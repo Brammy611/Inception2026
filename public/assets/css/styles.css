@@ -2181,6 +2181,383 @@ body::before {
   box-shadow: var(--shadow-hover);
 }
 
+/* ==== PAYMENT SECTION ==== */
+.payment-section {
+  border: 2px solid var(--accent-primary);
+  padding: 2rem;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(251, 177, 55, 0.05) 0%, rgba(70, 131, 181, 0.05) 100%);
+}
+
+.payment-info-box {
+  background: white;
+  border-radius: 15px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border: 1px solid var(--box-border);
+}
+
+.payment-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--bg-secondary);
+}
+
+.payment-header svg {
+  color: var(--accent-primary);
+}
+
+.payment-header h4 {
+  font-size: 1.3rem;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.payment-amount {
+  background: var(--gradient-warm);
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-primary);
+}
+
+.amount-label {
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.amount-value {
+  color: white;
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.bank-details {
+  margin-bottom: 2rem;
+}
+
+.bank-info {
+  background: var(--bg-secondary);
+  padding: 1.5rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.bank-logo {
+  width: 80px;
+  height: 60px;
+  background: linear-gradient(135deg, #003d99 0%, #0052cc 100%);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 900;
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+  box-shadow: 0 4px 10px rgba(0, 61, 153, 0.3);
+}
+
+.bank-account {
+  flex: 1;
+}
+
+.bank-account strong {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.account-number {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.8rem;
+}
+
+.account-number span {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: 'Courier New', monospace;
+  letter-spacing: 2px;
+}
+
+.copy-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  background: var(--accent-primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.copy-button:hover {
+  background: var(--button-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-primary);
+}
+
+.copy-button.copied {
+  background: #10b981;
+}
+
+.account-name {
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.account-name strong {
+  color: var(--accent-primary);
+}
+
+.payment-steps {
+  background: rgba(251, 177, 55, 0.05);
+  padding: 1.5rem;
+  border-radius: 10px;
+  border-left: 4px solid var(--accent-primary);
+}
+
+.steps-title {
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  font-size: 1.05rem;
+}
+
+.payment-steps ol {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.payment-steps li {
+  color: var(--text-primary);
+  margin-bottom: 0.8rem;
+  line-height: 1.6;
+}
+
+.payment-steps li:last-child {
+  margin-bottom: 0;
+}
+
+/* File Upload */
+.file-upload-wrapper {
+  position: relative;
+}
+
+.file-input {
+  position: absolute;
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.file-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 2rem;
+  border: 2px dashed rgba(66, 59, 77, 0.3);
+  border-radius: 12px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.file-label:hover,
+.file-label.drag-over {
+  border-color: var(--accent-primary);
+  background: rgba(251, 177, 55, 0.05);
+  transform: scale(1.02);
+}
+
+.file-label svg {
+  color: var(--accent-primary);
+  margin-bottom: 1rem;
+}
+
+.file-label-text {
+  display: block;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  font-size: 1.05rem;
+}
+
+.file-label-hint {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.file-preview {
+  display: none;
+  margin-top: 1.5rem;
+}
+
+.preview-container {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1.5rem;
+  background: white;
+  border: 2px solid var(--accent-primary);
+  border-radius: 12px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.preview-container img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid var(--bg-secondary);
+}
+
+.preview-container.pdf {
+  flex-direction: column;
+  text-align: center;
+}
+
+.preview-container.pdf svg {
+  color: var(--accent-secondary);
+}
+
+.preview-info {
+  flex: 1;
+}
+
+.preview-name {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.3rem;
+  word-break: break-word;
+}
+
+.preview-size {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.remove-file {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  background: var(--accent-secondary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.remove-file:hover {
+  background: #8b1f1f;
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .payment-section {
+    padding: 1.5rem;
+  }
+
+  .payment-info-box {
+    padding: 1.5rem;
+  }
+
+  .payment-amount {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+
+  .amount-value {
+    font-size: 1.8rem;
+  }
+
+  .bank-info {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .bank-logo {
+    width: 100px;
+  }
+
+  .account-number {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .account-number span {
+    font-size: 1.4rem;
+  }
+
+  .preview-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .preview-container img {
+    width: 100%;
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .file-label {
+    padding: 2rem 1.5rem;
+  }
+
+  .payment-steps ol {
+    padding-left: 1.2rem;
+  }
+
+  .amount-value {
+    font-size: 1.5rem;
+  }
+}
+
 /* ==== SUCCESS PAGE ==== */
 .success-section {
   min-height: 100vh;

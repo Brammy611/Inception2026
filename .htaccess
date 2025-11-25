@@ -1,0 +1,6 @@
+RewriteEngine On
+
+# Redirect semua request ke folder Laravel's public
+RewriteCond %{REQUEST_URI} !^/inception/public/
+RewriteRule ^(.*)$ /inception/public/$1 [L,QSA]
+
