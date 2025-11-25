@@ -21,10 +21,13 @@ return new class extends Migration
             $table->string('major');
             $table->string('semester');
             $table->text('motivation');
+            $table->string('payment_proof')->nullable(); 
+            $table->enum('payment_status', ['pending', 'verified', 'rejected'])->default('pending'); 
             $table->enum('status', ['pending', 'confirmed', 'attended', 'cancelled'])->default('pending');
             $table->boolean('email_sent')->default(false);
             $table->timestamp('confirmed_at')->nullable();
             $table->timestamp('attended_at')->nullable();
+            $table->timestamp('payment_verified_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
@@ -32,6 +35,7 @@ return new class extends Migration
             $table->index('email');
             $table->index('registration_number');
             $table->index('status');
+            $table->index('payment_status');
             $table->index('created_at');
         });
     }

@@ -69,6 +69,7 @@ class HomeController extends Controller
             'major' => 'required|string|max:255',
             'semester' => 'required|string',
             'motivation' => 'required|string|max:1000',
+            'payment_proof' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048', // Max 2MB
         ], [
             'full_name.required' => 'Nama lengkap harus diisi',
             'email.required' => 'Email harus diisi',
@@ -80,6 +81,10 @@ class HomeController extends Controller
             'semester.required' => 'Semester harus dipilih',
             'motivation.required' => 'Motivasi harus diisi',
             'motivation.max' => 'Motivasi maksimal 1000 karakter',
+            'payment_proof.required' => 'Bukti pembayaran harus diupload',
+            'payment_proof.file' => 'File harus berupa gambar atau PDF',
+            'payment_proof.mimes' => 'Format file harus JPG, PNG, atau PDF',
+            'payment_proof.max' => 'Ukuran file maksimal 2MB',
         ]);
 
         if ($validator->fails()) {
@@ -89,6 +94,14 @@ class HomeController extends Controller
         }
 
         try {
+            // Handle file upload
+            $paymentProofPath = null;
+            if ($request->hasFile('payment_proof')) {
+                $file = $request->file('payment_proof');
+                $fileName = time() . '_' . str_replace(' ', '_', $file->getClientOriginalName());
+                $paymentProofPath = $file->storeAs('payment_proofs', $fileName, 'public');
+            }
+
             // Save to database
             $registration = CareerTalkRegistration::create([
                 'full_name' => $request->full_name,
@@ -98,6 +111,8 @@ class HomeController extends Controller
                 'major' => $request->major,
                 'semester' => $request->semester,
                 'motivation' => $request->motivation,
+                'payment_proof' => $paymentProofPath,
+                'payment_status' => 'pending', // Pending verification
                 'status' => 'pending',
             ]);
 

@@ -19,10 +19,13 @@ class CareerTalkRegistration extends Model
         'major',
         'semester',
         'motivation',
+        'payment_proof',
+        'payment_status',
         'status',
         'email_sent',
         'confirmed_at',
         'attended_at',
+        'payment_verified_at',
     ];
 
     protected $casts = [
