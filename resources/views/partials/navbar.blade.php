@@ -18,5 +18,18 @@
         <li><a href="#timeline">Timeline</a></li>
       </ul>
     </div>
+
+    <div class="navbar-auth">
+      @auth
+        <a href="{{ route('dashboard') }}" class="btn-dashboard">Dashboard</a>
+        <form action="{{ route('logout') }}" method="POST" class="logout-form">
+          @csrf
+          <button type="submit" class="btn-logout">Logout</button>
+        </form>
+      @else
+        <a href="{{ route('login') }}" class="btn-login">Login</a>
+        <a href="{{ route('register') }}" class="btn-register">Register</a>
+      @endauth
+    </div>
   </div>
 </nav>

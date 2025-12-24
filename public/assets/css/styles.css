@@ -210,6 +210,65 @@ body {
   display: none;
 }
 
+/* Auth Buttons */
+.navbar-auth {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.navbar-auth .btn-login,
+.navbar-auth .btn-logout {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 24px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: #FFFFFF;
+  background: #B22A2A;
+  border: none;
+  border-radius: 15px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.navbar-auth .btn-login:hover,
+.navbar-auth .btn-logout:hover {
+  background: #8f2222;
+  transform: translateY(-2px);
+}
+
+.navbar-auth .btn-register,
+.navbar-auth .btn-dashboard {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 24px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: #FFFFFF;
+  background: #32477C;
+  border: none;
+  border-radius: 15px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.navbar-auth .btn-register:hover,
+.navbar-auth .btn-dashboard:hover {
+  background: #283a66;
+  transform: translateY(-2px);
+}
+
+.logout-form {
+  display: inline;
+}
+
 /* ==== HOME SECTION ==== */
 .home {
   background-image: url('/assets/images/tekstur.png');
@@ -417,6 +476,7 @@ body {
 @media (max-width: 768px) {
   .navbar .container {
     padding: 0.5rem 0.8rem;
+    flex-wrap: wrap;
   }
 
   .navbar-toggle {
@@ -427,6 +487,20 @@ body {
     font-size: 1.4rem;
     cursor: pointer;
     color: var(--link-color);
+    order: 2;
+  }
+
+  .navbar-auth {
+    order: 3;
+    margin-left: 10px;
+  }
+
+  .navbar-auth .btn-login,
+  .navbar-auth .btn-logout,
+  .navbar-auth .btn-register,
+  .navbar-auth .btn-dashboard {
+    padding: 6px 12px;
+    font-size: 12px;
   }
 
   .navbar-links {
@@ -435,6 +509,7 @@ body {
     justify-content: stretch;
     overflow: hidden;
     max-height: 0;
+    order: 4;
   }
 
   .navbar-links.open {

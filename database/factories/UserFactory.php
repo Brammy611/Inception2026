@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -23,22 +24,76 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $kategoriOptions = [
+            User::KATEGORI_BUSINESS_CASE,
+            User::KATEGORI_GEOTHERMAL,
+            User::KATEGORI_POSTER_PAPER,
+            User::KATEGORI_WELL_STIMULATION,
+        ];
+
         return [
-            'name' => fake()->name(),
+            'nama' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
+            'role' => 'peserta',
+            'nama_tim' => fake()->company(),
+            'kategori_lomba' => fake()->randomElement($kategoriOptions),
+            'foto' => null,
+            'status_verifikasi' => fake()->randomElement(['pending', 'verified']),
             'remember_token' => Str::random(10),
         ];
     }
 
     /**
-     * Indicate that the model's email address should be unverified.
+     * Indicate that the user is an admin.
      */
-    public function unverified(): static
+    public function admin(): static
     {
         return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
+            'role' => 'admin',
+            'nama_tim' => null,
+            'kategori_lomba' => null,
+            'status_verifikasi' => 'verified',
+        ]);
+    }
+
+    /**
+     * Indicate that the user is a peserta.
+     */
+    public function peserta(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'peserta',
+        ]);
+    }
+
+    /**
+     * Set specific kategori lomba.
+     */
+    public function kategori(string $kategori): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'kategori_lomba' => $kategori,
+        ]);
+    }
+
+    /**
+     * Set status as verified.
+     */
+    public function verified(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status_verifikasi' => 'verified',
+        ]);
+    }
+
+    /**
+     * Set status as pending.
+     */
+    public function pending(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status_verifikasi' => 'pending',
         ]);
     }
 }
