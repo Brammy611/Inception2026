@@ -15,6 +15,84 @@
     });
   }
 
+  // ==== SCROLL SPY - Navbar Active Indicator ====
+  document.addEventListener("DOMContentLoaded", () => {
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.navbar-links .nav-link');
+    
+    // Smooth scroll for anchor links (hanya untuk link internal di halaman yang sama)
+    navLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        
+        // Cek apakah link menuju section di halaman ini (dimulai dengan #)
+        // atau link ke halaman lain (mengandung route)
+        if (href.includes('{{ route("home") }}')) {
+          // Link ke homepage dengan anchor - biarkan browser handle redirect
+          return; // Tidak preventDefault, biarkan link bekerja normal
+        }
+        
+        // Untuk link internal (#home, #about, dll) di halaman yang sama
+        if (href.startsWith('#')) {
+          e.preventDefault();
+          const targetId = href.substring(1);
+          const targetSection = document.getElementById(targetId);
+          
+          if (targetSection) {
+            const navbarHeight = document.querySelector('.navbar').offsetHeight;
+            const targetPosition = targetSection.offsetTop - navbarHeight - 20;
+            
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            });
+          }
+        }
+      });
+    });
+
+    // Update active state on scroll
+    function updateActiveNavOnScroll() {
+      const scrollPosition = window.scrollY + 150;
+      
+      let currentSection = '';
+      
+      // Find current section
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+          currentSection = section.getAttribute('id');
+        }
+      });
+      
+      // Update active class
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        const linkSection = link.getAttribute('data-section');
+        
+        if (linkSection === currentSection) {
+          link.classList.add('active');
+        }
+      });
+    }
+    
+    // Throttle scroll event for performance
+    let scrollTimeout;
+    window.addEventListener('scroll', () => {
+      if (scrollTimeout) {
+        window.cancelAnimationFrame(scrollTimeout);
+      }
+      scrollTimeout = window.requestAnimationFrame(() => {
+        updateActiveNavOnScroll();
+      });
+    });
+    
+    // Run on page load
+    updateActiveNavOnScroll();
+  });
+
   // ==== ORGANIZATION CAROUSEL ====
   document.addEventListener("DOMContentLoaded", () => {
     const track = document.querySelector(".carousel-track");

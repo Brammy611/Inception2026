@@ -1,0 +1,458 @@
+/* ================================================
+   SUCCESS PAGE CSS - Inception 2026
+   ================================================ */
+
+/* ==== SUCCESS PAGE ==== */
+.success-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8rem 2rem 4rem;
+  position: relative;
+}
+
+.success-wrapper {
+  max-width: 800px;
+  text-align: center;
+}
+
+.success-checkmark {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 2rem;
+  background: var(--gradient-warm);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-hover);
+}
+
+.success-checkmark svg {
+  color: white;
+}
+
+.success-content h1 {
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  background: var(--gradient-main);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1.5rem;
+}
+
+.success-message {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 3rem;
+}
+
+.next-steps {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 20px;
+  border: 1px solid var(--box-border);
+  margin-bottom: 3rem;
+  text-align: left;
+}
+
+.next-steps h3 {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.step-card {
+  text-align: center;
+  padding: 1.5rem;
+  background: var(--bg-secondary);
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+.step-card:hover {
+  transform: translateY(-5px);
+  background: white;
+  box-shadow: var(--shadow-primary);
+}
+
+.step-number {
+  width: 50px;
+  height: 50px;
+  background: var(--gradient-warm);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 auto 1rem;
+  box-shadow: var(--glow-orange);
+}
+
+.step-card h4 {
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.step-card p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.success-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: var(--gradient-warm);
+  color: white;
+  box-shadow: var(--shadow-primary);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+
+.btn-secondary {
+  background: white;
+  color: var(--accent-primary);
+  border: 2px solid var(--accent-primary);
+}
+
+.btn-secondary:hover {
+  background: var(--accent-primary);
+  color: white;
+}
+
+.contact-info {
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  border: 1px solid var(--box-border);
+}
+
+.contact-info p {
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.contact-links {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.contact-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--link-color);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.contact-links a:hover {
+  color: var(--link-hover);
+  transform: translateY(-2px);
+}
+
+/* Success Animations */
+.success-animation {
+  animation: zoomIn 0.6s ease-out;
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.success-checkmark svg {
+  animation: drawCheck 0.8s ease-out 0.3s forwards;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+}
+
+@keyframes drawCheck {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ==== WHATSAPP GROUP SECTION ==== */
+.whatsapp-group-section {
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+  padding: 3rem 2.5rem;
+  border-radius: 25px;
+  margin-bottom: 3rem;
+  box-shadow: 0 10px 40px rgba(37, 211, 102, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.whatsapp-group-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.whatsapp-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.wa-icon {
+  width: 80px;
+  height: 80px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  color: #25D366;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.whatsapp-header h3 {
+  color: white;
+  font-size: 1.8rem;
+  margin-bottom: 0.8rem;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.whatsapp-header p {
+  color: rgba(255,255,255,0.95);
+  font-size: 1.05rem;
+}
+
+.qr-code-container {
+  text-align: center;
+  margin: 2rem 0;
+  position: relative;
+  z-index: 2;
+}
+
+.qr-code-wrapper {
+  display: inline-block;
+  position: relative;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.qr-code-image {
+  display: block;
+  width: 300px;
+  height: 300px;
+  border-radius: 10px;
+  object-fit: contain;
+}
+
+.qr-instruction {
+  margin-top: 1.5rem;
+  color: white;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.wa-divider {
+  text-align: center;
+  margin: 2.5rem 0;
+  position: relative;
+  z-index: 2;
+}
+
+.wa-divider::before,
+.wa-divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 40%;
+  height: 2px;
+  background: rgba(255,255,255,0.3);
+}
+
+.wa-divider::before { left: 0; }
+.wa-divider::after { right: 0; }
+
+.wa-divider span {
+  background: rgba(255,255,255,0.2);
+  padding: 0.5rem 1.5rem;
+  border-radius: 20px;
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+}
+
+.wa-join-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  width: 100%;
+  max-width: 400px;
+  padding: 1.2rem 2rem;
+  background: white;
+  color: #25D366;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  position: relative;
+  z-index: 2;
+  margin: 0 auto;
+  display: flex;
+}
+
+.wa-join-button:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  background: #f0f0f0;
+}
+
+.wa-join-button:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+.group-info {
+  text-align: center;
+  margin-top: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.group-info p {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255,255,255,0.2);
+  padding: 0.8rem 1.5rem;
+  border-radius: 30px;
+  color: white;
+  font-size: 0.9rem;
+  backdrop-filter: blur(10px);
+}
+
+.group-info svg {
+  flex-shrink: 0;
+}
+
+/* ==== RESPONSIVE - SUCCESS ==== */
+@media (max-width: 768px) {
+  .steps-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .success-actions {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .whatsapp-group-section {
+    padding: 2.5rem 1.5rem;
+  }
+
+  .whatsapp-header h3 {
+    font-size: 1.5rem;
+  }
+
+  .qr-code-image {
+    width: 250px;
+    height: 250px;
+  }
+
+  .wa-join-button {
+    font-size: 1rem;
+    padding: 1rem 1.5rem;
+  }
+
+  .group-info p {
+    font-size: 0.85rem;
+    padding: 0.7rem 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .qr-code-wrapper {
+    padding: 1rem;
+  }
+
+  .qr-code-image {
+    width: 200px;
+    height: 200px;
+  }
+
+  .wa-divider::before,
+  .wa-divider::after {
+    width: 30%;
+  }
+}

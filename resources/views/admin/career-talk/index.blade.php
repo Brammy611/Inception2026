@@ -18,7 +18,7 @@
 <!-- Statistics Cards -->
 <div class="stats-grid">
     <div class="stat-card">
-        <div class="stat-icon" style="background: linear-gradient(135deg, #4683B5 0%, #32477C 100%);">
+        <div class="stat-icon blue-gradient">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
         </div>
         <div class="stat-content">
@@ -28,7 +28,7 @@
     </div>
 
     <div class="stat-card">
-        <div class="stat-icon" style="background: linear-gradient(135deg, #FBB137 0%, #B22A2A 100%);">
+        <div class="stat-icon orange-gradient">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
         </div>
         <div class="stat-content">
@@ -38,7 +38,7 @@
     </div>
 
     <div class="stat-card">
-        <div class="stat-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+        <div class="stat-icon green-gradient">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
         </div>
         <div class="stat-content">
@@ -48,7 +48,7 @@
     </div>
 
     <div class="stat-card">
-        <div class="stat-icon" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);">
+        <div class="stat-icon purple-gradient">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
         </div>
         <div class="stat-content">
@@ -132,7 +132,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                         </a>
                         
-                        <form method="POST" action="{{ route('admin.career-talk.update-status', $registration) }}" style="display: inline;">
+                        <form method="POST" action="{{ route('admin.career-talk.update-status', $registration) }}" class="form-inline">
                             @csrf
                             @method('PATCH')
                             <select name="status" onchange="this.form.submit()" class="status-select">
@@ -143,7 +143,7 @@
                             </select>
                         </form>
 
-                        <form method="POST" action="{{ route('admin.career-talk.destroy', $registration) }}" onsubmit="return confirm('Are you sure?')" style="display: inline;">
+                        <form method="POST" action="{{ route('admin.career-talk.destroy', $registration) }}" onsubmit="return confirm('Are you sure?')" class="form-inline">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn-icon btn-danger" title="Delete">
@@ -155,8 +155,8 @@
             </tr>
             @empty
             <tr>
-                <td colspan="7" style="text-align: center; padding: 3rem;">
-                    <p style="color: #999;">No registrations found</p>
+                <td colspan="7" class="empty-state">
+                    <p>No registrations found</p>
                 </td>
             </tr>
             @endforelse
@@ -168,7 +168,7 @@
     </div>
 </div>
 
-<style>
+@endsection
 .admin-header {
     margin-bottom: 2rem;
 }

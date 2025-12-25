@@ -8,7 +8,30 @@
   <title>{{ $title ?? 'Inception 2026' }}</title>
   
   <link rel="icon" type="image/png" href="{{ asset('assets/images/logo.png') }}">
-  <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+  
+  <!-- Global Styles (loaded on all pages) -->
+  <link rel="stylesheet" href="{{ asset('assets/css/global.css') }}">
+  
+  <!-- Page-Specific Styles -->
+  @if(Request::is('/'))
+    <link rel="stylesheet" href="{{ asset('assets/css/home.css') }}">
+  @elseif(Request::is('career-talk'))
+    <link rel="stylesheet" href="{{ asset('assets/css/career-talk.css') }}">
+  @elseif(Request::is('career-talk/register'))
+    <link rel="stylesheet" href="{{ asset('assets/css/register.css') }}">
+  @elseif(Request::is('career-talk/success'))
+    <link rel="stylesheet" href="{{ asset('assets/css/success.css') }}">
+  @elseif(Request::is('peserta/dashboard'))
+    <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
+  @elseif(Request::is('login'))
+    <link rel="stylesheet" href="{{ asset('assets/css/auth.css') }}">
+  @elseif(Request::is('register'))
+    <link rel="stylesheet" href="{{ asset('assets/css/auth.css') }}">
+  @elseif(Request::is('admin/dashboard'))
+    <link rel="stylesheet" href="{{ asset('assets/css/admin.css') }}">
+  @elseif(Request::is('admin/career-talk*'))
+    <link rel="stylesheet" href="{{ asset('assets/css/admin-career-talk.css') }}">
+  @endif
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">

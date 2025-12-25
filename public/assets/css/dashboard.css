@@ -1,0 +1,619 @@
+/* ================================================
+   DASHBOARD PAGE CSS - Inception 2026
+   ================================================ */
+
+/* CSS Variables */
+:root {
+  --gradient-main: linear-gradient(90deg, #FBB137 0%, #B22A2A 50%, #32477C 100%);
+  --color-orange: #FFA629;
+  --color-yellow: #FBB137;
+  --color-red: #B22A2A;
+  --color-blue-light: #4683B5;
+  --color-blue-dark: #32477C;
+  --color-verified: #07AD33;
+  --color-pending: #F2B900;
+}
+
+/* Dashboard Container */
+.peserta-dashboard {
+  display: grid;
+  grid-template-columns: 220px 1fr 400px;
+  min-height: calc(100vh - 80px);
+  padding: 120px 40px 40px;
+  gap: 25px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+/* ==== SIDEBAR ==== */
+.sidebar {
+  background: #fff;
+  border-radius: 20px;
+  padding: 40px 25px;
+  border: 1px solid #FBB137;
+  height: fit-content;
+  position: sticky;
+  top: 100px;
+}
+
+.sidebar-profile {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.profile-avatar {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 20px;
+  background: #f0f0f0;
+  position: relative;
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none; /* Hidden by default, shown via JS when image fails */
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+}
+
+.avatar-placeholder svg {
+  width: 60%;
+  height: 60%;
+  color: #ccc;
+}
+
+.profile-name {
+  font-family: 'Kumbh Sans', 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1A1A1A;
+  margin-bottom: 5px;
+}
+
+.profile-team {
+  font-family: 'Kumbh Sans', 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #A7A7A7;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  color: #000;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.nav-item svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  color: #FFA629;
+}
+
+.nav-item:hover {
+  background: #fff8e8;
+}
+
+.nav-item.active {
+  color: #000;
+}
+
+.nav-item.active svg {
+  color: #FFA629;
+}
+
+/* ==== MAIN CONTENT ==== */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Competition Header */
+.competition-header {
+  border-radius: 20px;
+  padding: 50px 75px;
+  color: #fff;
+}
+
+.competition-header h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  line-height: 48px;
+}
+
+.btn-guidebook {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--gradient-main);
+  color: #fff;
+  padding: 10px 25px;
+  border-radius: 15px;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  border: 1px solid #104E81;
+  transition: all 0.3s ease;
+}
+
+.btn-guidebook:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Section Title - Gradient Text */
+.section-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 30px;
+  background: var(--gradient-main) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  color: transparent !important;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  text-align: left;
+  display: inline-block;
+}
+
+/* ==== TEAM CARD ==== */
+.team-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 25px 30px;
+  border: 1px solid #FBB137;
+}
+
+.team-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.team-header h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 36px;
+  color: #000;
+}
+
+.status-badge {
+  padding: 4px 20px;
+  border-radius: 20px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 20px;
+  text-transform: capitalize;
+}
+
+.status-badge.pending {
+  background: #F2B900;
+  color: #fff;
+}
+
+.status-badge.verified {
+  background: #07AD33;
+  color: #fff;
+}
+
+.status-badge.rejected {
+  background: #B22A2A;
+  color: #fff;
+}
+
+.team-info {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.info-item .label {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  color: #000;
+}
+
+.info-item .value {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  color: #000;
+}
+
+/* ==== TASK CARD ==== */
+.task-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 25px 30px;
+  border: 1px solid #FBB137;
+}
+
+.task-card h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 36px;
+  color: #000;
+  margin-bottom: 20px;
+}
+
+.upload-box {
+  border: 2px dashed #ccc;
+  border-radius: 12px;
+  padding: 25px;
+  text-align: center;
+  background: #fafafa;
+  margin-bottom: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  max-width: 200px;
+}
+
+.upload-box:hover {
+  border-color: #32477C;
+  background: #f5f7ff;
+}
+
+.upload-box svg {
+  color: #999;
+  margin-bottom: 10px;
+}
+
+.upload-box p {
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.upload-box a {
+  font-weight: 600;
+  text-decoration: none;
+  color: #32477C;
+}
+
+.upload-box span {
+  font-size: 10px;
+  color: #999;
+}
+
+.payment-info h4 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  color: #000;
+  margin-bottom: 10px;
+}
+
+.payment-info p {
+  font-family: 'Poppins', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 15px;
+  color: #000;
+  margin-bottom: 10px;
+}
+
+.format-example {
+  background: #f5f5f5;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 15px 0;
+}
+
+.format-example p {
+  font-size: 10px;
+  line-height: 15px;
+  margin: 0;
+}
+
+.bank-info {
+  margin: 20px 0;
+}
+
+.bank-info p {
+  margin-bottom: 5px;
+}
+
+.file-types {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.file-types h4 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.file-types p {
+  font-size: 10px;
+  line-height: 15px;
+  color: #000;
+}
+
+/* ==== TIMELINE SIDEBAR ==== */
+.timeline-sidebar {
+  background: #fff;
+  border-radius: 20px;
+  padding: 30px 20px;
+  border: 1px solid #FBB137;
+  height: fit-content;
+  position: sticky;
+  top: 120px;
+}
+
+.timeline-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 36px;
+  background: var(--gradient-main);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.timeline-container {
+  position: relative;
+  padding: 20px 0;
+  width: 100%;
+}
+
+.timeline-line-vertical {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, #FBB137, #FFA629);
+  transform: translateX(-50%);
+  z-index: 0;
+  margin-left: 0;
+}
+
+.timeline-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 28px 1fr;
+  align-items: center;
+  margin-bottom: 18px;
+  min-height: 40px;
+  gap: 0;
+}
+
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+.timeline-left {
+  grid-template-areas: "content marker empty";
+}
+
+.timeline-right {
+  grid-template-areas: "empty marker content";
+}
+
+.timeline-content-wrapper {
+  z-index: 1;
+}
+
+.timeline-left .timeline-content-wrapper {
+  grid-area: content;
+  text-align: right;
+  padding-right: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+}
+
+.timeline-right .timeline-content-wrapper {
+  grid-area: content;
+  text-align: left;
+  padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+}
+
+.timeline-marker {
+  grid-area: marker;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  transform: translateX(1px); /* Adjusted for proper alignment */
+}
+
+.timeline-marker img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.timeline-content {
+  display: contents;
+}
+
+.timeline-date {
+  font-family: 'Poppins', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 16px;
+  color: #000;
+}
+
+.timeline-event {
+  font-family: 'Poppins', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 15px;
+  color: #666;
+}
+
+/* ==== CATEGORY-SPECIFIC BORDER COLORS ==== */
+.peserta-dashboard[data-category="business_case"] .sidebar,
+.peserta-dashboard[data-category="business_case"] .team-card,
+.peserta-dashboard[data-category="business_case"] .task-card,
+.peserta-dashboard[data-category="business_case"] .timeline-sidebar {
+  border-color: #FBB137;
+}
+
+.peserta-dashboard[data-category="geothermal"] .sidebar,
+.peserta-dashboard[data-category="geothermal"] .team-card,
+.peserta-dashboard[data-category="geothermal"] .task-card,
+.peserta-dashboard[data-category="geothermal"] .timeline-sidebar {
+  border-color: #B22A2A;
+}
+
+.peserta-dashboard[data-category="poster_paper"] .sidebar,
+.peserta-dashboard[data-category="poster_paper"] .team-card,
+.peserta-dashboard[data-category="poster_paper"] .task-card,
+.peserta-dashboard[data-category="poster_paper"] .timeline-sidebar {
+  border-color: #4683B5;
+}
+
+.peserta-dashboard[data-category="well_stimulation"] .sidebar,
+.peserta-dashboard[data-category="well_stimulation"] .team-card,
+.peserta-dashboard[data-category="well_stimulation"] .task-card,
+.peserta-dashboard[data-category="well_stimulation"] .timeline-sidebar {
+  border-color: #32477C;
+}
+
+/* ==== RESPONSIVE - DASHBOARD ==== */
+@media (max-width: 1400px) {
+  .peserta-dashboard {
+    grid-template-columns: 200px 1fr 350px;
+    padding: 120px 20px 40px;
+  }
+  
+  .competition-header {
+    padding: 40px 50px;
+  }
+  
+  .competition-header h1 {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .peserta-dashboard {
+    grid-template-columns: 180px 1fr 300px;
+    gap: 15px;
+  }
+  
+  .profile-avatar {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .competition-header h1 {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 992px) {
+  .peserta-dashboard {
+    grid-template-columns: 1fr;
+    padding: 120px 15px 30px;
+  }
+
+  .sidebar {
+    position: relative;
+    top: 0;
+  }
+
+  .sidebar-profile {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    text-align: left;
+    margin-bottom: 20px;
+  }
+
+  .profile-avatar {
+    width: 80px;
+    height: 80px;
+    margin: 0;
+  }
+
+  .sidebar-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .nav-item {
+    width: fit-content;
+  }
+
+  .timeline-sidebar {
+    position: relative;
+    top: 0;
+  }
+  
+  .competition-header {
+    padding: 30px;
+  }
+  
+  .competition-header h1 {
+    font-size: 20px;
+    line-height: 30px;
+  }
+}
