@@ -25,22 +25,14 @@ $timeline = $timeline ?? [
 
 <section class="timeline-section" id="timeline">
   <h2 class="section-title">Timeline</h2>
-  
-  <div class="scroll-indicator">
-    <span>Scroll to explore</span>
-    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-    </svg>
-  </div>
 
   <div class="timeline-wrapper" id="timelineWrapper">
     <div class="timeline-track">
       <div class="timeline-line"></div>
-      <div class="timeline-progress" id="timelineProgress"></div>
       
       @foreach($timeline as $item)
-      <div class="timeline-item">
-        <div class="timeline-number">{{ $item['number'] }}</div>
+      <div class="timeline-item" data-timeline-index="{{ $item['number'] }}">
+        <div class="timeline-number" data-number="{{ $item['number'] }}">{{ $item['number'] }}</div>
         <div class="timeline-dot"></div>
         <div class="timeline-content">
           <h3>{{ $item['title'] }}</h3>

@@ -13,6 +13,15 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  width: 100%;
+  max-width: 100vw;
+}
+
+/* Container untuk membatasi lebar maksimal di layar besar */
+.home-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 /* Colored Blur Circles */
@@ -141,7 +150,12 @@
   z-index: 10;
   text-align: center;
   color: var(--text-primary);
-  margin-top: -10vh;
+  margin-top: 5vh;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  padding: 0 2rem;
 }
 
 .home-content h1 {
@@ -190,6 +204,16 @@
   position: relative;
   overflow: hidden;
   z-index: 1;
+  width: 100%;
+  max-width: 100vw;
+}
+
+/* Container wrapper untuk center content di layar besar */
+.about-header,
+.cards-container {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Grid background effect */
@@ -349,14 +373,24 @@
   padding: 6rem 0;
   color: #423B4D;
   text-align: center;
+  width: 100%;
+  max-width: 100vw;
+  overflow: hidden;
 }
 
 .carousel-container {
   position: relative;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: auto;
   overflow: hidden;
+  padding: 0 2rem;
+}
+
+.organization .about-header {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .carousel-track {
@@ -433,6 +467,8 @@
   padding: 6rem 0;
   color: #423B4D;
   text-align: center;
+  width: 100%;
+  max-width: 100vw;
   overflow: visible;
   position: relative;
   margin-bottom: 4rem;
@@ -481,6 +517,14 @@
   perspective: 1000px;
   position: relative;
   z-index: 2;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.events .about-header {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .event-card {
@@ -582,8 +626,15 @@
   position: relative;
   color: #423B4D;
   text-align: center;
+  width: 100%;
+  max-width: 100vw;
   padding: 8rem 2rem;
   overflow: hidden;
+}
+
+.competition-content {
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .competition-content h2 {
@@ -663,6 +714,15 @@
   padding: 6rem 0;
   color: #423B4D;
   overflow: hidden;
+  /* Prevent horizontal overflow */
+  width: 100%;
+  max-width: 100vw;
+}
+
+.timeline-section .section-title {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .section-title {
@@ -689,77 +749,73 @@
   scroll-behavior: smooth;
   padding: 3rem 2rem 4rem 2rem;
   cursor: grab;
+  /* Contain within viewport */
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Hide scrollbar on desktop (>= 1024px) */
+@media (min-width: 1024px) {
+  .timeline-wrapper {
+    overflow-x: visible;
+    cursor: default;
+  }
+  
+  .timeline-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .timeline-wrapper {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Hide scrollbar on desktop (>= 1024px) */
+@media (min-width: 1024px) {
+  .timeline-wrapper {
+    overflow-x: visible;
+    cursor: default;
+  }
+  
+  .timeline-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .timeline-wrapper {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
 
 .timeline-wrapper:active {
   cursor: grabbing;
 }
 
-/* Custom Scrollbar */
-.timeline-wrapper::-webkit-scrollbar {
-  height: 8px;
-}
-
-.timeline-wrapper::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 10px;
-}
-
-.timeline-wrapper::-webkit-scrollbar-thumb {
-  background: var(--gradient-warm);
-  border-radius: 10px;
-  box-shadow: var(--glow-orange);
-}
-
-.timeline-wrapper::-webkit-scrollbar-thumb:hover {
-  background: var(--gradient-cool);
-}
-
-/* Scroll Indicator */
-.scroll-indicator {
-  position: absolute;
-  right: 2rem;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: rgba(66, 59, 77, 0.6);
-  font-size: 0.9rem;
-  pointer-events: none;
-  animation: pulse 2s ease-in-out infinite;
-  z-index: 10;
-}
-
-@keyframes pulse {
-
-  0%,
-  100% {
-    opacity: 0.6;
+/* Custom Scrollbar - Hanya untuk mobile/tablet */
+@media (max-width: 1023px) {
+  .timeline-wrapper::-webkit-scrollbar {
+    height: 8px;
   }
 
-  50% {
-    opacity: 1;
+  .timeline-wrapper::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+  }
+
+  .timeline-wrapper::-webkit-scrollbar-thumb {
+    background: var(--gradient-warm);
+    border-radius: 10px;
+    box-shadow: var(--glow-orange);
+  }
+
+  .timeline-wrapper::-webkit-scrollbar-thumb:hover {
+    background: var(--gradient-cool);
   }
 }
 
-.scroll-indicator svg {
-  width: 24px;
-  height: 24px;
-  animation: slideRight 1.5s ease-in-out infinite;
-}
 
-@keyframes slideRight {
-
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-
-  50% {
-    transform: translateX(10px);
-  }
-}
 
 .timeline-track {
   display: flex;
@@ -768,6 +824,17 @@
   padding: 2rem 0;
   width: max-content;
   min-width: 100%;
+  /* Ensure proper containment */
+  box-sizing: border-box;
+}
+
+/* Desktop: center items dan fit screen */
+@media (min-width: 1024px) {
+  .timeline-track {
+    width: 100%;
+    justify-content: space-between;
+    gap: 1rem;
+  }
 }
 
 /* Progress Line Background */
@@ -783,19 +850,7 @@
   z-index: 0;
 }
 
-.timeline-progress {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  height: 6px;
-  background: var(--gradient-warm);
-  width: 0%;
-  border-radius: 3px;
-  transform: translateY(-50%);
-  transition: width 0.5s ease;
-  z-index: 1;
-  box-shadow: var(--glow-orange);
-}
+
 
 /* ==== TIMELINE ITEM ==== */
 .timeline-item {
@@ -808,14 +863,36 @@
   opacity: 0;
   transform: translateY(50px);
   animation: fadeInUp 0.8s ease-out forwards;
+  flex-shrink: 0;
 }
 
-.timeline-item:first-child {
-  margin-left: 3rem;
+/* Desktop: flexible width untuk fit screen */
+@media (min-width: 1024px) {
+  .timeline-item {
+    flex: 1;
+    min-width: 0;
+    max-width: 320px;
+    margin: 0 0.5rem;
+  }
+  
+  .timeline-item:first-child {
+    margin-left: 0;
+  }
+  
+  .timeline-item:last-child {
+    margin-right: 0;
+  }
 }
 
-.timeline-item:last-child {
-  margin-right: 3rem;
+/* Mobile/Tablet: margin khusus untuk scroll */
+@media (max-width: 1023px) {
+  .timeline-item:first-child {
+    margin-left: 3rem;
+  }
+
+  .timeline-item:last-child {
+    margin-right: 3rem;
+  }
 }
 
 .timeline-item:nth-child(1) {
@@ -955,26 +1032,355 @@
   transform: translateX(-50%);
   width: 40px;
   height: 40px;
-  background: var(--gradient-warm);
+  background: rgba(150, 150, 150, 0.3);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
   font-size: 1.1rem;
-  box-shadow: var(--glow-orange);
+  color: rgba(66, 59, 77, 0.5);
+  /* Transisi lebih cepat untuk efek lampu yang responsif */
+  transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.3s ease,
+              box-shadow 0.4s ease-out,
+              transform 0.35s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   z-index: 3;
 }
 
+/* Active/Lit state - Menyala seperti lampu */
+.timeline-number.active {
+  background: var(--gradient-warm);
+  color: #FFFFFF;
+  box-shadow: 
+    0 0 20px rgba(251, 177, 55, 0.6),
+    0 0 40px rgba(251, 177, 55, 0.4),
+    0 0 60px rgba(178, 42, 42, 0.3),
+    var(--glow-orange);
+  transform: translateX(-50%) scale(1.1);
+  animation: glow-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 
+      0 0 20px rgba(251, 177, 55, 0.6),
+      0 0 40px rgba(251, 177, 55, 0.4),
+      0 0 60px rgba(178, 42, 42, 0.3);
+  }
+  50% {
+    box-shadow: 
+      0 0 30px rgba(251, 177, 55, 0.8),
+      0 0 50px rgba(251, 177, 55, 0.6),
+      0 0 80px rgba(178, 42, 42, 0.4);
+  }
+}
+
 /* ==== RESPONSIVE - HOME PAGE ==== */
+
+/* Large Desktop - 1600px dan ke atas */
+@media (min-width: 1600px) {
+  /* Semua section sudah memiliki max-width 1400px */
+  /* Content akan tetap centered dan tidak melebar berlebihan */
+  
+  .home-content h1 {
+    font-size: 9rem;
+  }
+  
+  .year {
+    width: 300px;
+  }
+  
+  .about-header h2,
+  .section-title,
+  .competition-content h2 {
+    font-size: 4rem;
+  }
+  
+  .cards-container {
+    gap: 2.5rem;
+  }
+  
+  .timeline-item {
+    min-width: 350px;
+    max-width: 350px;
+  }
+}
+
+/* Tablet dan iPad - 1024px dan dibawah */
+@media (max-width: 1024px) {
+  /* HOME SECTION */
+  .home {
+    min-height: 90vh;
+    padding: 2rem 1rem;
+  }
+
+  .home-content {
+    padding: 0 1rem;
+  }
+
+  .home-content h1 {
+    font-size: clamp(3.5rem, 12vw, 7rem);
+    margin-bottom: 200px;
+  }
+
+  .year {
+    width: clamp(160px, 20vw, 260px);
+  }
+
+  .logo-3d {
+    width: 95vw;
+    height: 65vh;
+    bottom: -25vh;
+  }
+
+  /* ABOUT SECTION */
+  .about {
+    padding: 5rem 1.5rem;
+  }
+
+  .about-header {
+    margin-bottom: 3rem;
+  }
+
+  .cards-container {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.8rem;
+  }
+
+  /* ORGANIZATION SECTION */
+  .organization {
+    padding: 5rem 1.5rem;
+  }
+
+  .carousel-slide {
+    padding: 0 1rem;
+  }
+
+  /* EVENTS SECTION */
+  .events {
+    padding: 5rem 1.5rem;
+  }
+
+  .events-container {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 2rem;
+    padding: 0 1.5rem;
+  }
+
+  /* COMPETITION SECTION */
+  .competition {
+    padding: 6rem 1.5rem;
+  }
+
+  .competition-content h2 {
+    font-size: clamp(2rem, 7vw, 3.5rem);
+  }
+
+  .coming-soon {
+    font-size: clamp(1.8rem, 5.5vw, 3rem);
+  }
+
+  /* TIMELINE SECTION */
+  .timeline-section {
+    padding: 5rem 0;
+  }
+
+  .timeline-wrapper {
+    padding: 2.5rem 1.5rem 3.5rem 1.5rem;
+  }
+
+  .timeline-item {
+    min-width: 300px;
+    max-width: 300px;
+  }
+}
+
+/* Tablet Portrait dan Mobile Landscape - 768px dan dibawah */
 @media (max-width: 768px) {
+  /* Prevent body horizontal scroll */
+  body {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  /* HOME SECTION */
+  .home {
+    min-height: 85vh;
+    padding: 1.5rem 1rem;
+  }
+
+  .home-content {
+    margin-top: -5vh;
+    padding: 0 0.5rem;
+  }
+
+  .home-content h1 {
+    font-size: clamp(3rem, 10vw, 6rem);
+    letter-spacing: 2px;
+    margin-bottom: 150px;
+  }
+
+  .year {
+    width: clamp(140px, 18vw, 220px);
+  }
+
+  .logo-3d {
+    bottom: -20vh;
+    height: 55vh;
+  }
+
+  /* Blur circles adjustment untuk mobile */
+  .home .blur-circle:nth-child(1),
+  .home .blur-circle:nth-child(2),
+  .home .blur-circle:nth-child(3),
+  .home .blur-circle:nth-child(4),
+  .home .blur-circle:nth-child(5),
+  .home .blur-circle:nth-child(6) {
+    width: 280px;
+    height: 280px;
+    filter: blur(80px);
+  }
+
+  /* ABOUT SECTION */
   .about {
     padding: 4rem 1rem;
+  }
+
+  .about-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .about-header h2 {
+    font-size: clamp(2rem, 7vw, 3rem);
+  }
+
+  .about-header .tagline {
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    padding: 0 1rem;
   }
 
   .cards-container {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+  }
+
+  .info-card,
+  .mascot-card,
+  .highlight-card {
+    padding: 1.5rem;
+  }
+
+  .info-card h3 {
+    font-size: 1.3rem;
+  }
+
+  .mascot-image {
+    max-width: 220px;
+  }
+
+  .highlight-card h3 {
+    font-size: 1.6rem;
+  }
+
+  .date-badge {
+    font-size: 0.85rem;
+    padding: 0.4rem 1.2rem;
+  }
+
+  /* ORGANIZATION SECTION */
+  .organization {
+    padding: 4rem 1rem;
+  }
+
+  .carousel-container {
+    padding: 0;
+  }
+
+  .carousel-slide {
+    padding: 0 0.5rem;
+  }
+
+  .carousel-nav {
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+  }
+
+  .nav-button {
+    width: 36px;
+    height: 36px;
+    font-size: 1.3rem;
+  }
+
+  /* EVENTS SECTION */
+  .events {
+    padding: 4rem 0;
+    margin-bottom: 3rem;
+  }
+
+  .events-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.8rem;
+    padding: 0 1rem;
+  }
+
+  .event-card {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .event-inner {
+    padding: 1.8rem 1.3rem;
+  }
+
+  .event-inner img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .event-inner h3 {
+    font-size: 1.2rem;
+  }
+
+  .event-inner p {
+    font-size: 0.9rem;
+  }
+
+  /* COMPETITION SECTION */
+  .competition {
+    padding: 5rem 1rem;
+  }
+
+  .competition-content h2 {
+    font-size: clamp(1.8rem, 6vw, 3rem);
+    margin-bottom: 2rem;
+  }
+
+  .coming-soon {
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    letter-spacing: 0.15rem;
+  }
+
+  /* TIMELINE SECTION */
+  .timeline-section {
+    padding: 4rem 0;
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 6vw, 3rem);
+    margin-bottom: 3rem;
+    padding: 0 1rem;
+  }
+
+  .timeline-wrapper {
+    padding: 2rem 1rem 3rem 1rem;
+    width: calc(100vw - 2rem);
+    max-width: calc(100vw - 2rem);
+    margin: 0 auto;
   }
 
   .timeline-item {
@@ -991,40 +1397,459 @@
     margin-right: 2rem;
   }
 
-  .section-title {
-    font-size: clamp(2rem, 6vw, 3rem);
-    margin-bottom: 3rem;
+  .timeline-content {
+    padding: 1.3rem;
   }
 
-  .scroll-indicator {
-    font-size: 0.8rem;
-    right: 1rem;
+  .timeline-content h3 {
+    font-size: 1.3rem;
+  }
+
+  .timeline-content p {
+    font-size: 0.9rem;
+  }
+
+  .timeline-number {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+
+  .timeline-dot {
+    width: 20px;
+    height: 20px;
   }
 }
 
+/* Mobile - 600px dan dibawah */
 @media (max-width: 600px) {
-  .timeline-item {
-    grid-template-columns: 1fr;
-    gap: 0.8rem;
-  }
-}
-
-@media (max-width: 420px) {
-  .logo-mark {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
+  /* Prevent body horizontal scroll */
+  body {
+    overflow-x: hidden;
+    max-width: 100vw;
   }
 
-  .logo-text {
-    font-size: 0.95rem;
+  /* HOME SECTION */
+  .home {
+    min-height: 80vh;
+    padding: 1rem 0.5rem;
+  }
+
+  .home-content {
+    margin-top: 0;
+    padding: 0 0.5rem;
+  }
+
+  .home-content h1 {
+    font-size: clamp(2.5rem, 9vw, 5rem);
+    letter-spacing: 1px;
+    margin-bottom: 100px;
+  }
+
+  .year {
+    width: clamp(120px, 16vw, 180px);
+  }
+
+  .logo-3d {
+    bottom: -15vh;
+    height: 45vh;
+    width: 100vw;
+  }
+
+  /* ABOUT SECTION */
+  .about {
+    padding: 3rem 0.8rem;
+  }
+
+  .about::before {
+    background-size: 20px 20px;
+  }
+
+  .about-header {
+    margin-bottom: 2rem;
   }
 
   .about-header h2 {
-    font-size: 2rem;
+    font-size: clamp(1.8rem, 6vw, 2.5rem);
+    margin-bottom: 0.8rem;
+  }
+
+  .about-header .tagline {
+    font-size: 0.95rem;
+    padding: 0 0.5rem;
+  }
+
+  .cards-container {
+    gap: 1.3rem;
+  }
+
+  .info-card,
+  .mascot-card,
+  .highlight-card {
+    padding: 1.3rem;
+    border-radius: 16px;
+  }
+
+  .info-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .info-card p {
+    font-size: 0.9rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .mascot-image {
+    max-width: 180px;
   }
 
   .highlight-card h3 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+  }
+
+  .highlight-card p {
+    font-size: 0.9rem;
+  }
+
+  .date-badge {
+    font-size: 0.8rem;
+    padding: 0.4rem 1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .cta-button {
+    padding: 0.7rem 1.8rem;
+    font-size: 0.9rem;
+  }
+
+  /* ORGANIZATION SECTION */
+  .organization {
+    padding: 3rem 0.8rem;
+  }
+
+  .carousel-slide {
+    padding: 0;
+  }
+
+  .carousel-nav {
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .nav-button {
+    width: 32px;
+    height: 32px;
+    font-size: 1.2rem;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  /* EVENTS SECTION */
+  .events {
+    padding: 3rem 0;
+    margin-bottom: 2rem;
+  }
+
+  .events .blur-circle:nth-child(1),
+  .events .blur-circle:nth-child(2) {
+    width: 250px;
+    height: 250px;
+    filter: blur(70px);
+  }
+
+  .events-container {
+    gap: 1.5rem;
+    padding: 0 0.8rem;
+  }
+
+  .event-card {
+    max-width: 100%;
+  }
+
+  .event-inner {
+    padding: 1.5rem 1rem;
+    border-radius: 1.2rem;
+  }
+
+  .event-inner img {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 0.8rem;
+  }
+
+  .event-inner h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .event-inner p {
+    font-size: 0.85rem;
+  }
+
+  /* COMPETITION SECTION */
+  .competition {
+    padding: 4rem 0.8rem;
+  }
+
+  .competition-content h2 {
+    font-size: clamp(1.6rem, 5.5vw, 2.5rem);
+    margin-bottom: 1.5rem;
+  }
+
+  .coming-soon {
+    font-size: clamp(1.3rem, 4.5vw, 2rem);
+    letter-spacing: 0.1rem;
+  }
+
+  /* TIMELINE SECTION */
+  .timeline-section {
+    padding: 3rem 0;
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  .section-title {
+    font-size: clamp(1.8rem, 5.5vw, 2.5rem);
+    margin-bottom: 2.5rem;
+    padding: 0 0.8rem;
+  }
+
+  .timeline-wrapper {
+    padding: 1.5rem 0.8rem 2.5rem 0.8rem;
+    width: calc(100vw - 1.6rem);
+    max-width: calc(100vw - 1.6rem);
+    margin: 0 auto;
+  }
+
+  .timeline-item {
+    min-width: 260px;
+    max-width: 260px;
+    margin: 0 0.8rem;
+  }
+
+  .timeline-item:first-child {
+    margin-left: 1.5rem;
+  }
+
+  .timeline-item:last-child {
+    margin-right: 1.5rem;
+  }
+
+  .timeline-content {
+    padding: 1.2rem;
+    border-radius: 16px;
+  }
+
+  .timeline-content h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .timeline-content p {
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  .timeline-number {
+    width: 32px;
+    height: 32px;
+    font-size: 0.95rem;
+    top: -12px;
+  }
+
+  .timeline-dot {
+    width: 18px;
+    height: 18px;
+    margin-bottom: 1.2rem;
+  }
+}
+
+/* Mobile Small - 420px dan dibawah */
+@media (max-width: 420px) {
+  /* Prevent body horizontal scroll */
+  body {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  /* HOME SECTION */
+  .home {
+    min-height: 75vh;
+  }
+
+  .home-content h1 {
+    font-size: clamp(2rem, 8vw, 4rem);
+    margin-bottom: 80px;
+  }
+
+  .year {
+    width: clamp(100px, 15vw, 150px);
+  }
+
+  .logo-3d {
+    bottom: -12vh;
+    height: 40vh;
+  }
+
+  .home .blur-circle:nth-child(1),
+  .home .blur-circle:nth-child(2),
+  .home .blur-circle:nth-child(3),
+  .home .blur-circle:nth-child(4),
+  .home .blur-circle:nth-child(5),
+  .home .blur-circle:nth-child(6) {
+    width: 220px;
+    height: 220px;
+    filter: blur(60px);
+  }
+
+  /* ABOUT SECTION */
+  .about {
+    padding: 2.5rem 0.6rem;
+  }
+
+  .about-header h2 {
+    font-size: clamp(1.6rem, 5.5vw, 2rem);
+  }
+
+  .about-header .tagline {
+    font-size: 0.88rem;
+  }
+
+  .cards-container {
+    gap: 1.2rem;
+  }
+
+  .info-card,
+  .mascot-card,
+  .highlight-card {
+    padding: 1.2rem;
+  }
+
+  .info-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .info-card p {
+    font-size: 0.85rem;
+  }
+
+  .mascot-image {
+    max-width: 150px;
+  }
+
+  .highlight-card h3 {
+    font-size: 1.3rem;
+  }
+
+  .highlight-card p {
+    font-size: 0.85rem;
+  }
+
+  .date-badge {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.9rem;
+  }
+
+  /* ORGANIZATION SECTION */
+  .organization {
+    padding: 2.5rem 0.6rem;
+  }
+
+  /* EVENTS SECTION */
+  .events {
+    padding: 2.5rem 0;
+  }
+
+  .events-container {
+    padding: 0 0.6rem;
+  }
+
+  .event-inner {
+    padding: 1.3rem 0.9rem;
+  }
+
+  .event-inner img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .event-inner h3 {
+    font-size: 1rem;
+  }
+
+  .event-inner p {
+    font-size: 0.8rem;
+  }
+
+  /* COMPETITION SECTION */
+  .competition {
+    padding: 3.5rem 0.6rem;
+  }
+
+  .competition-content h2 {
+    font-size: clamp(1.4rem, 5vw, 2rem);
+  }
+
+  .coming-soon {
+    font-size: clamp(1.1rem, 4vw, 1.8rem);
+  }
+
+  /* TIMELINE SECTION */
+  .timeline-section {
+    padding: 2.5rem 0;
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  .section-title {
+    font-size: clamp(1.6rem, 5vw, 2rem);
+    margin-bottom: 2rem;
+  }
+
+  .timeline-wrapper {
+    width: calc(100vw - 1.2rem);
+    max-width: calc(100vw - 1.2rem);
+    margin: 0 auto;
+  }
+
+  .timeline-item {
+    min-width: 240px;
+    max-width: 240px;
+    margin: 0 0.6rem;
+  }
+
+  .timeline-item:first-child {
+    margin-left: 1.2rem;
+  }
+
+  .timeline-item:last-child {
+    margin-right: 1.2rem;
+  }
+
+  .timeline-content {
+    padding: 1rem;
+  }
+
+  .timeline-content h3 {
+    font-size: 1.1rem;
+  }
+
+  .timeline-content p {
+    font-size: 0.8rem;
+  }
+
+  .timeline-number {
+    width: 28px;
+    height: 28px;
+    font-size: 0.85rem;
+  }
+
+  .timeline-dot {
+    width: 16px;
+    height: 16px;
   }
 }

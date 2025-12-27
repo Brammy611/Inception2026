@@ -67,6 +67,11 @@
         }
       });
       
+      // Special case: organization section dianggap sebagai bagian dari about
+      if (currentSection === 'organization') {
+        currentSection = 'about';
+      }
+      
       // Update active class
       navLinks.forEach(link => {
         link.classList.remove('active');
@@ -183,27 +188,79 @@
 </script>
 
 <script>
-  // Smooth scroll progress
+  // ==== TIMELINE LIGHTING SYSTEM ====
+  // Sistem lampu progressif untuk timeline numbers dengan delay dan animasi
   const wrapper = document.getElementById('timelineWrapper');
-  const progress = document.getElementById('timelineProgress');
-  const scrollIndicator = document.querySelector('.scroll-indicator');
-
-  if (wrapper && progress) {
-    wrapper.addEventListener('scroll', () => {
-      const scrollLeft = wrapper.scrollLeft;
-      const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
-      const percentage = (scrollLeft / maxScroll) * 100;
-      progress.style.width = percentage + '%';
-
-      if (scrollIndicator) {
-        if (scrollLeft > 50) {
-          scrollIndicator.style.opacity = '0';
-        } else {
-          scrollIndicator.style.opacity = '0.6';
-        }
+  
+  if (wrapper) {
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    const timelineNumbers = document.querySelectorAll('.timeline-number');
+    let lightingTimeout = null;
+    
+    // Fungsi untuk mengecek apakah element terlihat di viewport
+    function isElementVisible(el, container) {
+      const containerRect = container.getBoundingClientRect();
+      const elementRect = el.getBoundingClientRect();
+      
+      // Element dianggap visible jika sebagian atau seluruhnya terlihat dalam container
+      const isVisible = (
+        elementRect.left < containerRect.right &&
+        elementRect.right > containerRect.left
+      );
+      
+      return isVisible;
+    }
+    
+    // Fungsi untuk update status lampu dengan delay dan animasi
+    function updateTimelineLights() {
+      // Clear timeout sebelumnya jika ada
+      if (lightingTimeout) {
+        clearTimeout(lightingTimeout);
       }
-    });
-
+      
+      // Delay 1 detik sebelum update
+      lightingTimeout = setTimeout(() => {
+        const visibleIndices = [];
+        
+        // Deteksi timeline items yang terlihat
+        timelineItems.forEach((item, index) => {
+          if (isElementVisible(item, wrapper)) {
+            visibleIndices.push(index + 1); // +1 karena index mulai dari 0
+          }
+        });
+        
+        // Tentukan nomor maksimal yang harus menyala
+        const maxVisibleIndex = Math.max(...visibleIndices, 0);
+        
+        // Update semua timeline numbers dengan staggered animation
+        timelineNumbers.forEach((numberEl, index) => {
+          const currentNumber = index + 1;
+          
+          // Logika: semua nomor <= maxVisibleIndex akan menyala
+          if (currentNumber <= maxVisibleIndex) {
+            // Tambahkan delay berbeda untuk setiap nomor (staggered effect)
+            setTimeout(() => {
+              numberEl.classList.add('active');
+            }, (currentNumber - 1) * 80); // 80ms delay antar nomor - lebih cepat!
+          } else {
+            numberEl.classList.remove('active');
+          }
+        });
+        
+        // Jika tidak ada yang visible, tetap nyalakan yang pertama
+        if (maxVisibleIndex === 0) {
+          if (timelineNumbers[0]) {
+            setTimeout(() => {
+              timelineNumbers[0].classList.add('active');
+            }, 80);
+          }
+        }
+      }, 200); // 200ms delay - jauh lebih responsif!
+    }
+    
+    // Update saat scroll dalam timeline wrapper
+    wrapper.addEventListener('scroll', updateTimelineLights);
+    
     // Drag to scroll functionality
     let isDown = false;
     let startX;
@@ -211,16 +268,19 @@
 
     wrapper.addEventListener('mousedown', (e) => {
       isDown = true;
+      wrapper.style.cursor = 'grabbing';
       startX = e.pageX - wrapper.offsetLeft;
       scrollLeft = wrapper.scrollLeft;
     });
 
     wrapper.addEventListener('mouseleave', () => {
       isDown = false;
+      wrapper.style.cursor = 'grab';
     });
 
     wrapper.addEventListener('mouseup', () => {
       isDown = false;
+      wrapper.style.cursor = 'grab';
     });
 
     wrapper.addEventListener('mousemove', (e) => {
@@ -230,6 +290,27 @@
       const walk = (x - startX) * 2;
       wrapper.scrollLeft = scrollLeft - walk;
     });
+    
+    // Touch support untuk mobile
+    let touchStartX = 0;
+    let touchScrollLeft = 0;
+    
+    wrapper.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].pageX - wrapper.offsetLeft;
+      touchScrollLeft = wrapper.scrollLeft;
+    });
+    
+    wrapper.addEventListener('touchmove', (e) => {
+      const x = e.touches[0].pageX - wrapper.offsetLeft;
+      const walk = (x - touchStartX) * 2;
+      wrapper.scrollLeft = touchScrollLeft - walk;
+    });
+    
+    // Initial update
+    updateTimelineLights();
+    
+    // Update saat window resize
+    window.addEventListener('resize', updateTimelineLights);
   }
 
   // Intersection Observer for animation

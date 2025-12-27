@@ -2,9 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <meta name="description" content="{{ $metaDescription ?? 'Inception 2026 - Showcase of creativity, innovation, and technology.' }}">
   <meta name="csrf-token" content="{{ csrf_token() }}">
+  
+  <!-- Mobile Optimization -->
+  <meta name="theme-color" content="#FBB137">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  
   <title>{{ $title ?? 'Inception 2026' }}</title>
   
   <link rel="icon" type="image/png" href="{{ asset('assets/images/logo.png') }}">
