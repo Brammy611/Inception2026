@@ -29,6 +29,9 @@ Route::get('/dashboard', function () {
 // Peserta Routes
 Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'peserta'])->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Peserta\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/register', [App\Http\Controllers\Peserta\DashboardController::class, 'showRegisterForm'])->name('register');
+    Route::post('/register', [App\Http\Controllers\Peserta\DashboardController::class, 'register'])->name('register.store');
+    Route::post('/documents', [App\Http\Controllers\Peserta\DashboardController::class, 'updateDocuments'])->name('documents.update');
 });
 
 // Career Talk Routes

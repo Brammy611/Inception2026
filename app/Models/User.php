@@ -13,14 +13,6 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     /**
-     * Kategori Lomba Constants
-     */
-    const KATEGORI_BUSINESS_CASE = 'business_case';
-    const KATEGORI_GEOTHERMAL = 'geothermal';
-    const KATEGORI_POSTER_PAPER = 'poster_paper';
-    const KATEGORI_WELL_STIMULATION = 'well_stimulation';
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
@@ -30,10 +22,6 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
-        'nama_tim',
-        'kategori_lomba',
-        'foto',
-        'status_verifikasi',
     ];
 
     /**
@@ -59,6 +47,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the peserta record associated with the user.
+     */
+    public function peserta()
+    {
+        return $this->hasOne(Peserta::class);
+    }
+
+    /**
      * Check if user is admin.
      */
     public function isAdmin(): bool
@@ -75,39 +71,10 @@ class User extends Authenticatable
     }
 
     /**
-     * Get kategori lomba display name.
+     * Check if user has completed peserta registration.
      */
-    public function getKategoriDisplayAttribute(): string
+    public function hasCompletedRegistration(): bool
     {
-        return config("competitions.categories.{$this->kategori_lomba}.name", 'Unknown');
-    }
-
-    /**
-     * Get all kategori lomba options.
-     */
-    public static function getKategoriOptions(): array
-    {
-        return [
-            self::KATEGORI_BUSINESS_CASE => 'Business Case Competition',
-            self::KATEGORI_GEOTHERMAL => 'Geothermal Development Plan Competition',
-            self::KATEGORI_POSTER_PAPER => 'Poster and Paper Competition',
-            self::KATEGORI_WELL_STIMULATION => 'Well Stimulation Competition',
-        ];
-    }
-
-    /**
-     * Check if user is verified.
-     */
-    public function isVerified(): bool
-    {
-        return $this->status_verifikasi === 'verified';
-    }
-
-    /**
-     * Check if user is pending verification.
-     */
-    public function isPending(): bool
-    {
-        return $this->status_verifikasi === 'pending';
+        return $this->peserta !== null;
     }
 }

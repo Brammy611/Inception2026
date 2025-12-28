@@ -17,15 +17,6 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->enum('role', ['admin', 'peserta'])->default('peserta');
-            $table->string('nama_tim')->nullable();
-            $table->enum('kategori_lomba', [
-                'business_case',
-                'geothermal',
-                'poster_paper',
-                'well_stimulation'
-            ])->nullable();
-            $table->string('foto')->nullable();
-            $table->enum('status_verifikasi', ['pending', 'verified', 'rejected'])->default('pending');
             $table->rememberToken();
             $table->timestamps();
         });

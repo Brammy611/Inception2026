@@ -18,7 +18,9 @@ class CareerTalkRegistrationSeeder extends Seeder
         
         // Clear existing registrations (optional)
         $this->command->warn('Clearing existing registrations...');
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         CareerTalkRegistration::truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         
         $institutions = [
             'Universitas Diponegoro',
@@ -56,64 +58,65 @@ class CareerTalkRegistrationSeeder extends Seeder
         $progressBar = $this->command->getOutput()->createProgressBar(50);
         $progressBar->start();
 
-        // Generate 50 sample registrations with transaction
-        DB::transaction(function () use ($faker, $institutions, $majors, $statuses, $statusWeights, $motivations, $progressBar) {
-            for ($i = 0; $i < 50; $i++) {
-                try {
-                    // Select status based on weights
-                    $rand = rand(1, 100);
-                    $cumulative = 0;
-                    $selectedStatus = 'pending';
-                    
-                    foreach ($statuses as $index => $status) {
-                        $cumulative += $statusWeights[$index];
-                        if ($rand <= $cumulative) {
-                            $selectedStatus = $status;
-                            break;
-                        }
+        // Generate 50 sample registrations
+        for ($i = 0; $i < 50; $i++) {
+            try {
+                // Select status based on weights
+                $rand = rand(1, 100);
+                $cumulative = 0;
+                $selectedStatus = 'pending';
+                
+                foreach ($statuses as $index => $status) {
+                    $cumulative += $statusWeights[$index];
+                    if ($rand <= $cumulative) {
+                        $selectedStatus = $status;
+                        break;
                     }
-
-                    // Random date between 30 days ago and now
-                    $createdAt = $faker->dateTimeBetween('-30 days', 'now');
-
-                    $registration = CareerTalkRegistration::create([
-                        'full_name' => $faker->name,
-                        'email' => $faker->unique()->safeEmail,
-                        'phone' => '08' . $faker->numerify('##########'),
-                        'institution' => $faker->randomElement($institutions),
-                        'major' => $faker->randomElement($majors),
-                        'semester' => (string) $faker->numberBetween(1, 8),
-                        'motivation' => $faker->randomElement($motivations),
-                        'status' => $selectedStatus,
-                        'email_sent' => $faker->boolean(80), // 80% emails sent
-                        'created_at' => $createdAt,
-                        'updated_at' => $createdAt,
-                    ]);
-
-                    // Set confirmed_at for confirmed and attended registrations
-                    if ($selectedStatus === 'confirmed' || $selectedStatus === 'attended') {
-                        $registration->confirmed_at = $faker->dateTimeBetween($registration->created_at, 'now');
-                        $registration->save();
-                    }
-
-                    // Set attended_at for attended registrations
-                    if ($selectedStatus === 'attended') {
-                        $confirmedAt = $registration->confirmed_at ?? $registration->created_at;
-                        $registration->attended_at = $faker->dateTimeBetween($confirmedAt, 'now');
-                        $registration->save();
-                    }
-
-                    $progressBar->advance();
-                    
-                    // Small delay to ensure unique registration numbers
-                    usleep(10000); // 0.01 second delay
-                    
-                } catch (\Exception $e) {
-                    $this->command->error("\nError creating registration #{$i}: " . $e->getMessage());
-                    continue;
                 }
+
+                // Random date between 30 days ago and now
+                $createdAt = $faker->dateTimeBetween('-30 days', 'now');
+
+                // Generate registration number manually
+                $date = now()->format('Ymd');
+                $prefix = 'CT-' . $date . '-';
+                $registrationNumber = $prefix . str_pad($i + 1, 4, '0', STR_PAD_LEFT);
+
+                $registration = CareerTalkRegistration::create([
+                    'registration_number' => $registrationNumber,
+                    'full_name' => $faker->name,
+                    'email' => $faker->unique()->safeEmail,
+                    'phone' => '08' . $faker->numerify('##########'),
+                    'institution' => $faker->randomElement($institutions),
+                    'major' => $faker->randomElement($majors),
+                    'semester' => (string) $faker->numberBetween(1, 8),
+                    'motivation' => $faker->randomElement($motivations),
+                    'status' => $selectedStatus,
+                    'email_sent' => $faker->boolean(80), // 80% emails sent
+                    'created_at' => $createdAt,
+                    'updated_at' => $createdAt,
+                ]);
+
+                // Set confirmed_at for confirmed and attended registrations
+                if ($selectedStatus === 'confirmed' || $selectedStatus === 'attended') {
+                    $registration->confirmed_at = $faker->dateTimeBetween($registration->created_at, 'now');
+                    $registration->save();
+                }
+
+                // Set attended_at for attended registrations
+                if ($selectedStatus === 'attended') {
+                    $confirmedAt = $registration->confirmed_at ?? $registration->created_at;
+                    $registration->attended_at = $faker->dateTimeBetween($confirmedAt, 'now');
+                    $registration->save();
+                }
+
+                $progressBar->advance();
+                
+            } catch (\Exception $e) {
+                $this->command->error("\nError creating registration #{$i}: " . $e->getMessage());
+                continue;
             }
-        });
+        }
 
         $progressBar->finish();
         $this->command->newLine();
