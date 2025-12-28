@@ -17,8 +17,18 @@
 
   // ==== SCROLL SPY - Navbar Active Indicator ====
   document.addEventListener("DOMContentLoaded", () => {
+    const navbar = document.querySelector('.navbar');
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.navbar-links .nav-link');
+    
+    // Navbar blur effect on scroll
+    function handleNavbarBlur() {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    }
     
     // Smooth scroll for anchor links (hanya untuk link internal di halaman yang sama)
     navLinks.forEach(link => {
@@ -91,11 +101,13 @@
       }
       scrollTimeout = window.requestAnimationFrame(() => {
         updateActiveNavOnScroll();
+        handleNavbarBlur();
       });
     });
     
     // Run on page load
     updateActiveNavOnScroll();
+    handleNavbarBlur();
   });
 
   // ==== ORGANIZATION CAROUSEL ====

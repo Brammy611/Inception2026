@@ -21,8 +21,9 @@
   min-height: calc(100vh - 80px);
   padding: 120px 40px 40px;
   gap: 25px;
-  max-width: 1440px;
+  max-width: 1600px;
   margin: 0 auto;
+  width: 100%;
 }
 
 /* ==== SIDEBAR ==== */
@@ -190,12 +191,22 @@
   display: inline-block;
 }
 
+/* Section Containers */
+.section-team,
+.section-tasks {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 /* ==== TEAM CARD ==== */
 .team-card {
   background: #fff;
   border-radius: 20px;
   padding: 25px 30px;
   border: 1px solid #FBB137;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .team-header {
@@ -272,6 +283,8 @@
   border-radius: 20px;
   padding: 25px 30px;
   border: 1px solid #FBB137;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .task-card h3 {
@@ -537,6 +550,37 @@
 }
 
 /* ==== RESPONSIVE - DASHBOARD ==== */
+/* Large Desktop (> 1600px) */
+@media (min-width: 1601px) {
+  .peserta-dashboard {
+    grid-template-columns: 240px 1fr 420px;
+    gap: 30px;
+    padding: 120px 60px 40px;
+  }
+  
+  .sidebar {
+    padding: 45px 30px;
+  }
+  
+  .profile-avatar {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .team-card,
+  .task-card {
+    padding: 30px 35px;
+  }
+  
+  .competition-header {
+    padding: 55px 80px;
+  }
+  
+  .competition-header h1 {
+    font-size: 36px;
+  }
+}
+
 @media (max-width: 1400px) {
   .peserta-dashboard {
     grid-template-columns: 200px 1fr 350px;
