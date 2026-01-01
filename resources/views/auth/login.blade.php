@@ -6,7 +6,7 @@
     <div class="auth-header">
       <img src="{{ asset('assets/images/logo.png') }}" alt="Logo Inception" class="auth-logo">
       <h1>Login</h1>
-      <p>Masuk ke akun Inception Anda</p>
+      <p>Sign in to your Inception account</p>
     </div>
 
     <form method="POST" action="{{ route('login') }}" class="auth-form">
@@ -21,7 +21,7 @@
           value="{{ old('email') }}" 
           required 
           autofocus
-          placeholder="Masukkan email Anda"
+          placeholder="Enter your email"
           class="@error('email') error @enderror"
         >
         @error('email')
@@ -36,7 +36,7 @@
           id="password" 
           name="password" 
           required
-          placeholder="Masukkan password Anda"
+          placeholder="Enter your password"
           class="@error('password') error @enderror"
         >
         @error('password')
@@ -47,7 +47,7 @@
       <div class="form-group remember-group">
         <label class="checkbox-label">
           <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
-          <span>Ingat saya</span>
+          <span>Remember me</span>
         </label>
       </div>
 
@@ -55,7 +55,7 @@
     </form>
 
     <div class="auth-footer">
-      <p>Belum punya akun? <a href="{{ route('register') }}">Daftar sekarang</a></p>
+      <p>Don't have an account? <a href="{{ route('register') }}">Register now</a></p>
     </div>
   </div>
 </div>

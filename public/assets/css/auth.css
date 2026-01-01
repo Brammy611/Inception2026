@@ -8,7 +8,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 130px 2rem 2rem 2rem;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
 
@@ -18,7 +18,12 @@
   border-radius: 20px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 420px;
+  max-width: 650px;
+}
+
+/* Extra padding for register page with sections */
+.auth-box:has(.form-section) {
+  padding: 3rem;
 }
 
 .auth-header {
@@ -60,7 +65,8 @@
 
 .auth-form input[type="email"],
 .auth-form input[type="password"],
-.auth-form input[type="text"] {
+.auth-form input[type="text"],
+.auth-form select {
   width: 100%;
   padding: 0.85rem 1rem;
   border: 2px solid #e1e1e1;
@@ -68,15 +74,28 @@
   font-size: 0.95rem;
   transition: all 0.3s ease;
   font-family: 'Poppins', sans-serif;
+  background-color: #fff;
 }
 
-.auth-form input:focus {
+.auth-form select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 12px;
+  padding-right: 2.5rem;
+}
+
+.auth-form input:focus,
+.auth-form select:focus {
   outline: none;
   border-color: #32477C;
   box-shadow: 0 0 0 3px rgba(50, 71, 124, 0.1);
 }
 
-.auth-form input.error {
+.auth-form input.error,
+.auth-form select.error {
   border-color: #B22A2A;
 }
 
@@ -85,6 +104,29 @@
   font-size: 0.8rem;
   margin-top: 0.35rem;
   display: block;
+}
+
+/* Form Sections */
+.form-section {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.form-section:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.section-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #32477C;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 3px solid #B22A2A;
+  display: inline-block;
 }
 
 .remember-group {

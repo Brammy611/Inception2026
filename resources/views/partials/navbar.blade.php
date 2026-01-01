@@ -11,7 +11,7 @@
 
     <div class="navbar-links" id="navLinks">
       <ul>
-        <li><a href="{{ route('home') }}#home" data-section="home" class="nav-link">Home</a></li>
+        <li><a href="{{ route('home') }}" data-section="home" class="nav-link">Home</a></li>
         <li><a href="{{ route('home') }}#about" data-section="about" class="nav-link">About</a></li>
         <li><a href="{{ route('home') }}#events" data-section="events" class="nav-link">Events</a></li>
         <li><a href="{{ route('home') }}#competitions" data-section="competitions" class="nav-link">Competitions</a></li>

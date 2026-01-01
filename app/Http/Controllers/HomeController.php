@@ -172,10 +172,10 @@ class HomeController extends Controller
     private function getBenefits()
     {
         return [
-            'E-Certificate untuk semua peserta',
-            'Networking dengan profesional industri',
-            'Insight karir dari praktisi berpengalaman',
-            'Kesempatan Q&A interaktif'
+            'E-Certificate for all participants',
+            'Networking with industry professionals',
+            'Career insights from experienced practitioners',
+            'Opportunity for interactive Q&A'
         ];
     }
 
@@ -184,7 +184,7 @@ class HomeController extends Controller
         return [
             ['time' => '09:30 - 10:00', 'activity' => 'Open Gate'],
             ['time' => '10:00 - 10:10', 'activity' => 'Opening'],
-            ['time' => '10:10 - 10:20', 'activity' => 'Sambutan PM Inception 2026'],
+            ['time' => '10:10 - 10:20', 'activity' => 'Opening Remarks from the Project Manager of Inception 2026'],
             ['time' => '10:20 - 10:25', 'activity' => 'Speaker (1) CV Reading'],
             ['time' => '10:25 - 11:10', 'activity' => 'Presentation of Material by Speaker (1)'],
             ['time' => '11:10 - 11:25', 'activity' => 'QnA Session'],
@@ -220,7 +220,7 @@ class HomeController extends Controller
                 'description' => 'Adu kreativitas dalam kompetisi teknologi.',
                 'image' => 'logo.png',
                 'delay' => '2s',
-                'link' => '#competition'
+                'link' => route('competitions')
             ],
             [
                 'title' => 'Awarding Night',
@@ -275,7 +275,7 @@ class HomeController extends Controller
             [
                 'number' => 4,
                 'title' => 'Awarding',
-                'description' => 'The grand finale – celebrating winners and closing the event with pride and joy.'
+                'description' => 'The grand finale - celebrating winners and closing the event with pride and joy.'
             ]
         ];
     }

@@ -48,6 +48,14 @@
     box-shadow: 0 8px 20px rgba(0,0,0,0.1);
 }
 
+/* Hide pagination completely */
+.pagination-wrapper,
+.pagination-wrapper *,
+nav[role="navigation"],
+.inline-flex.rtl\:flex-row-reverse {
+    display: none !important;
+}
+
 .stat-icon {
     width: 60px;
     height: 60px;

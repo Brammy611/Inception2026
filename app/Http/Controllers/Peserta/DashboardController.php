@@ -164,4 +164,115 @@ class DashboardController extends Controller
 
         return redirect()->route('peserta.dashboard')->with('success', 'Dokumen berhasil diperbarui!');
     }
+
+    /**
+     * Show the profile page.
+     */
+    public function showProfile()
+    {
+        $user = auth()->user();
+        $peserta = $user->peserta;
+        
+        if (!$peserta) {
+            return redirect()->route('peserta.register');
+        }
+
+        $kategori = $peserta->kategori;
+        $competition = config("competitions.categories.{$kategori}");
+
+        return view('peserta.profile', compact('user', 'peserta', 'competition', 'kategori'));
+    }
+
+    /**
+     * Update the profile information.
+     */
+    public function updateProfile(Request $request)
+    {
+        $user = auth()->user();
+        $peserta = $user->peserta;
+        
+        if (!$peserta) {
+            return redirect()->route('peserta.register');
+        }
+
+        $request->validate([
+            'nama_tim' => ['required', 'string', 'max:255'],
+            'asal_univ' => ['required', 'string', 'max:255'],
+            'nama_leader' => ['required', 'string', 'max:255'],
+            'jurusan_leader' => ['required', 'string', 'max:255'],
+            'nama_member_1' => ['required', 'string', 'max:255'],
+            'jurusan_member_1' => ['required', 'string', 'max:255'],
+            'nama_member_2' => ['nullable', 'string', 'max:255'],
+            'jurusan_member_2' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        $peserta->update([
+            'nama_tim' => $request->nama_tim,
+            'asal_univ' => $request->asal_univ,
+            'nama_leader' => $request->nama_leader,
+            'jurusan_leader' => $request->jurusan_leader,
+            'nama_member_1' => $request->nama_member_1,
+            'jurusan_member_1' => $request->jurusan_member_1,
+            'nama_member_2' => $request->nama_member_2,
+            'jurusan_member_2' => $request->jurusan_member_2,
+        ]);
+
+        return redirect()->route('peserta.profile')->with('success', 'Profile updated successfully!');
+    }
+
+    /**
+     * View KTM document
+     */
+    public function viewKtm($filename)
+    {
+        $path = storage_path('app/public/peserta/ktm/' . $filename);
+        
+        if (!file_exists($path)) {
+            abort(404);
+        }
+        
+        return response()->file($path);
+    }
+
+    /**
+     * View Follow IG document
+     */
+    public function viewFollowIg($filename)
+    {
+        $path = storage_path('app/public/peserta/follow_ig/' . $filename);
+        
+        if (!file_exists($path)) {
+            abort(404);
+        }
+        
+        return response()->file($path);
+    }
+
+    /**
+     * View Share Poster document
+     */
+    public function viewSharePoster($filename)
+    {
+        $path = storage_path('app/public/peserta/share_poster/' . $filename);
+        
+        if (!file_exists($path)) {
+            abort(404);
+        }
+        
+        return response()->file($path);
+    }
+
+    /**
+     * View Payment document
+     */
+    public function viewPayment($filename)
+    {
+        $path = storage_path('app/public/peserta/payment/' . $filename);
+        
+        if (!file_exists($path)) {
+            abort(404);
+        }
+        
+        return response()->file($path);
+    }
 }

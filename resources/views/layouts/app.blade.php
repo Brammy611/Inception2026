@@ -22,6 +22,8 @@
   <!-- Page-Specific Styles -->
   @if(Request::is('/'))
     <link rel="stylesheet" href="{{ asset('assets/css/home.css') }}">
+  @elseif(Request::is('competitions'))
+    <link rel="stylesheet" href="{{ asset('assets/css/competition.css') }}">
   @elseif(Request::is('career-talk'))
     <link rel="stylesheet" href="{{ asset('assets/css/career-talk.css') }}">
   @elseif(Request::is('career-talk/register'))
@@ -29,6 +31,8 @@
   @elseif(Request::is('career-talk/success'))
     <link rel="stylesheet" href="{{ asset('assets/css/success.css') }}">
   @elseif(Request::is('peserta/dashboard'))
+    <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
+  @elseif(Request::is('peserta/profile'))
     <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
   @elseif(Request::is('login'))
     <link rel="stylesheet" href="{{ asset('assets/css/auth.css') }}">
@@ -38,6 +42,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/admin.css') }}">
   @elseif(Request::is('admin/career-talk*'))
     <link rel="stylesheet" href="{{ asset('assets/css/admin-career-talk.css') }}">
+  @elseif(Request::is('admin/peserta*'))
+    <link rel="stylesheet" href="{{ asset('assets/css/admin-peserta.css') }}">
   @endif
   
   <!-- Google Fonts -->

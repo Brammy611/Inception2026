@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('title', 'Career Talk Registrations')
 
@@ -162,13 +162,10 @@
             @endforelse
         </tbody>
     </table>
-
-    <div class="pagination-wrapper">
-        {{ $registrations->links() }}
-    </div>
 </div>
-
 @endsection
+
+<style>
 .admin-header {
     margin-bottom: 2rem;
 }
@@ -415,4 +412,3 @@
     color: #059669;
 }
 </style>
-@endsection

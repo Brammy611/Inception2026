@@ -6,11 +6,16 @@
   <aside class="sidebar">
     <div class="sidebar-profile">
       <div class="profile-avatar">
-        <div class="avatar-placeholder">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-          </svg>
-        </div>
+        @php
+          $logoMap = [
+            'business_case' => 'BCC Logo.png',
+            'geothermal' => 'GDPC Logo.png',
+            'poster_paper' => 'PPC Logo.png',
+            'well_stimulation' => 'WSC Logo.png',
+          ];
+          $logo = $logoMap[$peserta->kategori] ?? 'logo.png';
+        @endphp
+        <img src="{{ asset('assets/images/' . $logo) }}" alt="{{ $competition['name'] }}">
       </div>
       <h3 class="profile-name">{{ explode(' ', $peserta->nama_leader)[0] }}</h3>
       <p class="profile-team">{{ $peserta->nama_tim }}</p>
@@ -23,7 +28,7 @@
         </svg>
         <span>Home</span>
       </a>
-      <a href="#" class="nav-item">
+      <a href="{{ route('peserta.profile') }}" class="nav-item">
         <svg fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
         </svg>
@@ -98,7 +103,7 @@
           @if($peserta->ktm)
             <div class="doc-uploaded">
               <span class="upload-status success">✓ Uploaded</span>
-              <a href="{{ asset('storage/' . $peserta->ktm) }}" target="_blank" class="btn-view-doc">View PDF</a>
+              <a href="{{ route('peserta.view-ktm', basename($peserta->ktm)) }}" target="_blank" class="btn-view-doc">View PDF</a>
             </div>
           @else
             <span class="upload-status pending">Belum diupload</span>
@@ -123,7 +128,7 @@
           @if($peserta->follow_ig)
             <div class="doc-uploaded">
               <span class="upload-status success">✓ Uploaded</span>
-              <a href="{{ asset('storage/' . $peserta->follow_ig) }}" target="_blank" class="btn-view-doc">View PDF</a>
+              <a href="{{ route('peserta.view-follow-ig', basename($peserta->follow_ig)) }}" target="_blank" class="btn-view-doc">View PDF</a>
             </div>
           @else
             <span class="upload-status pending">Belum diupload</span>
@@ -148,7 +153,7 @@
           @if($peserta->share_poster)
             <div class="doc-uploaded">
               <span class="upload-status success">✓ Uploaded</span>
-              <a href="{{ asset('storage/' . $peserta->share_poster) }}" target="_blank" class="btn-view-doc">View PDF</a>
+              <a href="{{ route('peserta.view-share-poster', basename($peserta->share_poster)) }}" target="_blank" class="btn-view-doc">View PDF</a>
             </div>
           @else
             <span class="upload-status pending">Belum diupload</span>
@@ -173,7 +178,7 @@
           @if($peserta->payment)
             <div class="doc-uploaded">
               <span class="upload-status success">✓ Uploaded</span>
-              <a href="{{ asset('storage/' . $peserta->payment) }}" target="_blank" class="btn-view-doc">View PDF</a>
+              <a href="{{ route('peserta.view-payment', basename($peserta->payment)) }}" target="_blank" class="btn-view-doc">View PDF</a>
             </div>
           @else
             <span class="upload-status pending">Belum diupload</span>

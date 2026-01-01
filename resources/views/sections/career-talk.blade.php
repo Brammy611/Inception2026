@@ -27,10 +27,10 @@
                 <span>Zoom Online</span>
             </div>
         </div>
-        <a href="{{ route('career-talk.register') }}" class="cta-button-hero">
-            Daftar Sekarang
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-        </a>
+        <!--<a href="{{ route('career-talk.register') }}" class="cta-button-hero">-->
+        <!--    Register Now-->
+        <!--    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>-->
+        <!--</a>-->
     </div>
 </section>
 
@@ -38,9 +38,9 @@
 <section class="career-about">
     <div class="container-custom">
         <div class="section-header-center">
-            <h2 class="heading">Tentang Career Talk</h2>
+            <h2 class="heading">About Career Talk</h2>
             <p class="section-description">
-                Career Talk Inception 2026 adalah talkshow interaktif yang menghadirkan profesional dari industri energi dan sektor terkait untuk berbagi pengalaman, wawasan, dan strategi membangun karier di era transisi energi. Melalui diskusi dan tanya jawab, peserta akan memahami tren dunia kerja, keterampilan masa depan, serta peluang karier di bidang energi, teknologi, dan keberlanjutan. Kegiatan ini juga menjadi ruang bagi mahasiswa dan fresh graduate untuk memperluas jejaring dan mempersiapkan diri memasuki dunia profesional.
+                Career Talk Inception 2026 is an interactive talk show featuring professionals from the energy industry and related sectors who share their experiences, insights, and strategies for building a career in the era of energy transition. Through discussions and Q&A sessions, participants will gain an understanding of workplace trends, future skills, and career opportunities in the fields of energy, technology, and sustainability. This event also serves as a space for students and fresh graduates to expand their network and prepare themselves to enter the professional world.
             </p>
         </div>
 
@@ -61,8 +61,8 @@
 <section class="speakers-section">
     <div class="container-custom">
         <div class="section-header-center">
-            <h2 class="heading">Pembicara Kami</h2>
-            <p class="section-description">Belajar dari para ahli industri dengan pengalaman bertahun-tahun</p>
+            <h2 class="heading">Our Speakers</h2>
+            <p class="section-description">Learn from industry experts with years of experience</p>
         </div>
 
         <div class="speakers-grid">
@@ -88,8 +88,8 @@
 <section class="schedule-section">
     <div class="container-custom">
         <div class="section-header-center">
-            <h2 class="heading">Jadwal Acara</h2>
-            <p class="section-description">Rangkaian kegiatan Career Talk yang dikemas secara menarik</p>
+            <h2 class="heading">Event Schedule</h2>
+            <p class="section-description">A series of Career Talk activities presented in an engaging format</p>
         </div>
 
         <div class="schedule-timeline">
@@ -110,14 +110,14 @@
 <section class="cta-section">
     <div class="container-custom">
         <div class="cta-box">
-            <h2>Siap Mengembangkan Karirmu?</h2>
-            <p>Jangan lewatkan kesempatan emas ini untuk mendapatkan insight berharga dari para profesional!</p>
+            <h2>Ready to Develop Your Career?</h2>
+            <p>Don’t miss this golden opportunity to gain valuable insights from professionals!</p>
             <div class="cta-buttons">
-                <a href="{{ route('career-talk.register') }}" class="cta-button primary">
-                    Daftar Sekarang
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </a>
-                <a href="{{ route('home') }}#contact" class="cta-button secondary">Hubungi Kami</a>
+                <!--<a href="{{ route('career-talk.register') }}" class="cta-button primary">-->
+                <!--    Register Now-->
+                <!--    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>-->
+                <!--</a>-->
+                <a href="{{ route('home') }}#contact" class="cta-button secondary">Contact Us</a>
             </div>
         </div>
     </div>

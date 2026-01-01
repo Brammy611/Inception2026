@@ -29,9 +29,15 @@ Route::get('/dashboard', function () {
 // Peserta Routes
 Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'peserta'])->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Peserta\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/profile', [App\Http\Controllers\Peserta\DashboardController::class, 'showProfile'])->name('profile');
+    Route::put('/profile', [App\Http\Controllers\Peserta\DashboardController::class, 'updateProfile'])->name('profile.update');
     Route::get('/register', [App\Http\Controllers\Peserta\DashboardController::class, 'showRegisterForm'])->name('register');
     Route::post('/register', [App\Http\Controllers\Peserta\DashboardController::class, 'register'])->name('register.store');
     Route::post('/documents', [App\Http\Controllers\Peserta\DashboardController::class, 'updateDocuments'])->name('documents.update');
+    Route::get('/documents/ktm/{filename}', [App\Http\Controllers\Peserta\DashboardController::class, 'viewKtm'])->name('view-ktm');
+    Route::get('/documents/follow-ig/{filename}', [App\Http\Controllers\Peserta\DashboardController::class, 'viewFollowIg'])->name('view-follow-ig');
+    Route::get('/documents/share-poster/{filename}', [App\Http\Controllers\Peserta\DashboardController::class, 'viewSharePoster'])->name('view-share-poster');
+    Route::get('/documents/payment/{filename}', [App\Http\Controllers\Peserta\DashboardController::class, 'viewPayment'])->name('view-payment');
 });
 
 // Career Talk Routes
@@ -39,6 +45,11 @@ Route::get('/career-talk', [HomeController::class, 'careerTalk'])->name('career-
 Route::get('/career-talk/register', [HomeController::class, 'careerTalkRegister'])->name('career-talk.register');
 Route::post('/career-talk/register', [HomeController::class, 'careerTalkRegisterStore'])->name('career-talk.register.store');
 Route::get('/career-talk/success', [HomeController::class, 'careerTalkSuccess'])->name('career-talk.success');
+
+// Competition Routes
+Route::get('/competitions', function () {
+    return view('competition.competition-home');
+})->name('competitions');
 
 // Admin Routes
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
@@ -53,5 +64,18 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
         Route::delete('/{registration}', [App\Http\Controllers\Admin\AdminCareerTalkController::class, 'destroy'])->name('destroy');
         Route::post('/check-in', [App\Http\Controllers\Admin\AdminCareerTalkController::class, 'checkIn'])->name('check-in');
         Route::post('/bulk-confirmation', [App\Http\Controllers\Admin\AdminCareerTalkController::class, 'sendBulkConfirmation'])->name('bulk-confirmation');
+    });
+    
+    // Competition Participant Management
+    Route::prefix('peserta')->name('peserta.')->group(function () {
+        Route::get('/', [App\Http\Controllers\Admin\AdminPesertaController::class, 'index'])->name('index');
+        Route::get('/export', [App\Http\Controllers\Admin\AdminPesertaController::class, 'export'])->name('export');
+        Route::get('/documents/ktm/{filename}', [App\Http\Controllers\Admin\AdminPesertaController::class, 'viewKtm'])->name('view-ktm');
+        Route::get('/documents/follow-ig/{filename}', [App\Http\Controllers\Admin\AdminPesertaController::class, 'viewFollowIg'])->name('view-follow-ig');
+        Route::get('/documents/share-poster/{filename}', [App\Http\Controllers\Admin\AdminPesertaController::class, 'viewSharePoster'])->name('view-share-poster');
+        Route::get('/documents/payment/{filename}', [App\Http\Controllers\Admin\AdminPesertaController::class, 'viewPayment'])->name('view-payment');
+        Route::get('/{peserta}', [App\Http\Controllers\Admin\AdminPesertaController::class, 'show'])->name('show');
+        Route::patch('/{peserta}/status', [App\Http\Controllers\Admin\AdminPesertaController::class, 'updateStatus'])->name('update-status');
+        Route::delete('/{peserta}', [App\Http\Controllers\Admin\AdminPesertaController::class, 'destroy'])->name('destroy');
     });
 });
