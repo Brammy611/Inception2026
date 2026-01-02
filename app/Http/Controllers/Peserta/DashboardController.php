@@ -65,21 +65,39 @@ class DashboardController extends Controller
             return redirect()->route('peserta.dashboard');
         }
 
-        $request->validate([
+        // Base validation rules
+        $rules = [
             'nama_tim' => ['required', 'string', 'max:255'],
             'nama_leader' => ['required', 'string', 'max:255'],
             'asal_univ' => ['required', 'string', 'max:255'],
             'jurusan_leader' => ['required', 'string', 'max:255'],
-            'nama_member_1' => ['required', 'string', 'max:255'],
-            'jurusan_member_1' => ['required', 'string', 'max:255'],
-            'nama_member_2' => ['nullable', 'string', 'max:255'],
-            'jurusan_member_2' => ['nullable', 'string', 'max:255', 'required_with:nama_member_2'],
             'kategori' => ['required', 'in:business_case,geothermal,poster_paper,well_stimulation'],
             'ktm' => ['required', 'file', 'mimes:pdf', 'max:10240'],
             'follow_ig' => ['required', 'file', 'mimes:pdf', 'max:10240'],
             'share_poster' => ['required', 'file', 'mimes:pdf', 'max:10240'],
             'payment' => ['required', 'file', 'mimes:pdf', 'max:10240'],
-        ]);
+        ];
+
+        // Dynamic member validation based on category
+        if ($request->kategori === 'poster_paper') {
+            // Poster Paper: min 2 (leader + 1), max 3 (leader + 2)
+            $rules['nama_member_1'] = ['nullable', 'string', 'max:255'];
+            $rules['jurusan_member_1'] = ['nullable', 'string', 'max:255', 'required_with:nama_member_1'];
+            $rules['nama_member_2'] = ['nullable', 'string', 'max:255'];
+            $rules['jurusan_member_2'] = ['nullable', 'string', 'max:255', 'required_with:nama_member_2'];
+            $rules['nama_member_3'] = ['nullable'];
+            $rules['jurusan_member_3'] = ['nullable'];
+        } else {
+            // Business Case, Geothermal, Well Stimulation: min 3 (leader + 2), max 4 (leader + 3)
+            $rules['nama_member_1'] = ['required', 'string', 'max:255'];
+            $rules['jurusan_member_1'] = ['required', 'string', 'max:255'];
+            $rules['nama_member_2'] = ['required', 'string', 'max:255'];
+            $rules['jurusan_member_2'] = ['required', 'string', 'max:255'];
+            $rules['nama_member_3'] = ['nullable', 'string', 'max:255'];
+            $rules['jurusan_member_3'] = ['nullable', 'string', 'max:255', 'required_with:nama_member_3'];
+        }
+
+        $request->validate($rules);
 
         // Store files
         $ktmPath = $request->file('ktm')->store('peserta/ktm', 'public');
@@ -97,6 +115,8 @@ class DashboardController extends Controller
             'jurusan_member_1' => $request->jurusan_member_1,
             'nama_member_2' => $request->nama_member_2,
             'jurusan_member_2' => $request->jurusan_member_2,
+            'nama_member_3' => $request->nama_member_3,
+            'jurusan_member_3' => $request->jurusan_member_3,
             'kategori' => $request->kategori,
             'ktm' => $ktmPath,
             'follow_ig' => $followIgPath,
@@ -195,18 +215,34 @@ class DashboardController extends Controller
             return redirect()->route('peserta.register');
         }
 
-        $request->validate([
+        // Base validation rules
+        $rules = [
             'nama_tim' => ['required', 'string', 'max:255'],
             'asal_univ' => ['required', 'string', 'max:255'],
             'nama_leader' => ['required', 'string', 'max:255'],
             'jurusan_leader' => ['required', 'string', 'max:255'],
-            'nama_member_1' => ['required', 'string', 'max:255'],
-            'jurusan_member_1' => ['required', 'string', 'max:255'],
-            'nama_member_2' => ['nullable', 'string', 'max:255'],
-            'jurusan_member_2' => ['nullable', 'string', 'max:255'],
-        ]);
+        ];
 
-        $peserta->update([
+        // Dynamic member validation based on category
+        if ($peserta->kategori === 'poster_paper') {
+            // Poster Paper: min 2 (leader + 1), max 3 (leader + 2)
+            $rules['nama_member_1'] = ['nullable', 'string', 'max:255'];
+            $rules['jurusan_member_1'] = ['nullable', 'string', 'max:255', 'required_with:nama_member_1'];
+            $rules['nama_member_2'] = ['nullable', 'string', 'max:255'];
+            $rules['jurusan_member_2'] = ['nullable', 'string', 'max:255', 'required_with:nama_member_2'];
+        } else {
+            // Business Case, Geothermal, Well Stimulation: min 3 (leader + 2), max 4 (leader + 3)
+            $rules['nama_member_1'] = ['required', 'string', 'max:255'];
+            $rules['jurusan_member_1'] = ['required', 'string', 'max:255'];
+            $rules['nama_member_2'] = ['required', 'string', 'max:255'];
+            $rules['jurusan_member_2'] = ['required', 'string', 'max:255'];
+            $rules['nama_member_3'] = ['nullable', 'string', 'max:255'];
+            $rules['jurusan_member_3'] = ['nullable', 'string', 'max:255', 'required_with:nama_member_3'];
+        }
+
+        $request->validate($rules);
+
+        $updateData = [
             'nama_tim' => $request->nama_tim,
             'asal_univ' => $request->asal_univ,
             'nama_leader' => $request->nama_leader,
@@ -215,7 +251,15 @@ class DashboardController extends Controller
             'jurusan_member_1' => $request->jurusan_member_1,
             'nama_member_2' => $request->nama_member_2,
             'jurusan_member_2' => $request->jurusan_member_2,
-        ]);
+        ];
+
+        // Add member_3 for non-poster_paper competitions
+        if ($peserta->kategori !== 'poster_paper') {
+            $updateData['nama_member_3'] = $request->nama_member_3;
+            $updateData['jurusan_member_3'] = $request->jurusan_member_3;
+        }
+
+        $peserta->update($updateData);
 
         return redirect()->route('peserta.profile')->with('success', 'Profile updated successfully!');
     }

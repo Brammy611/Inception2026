@@ -39,6 +39,8 @@ class Peserta extends Model
         'jurusan_member_1',
         'nama_member_2',
         'jurusan_member_2',
+        'nama_member_3',
+        'jurusan_member_3',
         'kategori',
         'ktm',
         'follow_ig',

@@ -143,8 +143,20 @@
       <section class="section-team">
         <div class="section-header">
           <h2 class="section-title">MEMBER 1 INFORMATION</h2>
+          @if($peserta->kategori === 'poster_paper')
+            <span class="optional-badge">Optional</span>
+          @endif
         </div>
         <div class="team-card profile-card">
+          @if($peserta->kategori === 'poster_paper')
+            <div class="info-notice" style="background: #e3f2fd; padding: 12px; border-radius: 6px; margin-bottom: 15px; color: #1565c0; font-size: 14px;">
+              <strong>Poster & Paper Competition:</strong> Min 2 members (Leader + 1 member), Max 3 members
+            </div>
+          @else
+            <div class="info-notice" style="background: #fff3e0; padding: 12px; border-radius: 6px; margin-bottom: 15px; color: #e65100; font-size: 14px;">
+              <strong>{{ $competition['name'] }}:</strong> Min 3 members (Leader + 2 members), Max 4 members
+            </div>
+          @endif
           <div class="form-row">
             <div class="form-group">
               <label for="nama_member_1">Full Name</label>
@@ -153,9 +165,9 @@
                 id="nama_member_1" 
                 name="nama_member_1" 
                 value="{{ old('nama_member_1', $peserta->nama_member_1) }}" 
-                required
+                {{ $peserta->kategori === 'poster_paper' ? '' : 'required' }}
                 class="form-control"
-                placeholder="Enter member 1 full name"
+                placeholder="Enter member 1 full name{{ $peserta->kategori === 'poster_paper' ? ' (min 2 members total)' : '' }}"
               >
             </div>
             <div class="form-group">
@@ -165,9 +177,9 @@
                 id="jurusan_member_1" 
                 name="jurusan_member_1" 
                 value="{{ old('jurusan_member_1', $peserta->jurusan_member_1) }}" 
-                required
+                {{ $peserta->kategori === 'poster_paper' ? '' : 'required' }}
                 class="form-control"
-                placeholder="Enter member 1 major"
+                placeholder="Enter member 1 major{{ $peserta->kategori === 'poster_paper' ? ' (optional)' : '' }}"
               >
             </div>
           </div>
@@ -178,9 +190,20 @@
       <section class="section-team">
         <div class="section-header">
           <h2 class="section-title">MEMBER 2 INFORMATION</h2>
-          <span class="optional-badge">Optional</span>
+          @if(in_array($peserta->kategori, ['poster_paper']))
+            <span class="optional-badge">Optional</span>
+          @endif
         </div>
         <div class="team-card profile-card">
+          @if($peserta->kategori === 'poster_paper')
+            <div class="info-notice" style="background: #e3f2fd; padding: 12px; border-radius: 6px; margin-bottom: 15px; color: #1565c0; font-size: 14px;">
+              <strong>Poster & Paper:</strong> Member 2 is optional (max 3 members total)
+            </div>
+          @else
+            <div class="info-notice" style="background: #fff3e0; padding: 12px; border-radius: 6px; margin-bottom: 15px; color: #e65100; font-size: 14px;">
+              <strong>Required:</strong> Member 2 is required (min 3 members). Member 3 is optional (max 4 members)
+            </div>
+          @endif
           <div class="form-row">
             <div class="form-group">
               <label for="nama_member_2">Full Name</label>
@@ -189,8 +212,9 @@
                 id="nama_member_2" 
                 name="nama_member_2" 
                 value="{{ old('nama_member_2', $peserta->nama_member_2) }}" 
+                {{ in_array($peserta->kategori, ['poster_paper']) ? '' : 'required' }}
                 class="form-control"
-                placeholder="Enter member 2 full name (optional)"
+                placeholder="Enter member 2 full name{{ in_array($peserta->kategori, ['poster_paper']) ? ' (optional)' : '' }}"
               >
             </div>
             <div class="form-group">
@@ -200,13 +224,53 @@
                 id="jurusan_member_2" 
                 name="jurusan_member_2" 
                 value="{{ old('jurusan_member_2', $peserta->jurusan_member_2) }}" 
+                {{ in_array($peserta->kategori, ['poster_paper']) ? '' : 'required' }}
                 class="form-control"
-                placeholder="Enter member 2 major (optional)"
+                placeholder="Enter member 2 major{{ in_array($peserta->kategori, ['poster_paper']) ? ' (optional)' : '' }}"
               >
             </div>
           </div>
         </div>
       </section>
+
+      {{-- Member 3 Information --}}
+      @if(in_array($peserta->kategori, ['business_case', 'geothermal', 'well_stimulation']))
+      <section class="section-team">
+        <div class="section-header">
+          <h2 class="section-title">MEMBER 3 INFORMATION</h2>
+          <span class="optional-badge">Optional</span>
+        </div>
+        <div class="team-card profile-card">
+          <div class="info-notice" style="background: #e8f5e9; padding: 12px; border-radius: 6px; margin-bottom: 15px; color: #2e7d32; font-size: 14px;">
+            <strong>Optional:</strong> Member 3 is optional. Maximum 4 members total (Leader + 3 members)
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nama_member_3">Full Name</label>
+              <input 
+                type="text" 
+                id="nama_member_3" 
+                name="nama_member_3" 
+                value="{{ old('nama_member_3', $peserta->nama_member_3) }}" 
+                class="form-control"
+                placeholder="Enter member 3 full name (optional)"
+              >
+            </div>
+            <div class="form-group">
+              <label for="jurusan_member_3">Major</label>
+              <input 
+                type="text" 
+                id="jurusan_member_3" 
+                name="jurusan_member_3" 
+                value="{{ old('jurusan_member_3', $peserta->jurusan_member_3) }}" 
+                class="form-control"
+                placeholder="Enter member 3 major (optional)"
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+      @endif
 
       {{-- Submit Button --}}
       <div class="form-actions">
