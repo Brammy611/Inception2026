@@ -34,6 +34,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
   @elseif(Request::is('peserta/profile'))
     <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
+  @elseif(Request::is('peserta/notifications'))
+    <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
   @elseif(Request::is('login'))
     <link rel="stylesheet" href="{{ asset('assets/css/auth.css') }}">
   @elseif(Request::is('register'))

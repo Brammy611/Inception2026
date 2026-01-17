@@ -4,8 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Peserta;
+use App\Models\Notification;
+use App\Mail\PesertaVerifiedMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class AdminPesertaController extends Controller
 {
@@ -73,11 +77,62 @@ class AdminPesertaController extends Controller
             'status' => 'required|in:pending,verified,rejected'
         ]);
 
+        $oldStatus = $peserta->status_verifikasi;
+
         $peserta->update([
             'status_verifikasi' => $request->status
         ]);
 
-        return redirect()->back()->with('success', 'Status peserta berhasil diupdate');
+        // Send email notification and create notification when status changed to verified
+        if ($request->status === 'verified' && $oldStatus !== 'verified') {
+            try {
+                // Load user relationship to get email
+                $peserta->load('user');
+                
+                // Define WhatsApp group links for each category
+                $whatsappLinks = [
+                    'business_case' => 'https://chat.whatsapp.com/EuwgY264bBr9orvok8zR0Q',
+                    'poster_paper' => 'https://chat.whatsapp.com/KHIoF9oTpovE93DwBfTI0S',
+                    'geothermal' => 'https://chat.whatsapp.com/DzZM4FROfVaBvyvDEnrJ0D',
+                    'well_stimulation' => 'https://chat.whatsapp.com/LnUZsICvMQ2JG0qyokwTxN',
+                ];
+
+                $categoryNames = [
+                    'business_case' => 'Business Case Competition',
+                    'poster_paper' => 'Petroleum Paper Competition',
+                    'geothermal' => 'Geothermal Drilling Paper Competition',
+                    'well_stimulation' => 'Well Stimulation Competition',
+                ];
+
+                $whatsappLink = $whatsappLinks[$peserta->kategori] ?? '#';
+                $categoryName = $categoryNames[$peserta->kategori] ?? 'Competition';
+
+                // Create notification in database
+                Notification::create([
+                    'user_id' => $peserta->user_id,
+                    'type' => 'verification',
+                    'title' => 'Pendaftaran Terverifikasi! 🎉',
+                    'message' => "Selamat! Pendaftaran tim {$peserta->nama_tim} untuk {$categoryName} telah diverifikasi. Silakan bergabung dengan grup WhatsApp peserta untuk mendapatkan informasi terbaru.",
+                    'data' => json_encode([
+                        'team_name' => $peserta->nama_tim,
+                        'category' => $categoryName,
+                        'whatsapp_link' => $whatsappLink,
+                    ]),
+                ]);
+                
+                // Send email to team leader
+                Mail::to($peserta->user->email)->send(
+                    new PesertaVerifiedMail($peserta)
+                );
+                
+                Log::info('Verification email and notification sent to: ' . $peserta->user->email . ' for team: ' . $peserta->nama_tim);
+            } catch (\Exception $e) {
+                Log::error('Failed to send verification email or create notification: ' . $e->getMessage());
+                // Don't fail the status update if email/notification fails
+            }
+        }
+
+        return redirect()->back()->with('success', 'Status peserta berhasil diupdate' . ($request->status === 'verified' ? ' dan email notifikasi telah dikirim' : ''));
     }
 
     public function destroy(Peserta $peserta)

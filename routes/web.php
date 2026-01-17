@@ -31,6 +31,8 @@ Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'peserta'])->gro
     Route::get('/dashboard', [App\Http\Controllers\Peserta\DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [App\Http\Controllers\Peserta\DashboardController::class, 'showProfile'])->name('profile');
     Route::put('/profile', [App\Http\Controllers\Peserta\DashboardController::class, 'updateProfile'])->name('profile.update');
+    Route::get('/notifications', [App\Http\Controllers\Peserta\DashboardController::class, 'notifications'])->name('notifications');
+    Route::post('/notifications/{notification}/read', [App\Http\Controllers\Peserta\DashboardController::class, 'markAsRead'])->name('notifications.read');
     Route::get('/register', [App\Http\Controllers\Peserta\DashboardController::class, 'showRegisterForm'])->name('register');
     Route::post('/register', [App\Http\Controllers\Peserta\DashboardController::class, 'register'])->name('register.store');
     Route::post('/documents', [App\Http\Controllers\Peserta\DashboardController::class, 'updateDocuments'])->name('documents.update');

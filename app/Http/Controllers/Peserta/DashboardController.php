@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Peserta;
 
 use App\Http\Controllers\Controller;
 use App\Models\Peserta;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -318,5 +319,47 @@ class DashboardController extends Controller
         }
         
         return response()->file($path);
+    }
+
+    /**
+     * Show notifications page
+     */
+    public function notifications()
+    {
+        $user = auth()->user();
+        $peserta = $user->peserta;
+        
+        if (!$peserta) {
+            return redirect()->route('peserta.register');
+        }
+
+        $kategori = $peserta->kategori;
+        $competition = config("competitions.categories.{$kategori}");
+
+        // Get all notifications for the user
+        $notifications = $user->notifications()->paginate(20);
+        
+        // Mark all as read when viewing the page
+        $user->notifications()->unread()->update([
+            'is_read' => true,
+            'read_at' => now()
+        ]);
+
+        return view('peserta.notifications', compact('user', 'peserta', 'competition', 'kategori', 'notifications'));
+    }
+
+    /**
+     * Mark notification as read
+     */
+    public function markAsRead(Notification $notification)
+    {
+        // Ensure the notification belongs to the authenticated user
+        if ($notification->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $notification->markAsRead();
+
+        return redirect()->back()->with('success', 'Notification marked as read');
     }
 }
