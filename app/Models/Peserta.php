@@ -125,4 +125,62 @@ class Peserta extends Model
 
         return $members;
     }
+
+    /**
+     * Get all submissions for this peserta.
+     */
+    public function submissions()
+    {
+        return $this->hasMany(Submission::class);
+    }
+
+    /**
+     * Get submission requirements based on kategori.
+     */
+    public function getSubmissionRequirements(): array
+    {
+        return config("submissions.categories.{$this->kategori}.requirements", []);
+    }
+
+    /**
+     * Get a specific submission by type and stage.
+     */
+    public function getSubmission(string $type, string $stage): ?Submission
+    {
+        return $this->submissions()
+            ->where('submission_type', $type)
+            ->where('stage', $stage)
+            ->first();
+    }
+
+    /**
+     * Check if a specific submission exists.
+     */
+    public function hasSubmission(string $type, string $stage): bool
+    {
+        return $this->getSubmission($type, $stage) !== null;
+    }
+
+    /**
+     * Get submission progress (percentage of uploaded files).
+     */
+    public function getSubmissionProgressAttribute(): array
+    {
+        $requirements = $this->getSubmissionRequirements();
+        $totalRequired = 0;
+        $totalUploaded = 0;
+
+        foreach ($requirements as $requirement) {
+            $totalRequired++;
+            if ($this->hasSubmission($requirement['type'], $requirement['stage'])) {
+                $totalUploaded++;
+            }
+        }
+
+        return [
+            'total' => $totalRequired,
+            'uploaded' => $totalUploaded,
+            'percentage' => $totalRequired > 0 ? round(($totalUploaded / $totalRequired) * 100) : 0,
+        ];
+    }
 }

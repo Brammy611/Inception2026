@@ -603,6 +603,50 @@
   background: #dc2626;
 }
 
+/* View Submissions Button */
+.btn-view-submissions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, #FFA629 0%, #FBB137 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn-view-submissions:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 166, 41, 0.3);
+}
+
+/* Submission Summary */
+.submission-summary {
+  display: flex;
+  gap: 2rem;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.summary-label {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.summary-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111827;
+}
+
 /* Alerts */
 .alert {
   padding: 1rem 1.5rem;

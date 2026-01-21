@@ -40,6 +40,16 @@ Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'peserta'])->gro
     Route::get('/documents/follow-ig/{filename}', [App\Http\Controllers\Peserta\DashboardController::class, 'viewFollowIg'])->name('view-follow-ig');
     Route::get('/documents/share-poster/{filename}', [App\Http\Controllers\Peserta\DashboardController::class, 'viewSharePoster'])->name('view-share-poster');
     Route::get('/documents/payment/{filename}', [App\Http\Controllers\Peserta\DashboardController::class, 'viewPayment'])->name('view-payment');
+    
+    // Submission Routes
+    Route::prefix('submissions')->name('submissions.')->group(function () {
+        Route::get('/', function() { return redirect()->route('peserta.dashboard'); })->name('index');
+        Route::post('/upload', [App\Http\Controllers\Peserta\SubmissionController::class, 'upload'])->name('upload');
+        Route::delete('/delete', [App\Http\Controllers\Peserta\SubmissionController::class, 'delete'])->name('delete');
+        Route::get('/status', [App\Http\Controllers\Peserta\SubmissionController::class, 'status'])->name('status');
+        Route::get('/view/{type}/{stage}', [App\Http\Controllers\Peserta\SubmissionController::class, 'view'])->name('view');
+        Route::get('/download/{type}/{stage}', [App\Http\Controllers\Peserta\SubmissionController::class, 'download'])->name('download');
+    });
 });
 
 // Career Talk Routes
@@ -79,5 +89,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
         Route::get('/{peserta}', [App\Http\Controllers\Admin\AdminPesertaController::class, 'show'])->name('show');
         Route::patch('/{peserta}/status', [App\Http\Controllers\Admin\AdminPesertaController::class, 'updateStatus'])->name('update-status');
         Route::delete('/{peserta}', [App\Http\Controllers\Admin\AdminPesertaController::class, 'destroy'])->name('destroy');
+        
+        // Admin Submission Management
+        Route::get('/{peserta}/submissions', [App\Http\Controllers\Admin\AdminSubmissionController::class, 'index'])->name('submissions.index');
+        Route::get('/{peserta}/submissions/{type}/{stage}', [App\Http\Controllers\Admin\AdminSubmissionController::class, 'view'])->name('submissions.view');
+        Route::get('/{peserta}/submissions/{type}/{stage}/download', [App\Http\Controllers\Admin\AdminSubmissionController::class, 'download'])->name('submissions.download');
     });
 });

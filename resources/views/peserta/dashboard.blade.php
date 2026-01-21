@@ -95,6 +95,145 @@
       </div>
     </section>
 
+    {{-- Competition Submissions Section --}}
+    @if($submissionConfig)
+    <section class="section-submissions-full">
+      <div class="section-header-with-progress">
+        <h2 class="section-title">COMPETITION SUBMISSIONS</h2>
+        @php
+          $progress = $peserta->submission_progress;
+        @endphp
+        <div class="progress-inline">
+          <span class="progress-text">{{ $progress['uploaded'] }}/{{ $progress['total'] }}</span>
+          <div class="progress-bar-inline">
+            <div class="progress-fill-inline" style="width: {{ $progress['percentage'] }}%;"></div>
+          </div>
+          <span class="progress-percentage-inline">{{ $progress['percentage'] }}%</span>
+        </div>
+      </div>
+
+      {{-- Verification Notice --}}
+      @if(!$peserta->isVerified())
+      <div class="verification-notice">
+        <div class="notice-icon">
+          <svg fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+          </svg>
+        </div>
+        <div class="notice-content">
+          <h4>Akun Belum Terverifikasi</h4>
+          <p>Anda harus menunggu verifikasi dari admin sebelum dapat mengunggah file submission.</p>
+        </div>
+      </div>
+      @endif
+
+      {{-- Submissions by Stage --}}
+      @php
+        $stages = [];
+        foreach ($submissionConfig['requirements'] as $req) {
+          $stages[$req['stage']][] = $req;
+        }
+        $stageOrder = ['preliminary', 'semifinal', 'final'];
+        $stageNames = [
+          'preliminary' => 'Preliminary Round',
+          'semifinal' => 'Semifinal Round', 
+          'final' => 'Final Round',
+        ];
+      @endphp
+
+      @foreach($stageOrder as $stage)
+        @if(isset($stages[$stage]))
+        <div class="stage-section">
+          <h3 class="stage-title">{{ $stageNames[$stage] }}</h3>
+          <div class="submissions-grid">
+            @foreach($stages[$stage] as $requirement)
+              @php
+                $key = $requirement['type'] . '_' . $requirement['stage'];
+                $submission = $existingSubmissions->get($key);
+              @endphp
+              <div class="submission-card" data-type="{{ $requirement['type'] }}" data-stage="{{ $requirement['stage'] }}">
+                <div class="submission-header">
+                  <h4>{{ $requirement['label'] }}</h4>
+                  <span class="submission-status {{ $submission ? 'uploaded' : 'pending' }}">
+                    {{ $submission ? '✓ Uploaded' : 'Belum Upload' }}
+                  </span>
+                </div>
+                
+                <p class="submission-description">{{ $requirement['description'] }}</p>
+                
+                @if($submission)
+                <div class="submission-file-info">
+                  <div class="file-details">
+                    <svg fill="currentColor" viewBox="0 0 24 24" width="20" height="20">
+                      <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                    </svg>
+                    <div class="file-meta">
+                      <span class="file-name" title="{{ $submission->original_filename }}">{{ Str::limit($submission->original_filename, 25) }}</span>
+                      <span class="file-size">{{ $submission->formatted_file_size }} • {{ $submission->uploaded_at->format('d M Y') }}</span>
+                    </div>
+                  </div>
+                  <div class="file-actions">
+                    <a href="{{ route('peserta.submissions.view', ['type' => $requirement['type'], 'stage' => $requirement['stage']]) }}" 
+                       target="_blank" class="btn-action btn-view" title="Lihat File">
+                      <svg fill="currentColor" viewBox="0 0 24 24" width="16" height="16">
+                        <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                      </svg>
+                    </a>
+                    <a href="{{ route('peserta.submissions.download', ['type' => $requirement['type'], 'stage' => $requirement['stage']]) }}" 
+                       class="btn-action btn-download" title="Download">
+                      <svg fill="currentColor" viewBox="0 0 24 24" width="16" height="16">
+                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+                @endif
+
+                <div class="submission-upload {{ $peserta->isVerified() ? '' : 'disabled' }}">
+                  <div class="upload-dropzone" data-type="{{ $requirement['type'] }}" data-stage="{{ $requirement['stage'] }}" data-max-size="{{ $requirement['max_size'] }}">
+                    <input type="file" 
+                           id="file_{{ $requirement['type'] }}_{{ $requirement['stage'] }}" 
+                           accept=".pdf,application/pdf" 
+                           class="file-input-hidden"
+                           {{ $peserta->isVerified() ? '' : 'disabled' }}>
+                    <label for="file_{{ $requirement['type'] }}_{{ $requirement['stage'] }}" class="upload-label">
+                      <div class="upload-icon">
+                        <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" width="28" height="28">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>
+                        </svg>
+                      </div>
+                      <span class="upload-text">{{ $submission ? 'Ganti File' : 'Upload PDF' }}</span>
+                      <span class="upload-hint">Max {{ $requirement['max_size'] }} MB</span>
+                    </label>
+                  </div>
+                  <div class="upload-progress" style="display: none;">
+                    <div class="progress-bar-mini">
+                      <div class="progress-fill"></div>
+                    </div>
+                    <span class="progress-status">Mengunggah...</span>
+                  </div>
+                </div>
+
+                @if($submission && $peserta->isVerified())
+                <button type="button" class="btn-delete-submission" 
+                        data-type="{{ $requirement['type'] }}" 
+                        data-stage="{{ $requirement['stage'] }}"
+                        title="Hapus File">
+                  <svg fill="currentColor" viewBox="0 0 24 24" width="14" height="14">
+                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                  </svg>
+                  Hapus
+                </button>
+                @endif
+              </div>
+            @endforeach
+          </div>
+        </div>
+        @endif
+      @endforeach
+    </section>
+    @endif
+
     {{-- Documents Section --}}
     <section class="section-tasks">
       <h2 class="section-title">DOCUMENTS</h2>
@@ -283,4 +422,223 @@
   position: relative;
 }
 </style>
+
+{{-- Toast Notification --}}
+<div id="toast-notification" class="toast-notification" style="display: none;">
+  <div class="toast-icon"></div>
+  <div class="toast-message"></div>
+</div>
+
+{{-- Delete Confirmation Modal --}}
+<div id="delete-modal" class="modal-overlay" style="display: none;">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Konfirmasi Hapus</h3>
+      <button type="button" class="modal-close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p>Apakah Anda yakin ingin menghapus file submission ini?</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn-modal-cancel">Batal</button>
+      <button type="button" class="btn-modal-confirm">Hapus</button>
+    </div>
+  </div>
+</div>
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+    
+    // File upload handling
+    document.querySelectorAll('.upload-dropzone').forEach(dropzone => {
+        const fileInput = dropzone.querySelector('.file-input-hidden');
+        const type = dropzone.dataset.type;
+        const stage = dropzone.dataset.stage;
+        const maxSize = parseInt(dropzone.dataset.maxSize) * 1024 * 1024;
+        
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropzone.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropzone.addEventListener(eventName, () => dropzone.classList.add('dragover'), false);
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropzone.addEventListener(eventName, () => dropzone.classList.remove('dragover'), false);
+        });
+        
+        dropzone.addEventListener('drop', (e) => {
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileUpload(files[0], type, stage, maxSize, dropzone);
+            }
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFileUpload(e.target.files[0], type, stage, maxSize, dropzone);
+            }
+        });
+    });
+    
+    function handleFileUpload(file, type, stage, maxSize, dropzone) {
+        if (file.type !== 'application/pdf') {
+            showToast('error', 'Hanya file PDF yang diperbolehkan.');
+            return;
+        }
+        
+        if (file.size > maxSize) {
+            const maxSizeMB = maxSize / (1024 * 1024);
+            showToast('error', `Ukuran file melebihi batas maksimum ${maxSizeMB} MB.`);
+            return;
+        }
+        
+        const card = dropzone.closest('.submission-card');
+        const uploadProgress = card.querySelector('.upload-progress');
+        const progressFill = uploadProgress.querySelector('.progress-fill');
+        const progressStatus = uploadProgress.querySelector('.progress-status');
+        
+        dropzone.style.display = 'none';
+        uploadProgress.style.display = 'block';
+        
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('submission_type', type);
+        formData.append('stage', stage);
+        formData.append('_token', csrfToken);
+        
+        const xhr = new XMLHttpRequest();
+        
+        xhr.upload.addEventListener('progress', (e) => {
+            if (e.lengthComputable) {
+                const percent = Math.round((e.loaded / e.total) * 100);
+                progressFill.style.width = percent + '%';
+                progressStatus.textContent = `Mengunggah... ${percent}%`;
+            }
+        });
+        
+        xhr.addEventListener('load', () => {
+            if (xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    showToast('success', response.message);
+                    setTimeout(() => location.reload(), 1000);
+                } else {
+                    showToast('error', response.message);
+                    resetUpload(dropzone, uploadProgress);
+                }
+            } else {
+                try {
+                    const response = JSON.parse(xhr.responseText);
+                    showToast('error', response.message || 'Terjadi kesalahan.');
+                } catch {
+                    showToast('error', 'Terjadi kesalahan saat mengunggah file.');
+                }
+                resetUpload(dropzone, uploadProgress);
+            }
+        });
+        
+        xhr.addEventListener('error', () => {
+            showToast('error', 'Terjadi kesalahan jaringan.');
+            resetUpload(dropzone, uploadProgress);
+        });
+        
+        xhr.open('POST', '{{ route("peserta.submissions.upload") }}');
+        xhr.send(formData);
+    }
+    
+    function resetUpload(dropzone, uploadProgress) {
+        dropzone.style.display = 'block';
+        uploadProgress.style.display = 'none';
+        const progressFill = uploadProgress.querySelector('.progress-fill');
+        progressFill.style.width = '0%';
+    }
+    
+    // Delete submission handling
+    let deleteType = null;
+    let deleteStage = null;
+    const deleteModal = document.getElementById('delete-modal');
+    
+    document.querySelectorAll('.btn-delete-submission').forEach(btn => {
+        btn.addEventListener('click', () => {
+            deleteType = btn.dataset.type;
+            deleteStage = btn.dataset.stage;
+            deleteModal.style.display = 'flex';
+        });
+    });
+    
+    document.querySelector('.modal-close')?.addEventListener('click', closeDeleteModal);
+    document.querySelector('.btn-modal-cancel')?.addEventListener('click', closeDeleteModal);
+    
+    deleteModal?.addEventListener('click', (e) => {
+        if (e.target === deleteModal) closeDeleteModal();
+    });
+    
+    function closeDeleteModal() {
+        deleteModal.style.display = 'none';
+        deleteType = null;
+        deleteStage = null;
+    }
+    
+    document.querySelector('.btn-modal-confirm')?.addEventListener('click', () => {
+        if (!deleteType || !deleteStage) return;
+        
+        fetch('{{ route("peserta.submissions.delete") }}', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken,
+            },
+            body: JSON.stringify({
+                submission_type: deleteType,
+                stage: deleteStage,
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            closeDeleteModal();
+            if (data.success) {
+                showToast('success', data.message);
+                setTimeout(() => location.reload(), 1000);
+            } else {
+                showToast('error', data.message);
+            }
+        })
+        .catch(() => {
+            closeDeleteModal();
+            showToast('error', 'Terjadi kesalahan.');
+        });
+    });
+    
+    function showToast(type, message) {
+        const toast = document.getElementById('toast-notification');
+        const icon = toast.querySelector('.toast-icon');
+        const msg = toast.querySelector('.toast-message');
+        
+        toast.className = 'toast-notification ' + type;
+        msg.textContent = message;
+        
+        if (type === 'success') {
+            icon.innerHTML = '<svg fill="currentColor" viewBox="0 0 24 24" width="24" height="24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>';
+        } else {
+            icon.innerHTML = '<svg fill="currentColor" viewBox="0 0 24 24" width="24" height="24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>';
+        }
+        
+        toast.style.display = 'flex';
+        
+        setTimeout(() => {
+            toast.style.display = 'none';
+        }, 4000);
+    }
+});
+</script>
+@endpush
 @endsection

@@ -34,7 +34,15 @@ class DashboardController extends Controller
 
         $payment = config('competitions.payment');
 
-        return view('peserta.dashboard', compact('user', 'peserta', 'competition', 'kategori', 'payment'));
+        // Get submission config and existing submissions
+        $submissionConfig = config("submissions.categories.{$kategori}");
+        $existingSubmissions = $peserta->submissions()
+            ->get()
+            ->keyBy(function ($item) {
+                return $item->submission_type . '_' . $item->stage;
+            });
+
+        return view('peserta.dashboard', compact('user', 'peserta', 'competition', 'kategori', 'payment', 'submissionConfig', 'existingSubmissions'));
     }
 
     /**

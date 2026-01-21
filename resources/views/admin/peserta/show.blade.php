@@ -104,6 +104,39 @@
       </div>
     </div>
 
+    {{-- Competition Submissions --}}
+    <div class="detail-card full-width">
+      <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+        <h2>Competition Submissions</h2>
+        <a href="{{ route('admin.peserta.submissions.index', $peserta) }}" class="btn-view-submissions">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+          View All Submissions
+        </a>
+      </div>
+      <div class="card-body">
+        @php
+          $submissionProgress = $peserta->submission_progress;
+        @endphp
+        <div class="submission-summary">
+          <div class="summary-item">
+            <span class="summary-label">Uploaded Files:</span>
+            <span class="summary-value">{{ $submissionProgress['uploaded'] }} / {{ $submissionProgress['total'] }}</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Progress:</span>
+            <span class="summary-value" style="color: {{ $competition['color'] ?? '#07AD33' }};">{{ $submissionProgress['percentage'] }}%</span>
+          </div>
+        </div>
+        <div class="progress-bar-wrapper" style="margin-top: 15px;">
+          <div style="width: 100%; height: 10px; background: #e9ecef; border-radius: 10px; overflow: hidden;">
+            <div style="width: {{ $submissionProgress['percentage'] }}%; height: 100%; background: {{ $competition['color'] ?? '#07AD33' }}; border-radius: 10px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     {{-- Documents --}}
     <div class="detail-card full-width">
       <div class="card-header">
