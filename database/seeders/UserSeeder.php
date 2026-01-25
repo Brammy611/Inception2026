@@ -67,54 +67,91 @@ class UserSeeder extends Seeder
         }
 
         // Create specific test users for each category
+        echo "\n";
+        echo "==============================================\n";
+        echo "    CREATING 4 TEST USERS FOR EACH CATEGORY  \n";
+        echo "==============================================\n\n";
+
         $testUsers = [
             [
-                'nama' => 'Peter Suherman',
-                'email' => 'peter.bcc@inception.com',
+                'nama' => 'Budi Santoso',
+                'email' => 'budi.bcc@test.com',
+                'tim' => 'Business Innovators',
                 'kategori' => Peserta::KATEGORI_BUSINESS_CASE,
-                'status' => 'pending',
+                'kategori_display' => 'Business Case Competition',
+                'status' => 'verified',
             ],
             [
-                'nama' => 'Peter Suherman',
-                'email' => 'peter.gdpc@inception.com',
+                'nama' => 'Siti Rahayu',
+                'email' => 'siti.gdpc@test.com',
+                'tim' => 'Geothermal Warriors',
                 'kategori' => Peserta::KATEGORI_GEOTHERMAL,
+                'kategori_display' => 'Geothermal Development Plan',
                 'status' => 'verified',
             ],
             [
-                'nama' => 'Peter Suherman',
-                'email' => 'peter.ppc@inception.com',
+                'nama' => 'Ahmad Wijaya',
+                'email' => 'ahmad.ppc@test.com',
+                'tim' => 'Poster Creators',
                 'kategori' => Peserta::KATEGORI_POSTER_PAPER,
+                'kategori_display' => 'Poster and Paper Competition',
                 'status' => 'verified',
             ],
             [
-                'nama' => 'Peter Suherman',
-                'email' => 'peter.wsc@inception.com',
+                'nama' => 'Dewi Kartika',
+                'email' => 'dewi.wsc@test.com',
+                'tim' => 'Well Experts',
                 'kategori' => Peserta::KATEGORI_WELL_STIMULATION,
+                'kategori_display' => 'Well Stimulation Competition',
                 'status' => 'verified',
             ],
         ];
 
-        foreach ($testUsers as $testUser) {
+        foreach ($testUsers as $index => $testUser) {
             $user = User::create([
                 'nama' => $testUser['nama'],
                 'email' => $testUser['email'],
-                'password' => Hash::make('password'),
+                'password' => Hash::make('password123'),
                 'role' => 'peserta',
             ]);
 
-            Peserta::create([
+            $peserta = Peserta::create([
                 'user_id' => $user->id,
-                'nama_tim' => 'Inception Team',
+                'nama_tim' => $testUser['tim'],
                 'nama_leader' => $testUser['nama'],
-                'asal_univ' => 'Universitas Indonesia',
+                'asal_univ' => 'Institut Teknologi Bandung',
                 'jurusan_leader' => 'Teknik Perminyakan',
-                'nama_member_1' => 'Member One',
+                'nama_member_1' => 'Anggota Pertama',
                 'jurusan_member_1' => 'Teknik Geologi',
-                'nama_member_2' => 'Member Two',
+                'nama_member_2' => 'Anggota Kedua',
                 'jurusan_member_2' => 'Teknik Kimia',
+                'nama_member_3' => $testUser['kategori'] !== Peserta::KATEGORI_POSTER_PAPER ? 'Anggota Ketiga' : null,
+                'jurusan_member_3' => $testUser['kategori'] !== Peserta::KATEGORI_POSTER_PAPER ? 'Teknik Mesin' : null,
                 'kategori' => $testUser['kategori'],
                 'status_verifikasi' => $testUser['status'],
             ]);
+
+            // Display user information
+            echo "✓ User #" . ($index + 1) . " Created:\n";
+            echo "  ├─ Nama       : " . $testUser['nama'] . "\n";
+            echo "  ├─ Email      : " . $testUser['email'] . "\n";
+            echo "  ├─ Password   : password123\n";
+            echo "  ├─ Tim        : " . $testUser['tim'] . "\n";
+            echo "  ├─ Kategori   : " . $testUser['kategori_display'] . "\n";
+            echo "  ├─ Universitas: Institut Teknologi Bandung\n";
+            echo "  ├─ Status     : " . ucfirst($testUser['status']) . "\n";
+            
+            if ($testUser['kategori'] === Peserta::KATEGORI_POSTER_PAPER) {
+                echo "  └─ Anggota    : 3 orang (Leader + 2 members)\n";
+            } else {
+                echo "  └─ Anggota    : 4 orang (Leader + 3 members)\n";
+            }
+            echo "\n";
         }
+
+        echo "==============================================\n";
+        echo "  ✓ Successfully created 4 test users!       \n";
+        echo "  ✓ Total Users: " . User::count() . " (2 Admin + 24 Random Peserta)      \n";
+        echo "==============================================\n\n";
     }
 }

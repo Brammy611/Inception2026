@@ -26,6 +26,80 @@
   width: 100%;
 }
 
+/* Responsive Dashboard Layout */
+@media (max-width: 1280px) {
+  .peserta-dashboard {
+    grid-template-columns: 220px 1fr 280px;
+    padding: 100px 30px 30px;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .peserta-dashboard {
+    grid-template-columns: 200px 1fr;
+    padding: 100px 20px 20px;
+    gap: 16px;
+  }
+  
+  .timeline-sidebar {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .peserta-dashboard {
+    grid-template-columns: 1fr;
+    padding: 90px 16px 20px;
+    gap: 14px;
+  }
+  
+  .sidebar {
+    position: relative;
+    top: 0;
+    padding: 20px 16px;
+  }
+  
+  .sidebar-profile {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .profile-avatar {
+    width: 60px;
+    height: 60px;
+    margin: 0;
+  }
+  
+  .sidebar-profile {
+    text-align: left;
+  }
+  
+  .sidebar-nav {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 6px;
+    padding-bottom: 4px;
+  }
+  
+  .nav-item {
+    flex: 0 0 auto;
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+  
+  .nav-item span {
+    display: none;
+  }
+  
+  .nav-item svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
 /* ==== SIDEBAR ==== */
 .sidebar {
   background: #fff;
@@ -1439,8 +1513,76 @@
 
 .submissions-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
   gap: 20px;
+}
+
+/* Responsive for tablets */
+@media (max-width: 1024px) {
+  .submissions-grid {
+    gap: 16px;
+  }
+  
+  .submission-card {
+    padding: 20px;
+  }
+  
+  .submission-guidelines {
+    padding: 16px 18px;
+  }
+  
+  .submission-guidelines .guideline-content ul {
+    gap: 8px;
+  }
+  
+  .submission-guidelines .guideline-content ul li {
+    font-size: 11px;
+    padding: 4px 10px;
+  }
+}
+
+/* Responsive for mobile */
+@media (max-width: 768px) {
+  .submissions-grid {
+    gap: 14px;
+  }
+  
+  .submission-card {
+    padding: 18px;
+  }
+  
+  .submission-header h4 {
+    font-size: 15px;
+  }
+  
+  .submission-guidelines {
+    padding: 14px 16px;
+  }
+  
+  .submission-guidelines .guideline-content h5 {
+    font-size: 12px;
+  }
+  
+  .submission-guidelines .guideline-content ul {
+    gap: 6px;
+  }
+  
+  .submission-guidelines .guideline-content ul li {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+  
+  .submission-guidelines .filename-box {
+    padding: 8px 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  
+  .submission-guidelines .filename-box code {
+    font-size: 10px;
+    width: 100%;
+  }
 }
 
 /* Submission Card */
@@ -1497,6 +1639,99 @@
   color: #666;
   line-height: 1.5;
   margin-bottom: 15px;
+}
+
+/* Submission Guidelines Inside Card */
+.submission-guidelines {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border: 1px solid #e3e6ea;
+  border-left: 3px solid #FBB137;
+  border-radius: 8px;
+  padding: 18px 20px;
+  margin-bottom: 18px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.submission-guidelines .guideline-content h5 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 12px 0;
+  letter-spacing: 0.2px;
+}
+
+.submission-guidelines .guideline-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.submission-guidelines .guideline-content ul li {
+  font-family: 'Kumbh Sans', sans-serif;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #555;
+  padding: 5px 12px;
+  background: #fff;
+  border: 1px solid #e0e4e8;
+  border-radius: 6px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.submission-guidelines .guideline-content ul li:hover {
+  border-color: #FBB137;
+  box-shadow: 0 2px 4px rgba(251, 177, 55, 0.1);
+}
+
+.submission-guidelines .guideline-content ul li::before {
+  display: none;
+}
+
+.submission-guidelines .guideline-content ul li strong {
+  color: #1A1A1A;
+  font-weight: 600;
+  margin-left: 4px;
+}
+
+.submission-guidelines .filename-box {
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 0;
+  transition: all 0.2s ease;
+}
+
+.submission-guidelines .filename-box:hover {
+  border-color: #FBB137;
+  box-shadow: 0 2px 6px rgba(251, 177, 55, 0.12);
+}
+
+.submission-guidelines .filename-box svg {
+  flex-shrink: 0;
+  color: #6b7280;
+}
+
+.submission-guidelines .filename-box code {
+  font-family: 'Consolas', 'Monaco', monospace;
+  font-size: 11px;
+  color: #374151;
+  background: #f9fafb;
+  padding: 3px 6px;
+  border-radius: 4px;
+  word-break: break-all;
+  line-height: 1.5;
 }
 
 /* Submission File Info */

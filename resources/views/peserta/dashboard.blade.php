@@ -160,6 +160,253 @@
                 </div>
                 
                 <p class="submission-description">{{ $requirement['description'] }}</p>
+
+                {{-- Submission Guidelines for All Categories --}}
+                <div class="submission-guidelines">
+                  @if($kategori === 'business_case')
+                    {{-- BCC Guidelines --}}
+                    @if($requirement['type'] === 'essay' && $requirement['stage'] === 'preliminary')
+                      <div class="guideline-content">
+                        <h5>Ketentuan Essay:</h5>
+                        <ul>
+                          <li>Maksimal <strong>5 halaman</strong></li>
+                          <li>Font: <strong>Times New Roman</strong></li>
+                          <li>Spasi: <strong>1.15</strong></li>
+                          <li>Citation: <strong>APA 7</strong></li>
+                          <li>Format: <strong>PDF</strong></li>
+                        </ul>
+                        <div class="filename-box">
+                          <svg fill="currentColor" viewBox="0 0 24 24" width="14" height="14">
+                            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                          </svg>
+                          <code>INCEPTION2026_BCC_Essay_TeamName_UniversityName</code>
+                        </div>
+                      </div>
+                    @endif
+
+                    @if($requirement['type'] === 'full_paper' && $requirement['stage'] === 'semifinal')
+                      <div class="guideline-content">
+                        <h5>Ketentuan Full Paper:</h5>
+                        <ul>
+                          <li>Maksimal <strong>15 halaman</strong></li>
+                          <li>Merupakan <strong>pengembangan dari essay</strong></li>
+                          <li>Format: <strong>PDF</strong></li>
+                        </ul>
+                        <div class="filename-box">
+                          <svg fill="currentColor" viewBox="0 0 24 24" width="14" height="14">
+                            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                          </svg>
+                          <code>INCEPTION2026_BCC_FullPaper_TeamName_UniversityName</code>
+                        </div>
+                      </div>
+                    @endif
+
+                    @if($requirement['type'] === 'pitch_deck' && $requirement['stage'] === 'final')
+                      <div class="guideline-content">
+                        <h5>Ketentuan Pitch Deck:</h5>
+                        <ul>
+                          <li>Maksimal <strong>20 slide</strong></li>
+                          <li>Format: <strong>PPTX / PDF</strong></li>
+                          <li>Rasio: <strong>16:9</strong></li>
+                          <li>Presentasi dilakukan <strong>offline</strong></li>
+                        </ul>
+                        <div class="filename-box">
+                          <svg fill="currentColor" viewBox="0 0 24 24" width="14" height="14">
+                            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                          </svg>
+                          <code>INCEPTION2026_BCC_PitchDeck_TeamName_UniversityName</code>
+                        </div>
+                      </div>
+                    @endif
+                  @endif
+
+                  @if($kategori === 'poster_paper')
+                    {{-- PPC Guidelines --}}
+                    @if($requirement['type'] === 'abstract' && $requirement['stage'] === 'preliminary')
+                      <div class="guideline-content">
+                        <h5>Ketentuan Abstract:</h5>
+                        <ul>
+                          <li>Ditulis dalam <strong>Bahasa Inggris</strong></li>
+                          <li>Kertas: <strong>A4</strong></li>
+                          <li>Font: <strong>Times New Roman 12</strong></li>
+                          <li>Spasi: <strong>1.15</strong></li>
+                          <li>Margin: <strong>L 2cm, T 4cm, B 3cm, R 2cm</strong></li>
+                        </ul>
+                        <div class="filename-box">
+                          <svg fill="currentColor" viewBox="0 0 24 24" width="14" height="14">
+                            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                          </svg>
+                          <code>TeamName_Abstract_Inception2026</code>
+                        </div>
+                      </div>
+                    @endif
+
+                    @if($requirement['type'] === 'full_paper' && $requirement['stage'] === 'semifinal')
+                      <div class="guideline-content">
+                        <h5>Ketentuan Full Paper:</h5>
+                        <ul>
+                          <li>Panjang: <strong>7.000 – 10.000 kata</strong></li>
+                          <li>Struktur: <strong>Abstract, Keywords, Introduction, Methods, Results & Discussion, Conclusion, References</strong></li>
+                          <li>Format: <strong>Sesuai template resmi</strong></li>
+                        </ul>
+                        <div class="filename-box">
+                          <svg fill="currentColor" viewBox="0 0 24 24" width="14" height="14">
+                            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                          </svg>
+                          <code>TeamName_Paper_Inception2026</code>
+                        </div>
+                      </div>
+                    @endif
+
+                    @if($requirement['type'] === 'poster' && $requirement['stage'] === 'semifinal')
+                      <div class="guideline-content">
+                        <h5>Ketentuan Poster:</h5>
+                        <ul>
+                          <li>Ukuran: <strong>A3 (297 × 420 mm)</strong></li>
+                          <li>Format: <strong>JPG / JPEG</strong></li>
+                          <li>Wajib memuat: <strong>Nama tim, anggota, institusi, logo INCEPTION, SPE, SEG</strong></li>
+                        </ul>
+                        <div class="filename-box">
+                          <svg fill="currentColor" viewBox="0 0 24 24" width="14" height="14">
+                            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                          </svg>
+                          <code>TeamName_Poster_Inception2026</code>
+                        </div>
+                      </div>
+                    @endif
+
+                    @if($requirement['type'] === 'presentation_slides' && $requirement['stage'] === 'final')
+                      <div class="guideline-content">
+                        <h5>Ketentuan Presentation:</h5>
+                        <ul>
+                          <li>Format: <strong>PPTX</strong></li>
+                          <li>Bahasa: <strong>Inggris</strong></li>
+                          <li>Tidak boleh mencantumkan <strong>logo universitas</strong></li>
+                        </ul>
+                        <div class="filename-box">
+                          <svg fill="currentColor" viewBox="0 0 24 24" width="14" height="14">
+                            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                          </svg>
+                          <code>TeamName_Presentation_Inception2026</code>
+                        </div>
+                      </div>
+                    @endif
+                  @endif
+
+                  @if($kategori === 'well_stimulation')
+                    {{-- WSC Guidelines --}}
+                    @if($requirement['type'] === 'essay' && $requirement['stage'] === 'preliminary')
+                      <div class="guideline-content">
+                        <h5>Ketentuan Essay:</h5>
+                        <ul>
+                          <li>Panjang: <strong>400–600 kata</strong></li>
+                          <li>Font: <strong>Times New Roman 12</strong></li>
+                          <li>Spasi: <strong>1.15</strong></li>
+                          <li>Margin: <strong>2.54 cm</strong></li>
+                          <li>Format: <strong>PDF</strong></li>
+                        </ul>
+                        <div class="filename-box">
+                          <svg fill="currentColor" viewBox="0 0 24 24" width="14" height="14">
+                            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                          </svg>
+                          <code>TeamName_Essay_WSC_INCEPTION2026.pdf</code>
+                        </div>
+                      </div>
+                    @endif
+
+                    @if($requirement['type'] === 'final_case_report' && $requirement['stage'] === 'semifinal')
+                      <div class="guideline-content">
+                        <h5>Ketentuan Final Case Report:</h5>
+                        <ul>
+                          <li>Panjang: <strong>20–50 halaman</strong></li>
+                          <li>Font: <strong>Times New Roman 12</strong></li>
+                          <li>Spasi: <strong>1.15</strong></li>
+                          <li>Margin: <strong>2.54 cm</strong></li>
+                          <li>Format: <strong>PDF</strong></li>
+                        </ul>
+                        <div class="filename-box">
+                          <svg fill="currentColor" viewBox="0 0 24 24" width="14" height="14">
+                            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                          </svg>
+                          <code>TeamName_FinalReport_WSC_INCEPTION2026.pdf</code>
+                        </div>
+                      </div>
+                    @endif
+
+                    @if($requirement['type'] === 'turnitin_report' && $requirement['stage'] === 'semifinal')
+                      <div class="guideline-content">
+                        <h5>Ketentuan Turnitin Similarity Report:</h5>
+                        <ul>
+                          <li>Wajib melampirkan <strong>Turnitin Similarity Report</strong></li>
+                          <li>Format: <strong>PDF</strong></li>
+                        </ul>
+                      </div>
+                    @endif
+
+                    @if($requirement['type'] === 'presentation_slides' && $requirement['stage'] === 'final')
+                      <div class="guideline-content">
+                        <h5>Ketentuan Presentation:</h5>
+                        <ul>
+                          <li>Maksimal <strong>15 slide</strong></li>
+                          <li>Bahasa: <strong>Inggris</strong></li>
+                          <li>Durasi: <strong>15 menit + Q&A</strong></li>
+                          <li>Seluruh anggota tim <strong>wajib berpartisipasi</strong></li>
+                        </ul>
+                      </div>
+                    @endif
+                  @endif
+
+                  @if($kategori === 'geothermal')
+                    {{-- GDPC Guidelines --}}
+                    @if($requirement['type'] === 'essay' && $requirement['stage'] === 'preliminary')
+                      <div class="guideline-content">
+                        <h5>Ketentuan Essay:</h5>
+                        <ul>
+                          <li>Maksimal <strong>3.000 kata</strong></li>
+                          <li>Font: <strong>Times New Roman 12</strong></li>
+                          <li>Spasi: <strong>1.5</strong></li>
+                          <li>Margin: <strong>2.54 cm</strong></li>
+                          <li>Format: <strong>PDF</strong></li>
+                        </ul>
+                        <div class="filename-box">
+                          <svg fill="currentColor" viewBox="0 0 24 24" width="14" height="14">
+                            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                          </svg>
+                          <code>TeamName_Essay_GDPC_INCEPTION2026.pdf</code>
+                        </div>
+                      </div>
+                    @endif
+
+                    @if($requirement['type'] === 'final_report' && $requirement['stage'] === 'semifinal')
+                      <div class="guideline-content">
+                        <h5>Ketentuan Final Report:</h5>
+                        <ul>
+                          <li>Maksimal <strong>50 halaman</strong></li>
+                          <li>Memuat: <strong>Analisis geoscience & reservoir, drilling & surface facilities, ekonomi proyek, risiko & keberlanjutan</strong></li>
+                          <li>Format: <strong>PDF</strong></li>
+                        </ul>
+                        <div class="filename-box">
+                          <svg fill="currentColor" viewBox="0 0 24 24" width="14" height="14">
+                            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                          </svg>
+                          <code>TeamName_FinalReport_GDPC_INCEPTION2026.pdf</code>
+                        </div>
+                      </div>
+                    @endif
+
+                    @if($requirement['type'] === 'presentation_slides' && $requirement['stage'] === 'final')
+                      <div class="guideline-content">
+                        <h5>Ketentuan Presentation:</h5>
+                        <ul>
+                          <li>Maksimal <strong>20 slide</strong></li>
+                          <li>Bahasa: <strong>Inggris</strong></li>
+                          <li>Durasi: <strong>15 menit presentasi + 30 menit Q&A</strong></li>
+                          <li>Seluruh anggota tim <strong>wajib tampil</strong></li>
+                        </ul>
+                      </div>
+                    @endif
+                  @endif
+                </div>
                 
                 @if($submission)
                 <div class="submission-file-info">
