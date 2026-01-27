@@ -167,54 +167,56 @@
                     {{-- BCC Guidelines --}}
                     @if($requirement['type'] === 'essay' && $requirement['stage'] === 'preliminary')
                       <div class="guideline-content">
-                        <h5>Ketentuan Essay:</h5>
+                        <h5>Requirements</h5>
                         <ul>
-                          <li>Maksimal <strong>5 halaman</strong></li>
-                          <li>Font: <strong>Times New Roman</strong></li>
-                          <li>Spasi: <strong>1.15</strong></li>
-                          <li>Citation: <strong>APA 7</strong></li>
-                          <li>Format: <strong>PDF</strong></li>
+                          <li><strong>File Format:</strong> PDF</li>
+                          <li><strong>Language:</strong> English (Mandatory)</li>
+                          <li><strong>Page Limit:</strong> Maximum 5 Pages (Main content, excluding cover/references)</li>
+                          <li><strong>Content Requirements:</strong> Must include Introduction, Methodology, Result, Novelty, Conclusion, & References</li>
+                          <li><strong>Restriction:</strong> University logo must NOT be included in the document</li>
                         </ul>
                         <div class="filename-box">
                           <svg fill="currentColor" viewBox="0 0 24 24" width="14" height="14">
                             <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
                           </svg>
-                          <code>INCEPTION2026_BCC_Essay_TeamName_UniversityName</code>
+                          <code>INCEPTION2026_BCC_Essay_TeamName_UnivName</code>
                         </div>
                       </div>
                     @endif
 
                     @if($requirement['type'] === 'full_paper' && $requirement['stage'] === 'semifinal')
                       <div class="guideline-content">
-                        <h5>Ketentuan Full Paper:</h5>
+                        <h5>Requirements</h5>
                         <ul>
-                          <li>Maksimal <strong>15 halaman</strong></li>
-                          <li>Merupakan <strong>pengembangan dari essay</strong></li>
-                          <li>Format: <strong>PDF</strong></li>
+                          <li><strong>File Format:</strong> PDF</li>
+                          <li><strong>Language:</strong> English (Mandatory)</li>
+                          <li><strong>Page Limit:</strong> Maximum 15 Pages (Main content)</li>
+                          <li><strong>Content:</strong> In-depth development of the previous essay</li>
+                          <li><strong>Restriction:</strong> University logo must NOT be included</li>
                         </ul>
                         <div class="filename-box">
                           <svg fill="currentColor" viewBox="0 0 24 24" width="14" height="14">
                             <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
                           </svg>
-                          <code>INCEPTION2026_BCC_FullPaper_TeamName_UniversityName</code>
+                          <code>INCEPTION2026_BCC_FullPaper_TeamName_UnivName</code>
                         </div>
                       </div>
                     @endif
 
                     @if($requirement['type'] === 'pitch_deck' && $requirement['stage'] === 'final')
                       <div class="guideline-content">
-                        <h5>Ketentuan Pitch Deck:</h5>
+                        <h5>Requirements</h5>
                         <ul>
-                          <li>Maksimal <strong>20 slide</strong></li>
-                          <li>Format: <strong>PPTX / PDF</strong></li>
-                          <li>Rasio: <strong>16:9</strong></li>
-                          <li>Presentasi dilakukan <strong>offline</strong></li>
+                          <li><strong>File Format:</strong> PPTX or PDF</li>
+                          <li><strong>Slide Size:</strong> 16:9 Ratio (Widescreen)</li>
+                          <li><strong>Slide Count:</strong> Maximum 20 Slides (Including cover & references)</li>
+                          <li><strong>Language:</strong> English</li>
                         </ul>
                         <div class="filename-box">
                           <svg fill="currentColor" viewBox="0 0 24 24" width="14" height="14">
                             <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
                           </svg>
-                          <code>INCEPTION2026_BCC_PitchDeck_TeamName_UniversityName</code>
+                          <code>INCEPTION2026_BCC_PitchDeck_TeamName_UnivName</code>
                         </div>
                       </div>
                     @endif
@@ -243,11 +245,13 @@
 
                     @if($requirement['type'] === 'full_paper' && $requirement['stage'] === 'semifinal')
                       <div class="guideline-content">
-                        <h5>Ketentuan Full Paper:</h5>
+                        <h5>Requirements:</h5>
                         <ul>
-                          <li>Panjang: <strong>7.000 – 10.000 kata</strong></li>
-                          <li>Struktur: <strong>Abstract, Keywords, Introduction, Methods, Results & Discussion, Conclusion, References</strong></li>
-                          <li>Format: <strong>Sesuai template resmi</strong></li>
+                          <li>Word count: <strong>7,000 - 10,000 words</strong></li>
+                          <li>Structure: <strong>Abstract, Keywords, Introduction, Methods, Results & Discussion, Conclusion, References</strong></li>
+                          <li>Use the <strong>provided template</strong> (download from guidebooks)</li>
+                          <li>Language: <strong>English or Bahasa Indonesia</strong></li>
+                          <li>Format: <strong>PDF</strong></li>
                         </ul>
                         <div class="filename-box">
                           <svg fill="currentColor" viewBox="0 0 24 24" width="14" height="14">
@@ -260,11 +264,13 @@
 
                     @if($requirement['type'] === 'poster' && $requirement['stage'] === 'semifinal')
                       <div class="guideline-content">
-                        <h5>Ketentuan Poster:</h5>
+                        <h5>Requirements:</h5>
                         <ul>
-                          <li>Ukuran: <strong>A3 (297 × 420 mm)</strong></li>
-                          <li>Format: <strong>JPG / JPEG</strong></li>
-                          <li>Wajib memuat: <strong>Nama tim, anggota, institusi, logo INCEPTION, SPE, SEG</strong></li>
+                          <li>Size: <strong>A3 (297 × 420 mm)</strong></li>
+                          <li>Format: <strong>JPG/JPEG (High Resolution)</strong></li>
+                          <li>Required logos: <strong>INCEPTION 2026, SPE STT Migas, SEG STT Migas</strong></li>
+                          <li>Content: <strong>Team name, members, institution, title, background, methods, results, conclusion</strong></li>
+                          <li>Language: <strong>English or Bahasa Indonesia</strong></li>
                         </ul>
                         <div class="filename-box">
                           <svg fill="currentColor" viewBox="0 0 24 24" width="14" height="14">
@@ -277,11 +283,12 @@
 
                     @if($requirement['type'] === 'presentation_slides' && $requirement['stage'] === 'final')
                       <div class="guideline-content">
-                        <h5>Ketentuan Presentation:</h5>
+                        <h5>Requirements:</h5>
                         <ul>
                           <li>Format: <strong>PPTX</strong></li>
-                          <li>Bahasa: <strong>Inggris</strong></li>
-                          <li>Tidak boleh mencantumkan <strong>logo universitas</strong></li>
+                          <li>Language: <strong>English mandatory</strong></li>
+                          <li>No university logos or names allowed</li>
+                          <li>Duration: <strong>10 minutes presentation + 5 minutes Q&A</strong></li>
                         </ul>
                         <div class="filename-box">
                           <svg fill="currentColor" viewBox="0 0 24 24" width="14" height="14">
@@ -297,13 +304,12 @@
                     {{-- WSC Guidelines --}}
                     @if($requirement['type'] === 'essay' && $requirement['stage'] === 'preliminary')
                       <div class="guideline-content">
-                        <h5>Ketentuan Essay:</h5>
+                        <h5>Requirements</h5>
                         <ul>
-                          <li>Panjang: <strong>400–600 kata</strong></li>
-                          <li>Font: <strong>Times New Roman 12</strong></li>
-                          <li>Spasi: <strong>1.15</strong></li>
-                          <li>Margin: <strong>2.54 cm</strong></li>
-                          <li>Format: <strong>PDF</strong></li>
+                          <li><strong>Word Count:</strong> 400 – 600 words</li>
+                          <li><strong>Page Format:</strong> Margin 2.54 cm (All sides)</li>
+                          <li><strong>Typography:</strong> Times New Roman, Size 12, Line Spacing 1.15</li>
+                          <li><strong>File Format:</strong> PDF</li>
                         </ul>
                         <div class="filename-box">
                           <svg fill="currentColor" viewBox="0 0 24 24" width="14" height="14">
@@ -316,13 +322,12 @@
 
                     @if($requirement['type'] === 'final_case_report' && $requirement['stage'] === 'semifinal')
                       <div class="guideline-content">
-                        <h5>Ketentuan Final Case Report:</h5>
+                        <h5>Requirements</h5>
                         <ul>
-                          <li>Panjang: <strong>20–50 halaman</strong></li>
-                          <li>Font: <strong>Times New Roman 12</strong></li>
-                          <li>Spasi: <strong>1.15</strong></li>
-                          <li>Margin: <strong>2.54 cm</strong></li>
-                          <li>Format: <strong>PDF</strong></li>
+                          <li><strong>Report Length:</strong> 20 – 50 pages</li>
+                          <li><strong>Page Format:</strong> Margin 2.54 cm (All sides)</li>
+                          <li><strong>Typography:</strong> Times New Roman, Size 12, Line Spacing 1.15</li>
+                          <li><strong>File Format:</strong> PDF</li>
                         </ul>
                         <div class="filename-box">
                           <svg fill="currentColor" viewBox="0 0 24 24" width="14" height="14">
@@ -335,23 +340,29 @@
 
                     @if($requirement['type'] === 'turnitin_report' && $requirement['stage'] === 'semifinal')
                       <div class="guideline-content">
-                        <h5>Ketentuan Turnitin Similarity Report:</h5>
+                        <h5>Requirements</h5>
                         <ul>
-                          <li>Wajib melampirkan <strong>Turnitin Similarity Report</strong></li>
-                          <li>Format: <strong>PDF</strong></li>
+                          <li><strong>Mandatory Attachment:</strong> Turnitin Similarity Report</li>
+                          <li><strong>File Format:</strong> PDF</li>
                         </ul>
                       </div>
                     @endif
 
                     @if($requirement['type'] === 'presentation_slides' && $requirement['stage'] === 'final')
                       <div class="guideline-content">
-                        <h5>Ketentuan Presentation:</h5>
+                        <h5>Requirements</h5>
                         <ul>
-                          <li>Maksimal <strong>15 slide</strong></li>
-                          <li>Bahasa: <strong>Inggris</strong></li>
-                          <li>Durasi: <strong>15 menit + Q&A</strong></li>
-                          <li>Seluruh anggota tim <strong>wajib berpartisipasi</strong></li>
+                          <li><strong>Slide Count:</strong> Maximum 15 Slides</li>
+                          <li><strong>Language:</strong> English (Mandatory)</li>
+                          <li><strong>Duration:</strong> 15 Minutes Presentation + Q&A</li>
+                          <li><strong>Participation:</strong> All team members must participate</li>
                         </ul>
+                        <div class="filename-box">
+                          <svg fill="currentColor" viewBox="0 0 24 24" width="14" height="14">
+                            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                          </svg>
+                          <code>TeamName_Presentation_WSC_INCEPTION2026.pdf</code>
+                        </div>
                       </div>
                     @endif
                   @endif
@@ -360,12 +371,13 @@
                     {{-- GDPC Guidelines --}}
                     @if($requirement['type'] === 'essay' && $requirement['stage'] === 'preliminary')
                       <div class="guideline-content">
-                        <h5>Ketentuan Essay:</h5>
+                        <h5>Requirements:</h5>
                         <ul>
-                          <li>Maksimal <strong>3.000 kata</strong></li>
+                          <li>Maximum <strong>3,000 words</strong></li>
                           <li>Font: <strong>Times New Roman 12</strong></li>
-                          <li>Spasi: <strong>1.5</strong></li>
-                          <li>Margin: <strong>2.54 cm</strong></li>
+                          <li>Spacing: <strong>1.5</strong></li>
+                          <li>Margins: <strong>2.54 cm (all sides)</strong></li>
+                          <li>Language: <strong>English or Bahasa Indonesia</strong></li>
                           <li>Format: <strong>PDF</strong></li>
                         </ul>
                         <div class="filename-box">
@@ -379,10 +391,11 @@
 
                     @if($requirement['type'] === 'final_report' && $requirement['stage'] === 'semifinal')
                       <div class="guideline-content">
-                        <h5>Ketentuan Final Report:</h5>
+                        <h5>Requirements:</h5>
                         <ul>
-                          <li>Maksimal <strong>50 halaman</strong></li>
-                          <li>Memuat: <strong>Analisis geoscience & reservoir, drilling & surface facilities, ekonomi proyek, risiko & keberlanjutan</strong></li>
+                          <li>Maximum <strong>50 pages</strong></li>
+                          <li>Must include: <strong>Geoscience & reservoir analysis, drilling & surface facilities, project economics, risk assessment & sustainability</strong></li>
+                          <li>Language: <strong>English mandatory</strong></li>
                           <li>Format: <strong>PDF</strong></li>
                         </ul>
                         <div class="filename-box">
@@ -396,12 +409,13 @@
 
                     @if($requirement['type'] === 'presentation_slides' && $requirement['stage'] === 'final')
                       <div class="guideline-content">
-                        <h5>Ketentuan Presentation:</h5>
+                        <h5>Requirements:</h5>
                         <ul>
-                          <li>Maksimal <strong>20 slide</strong></li>
-                          <li>Bahasa: <strong>Inggris</strong></li>
-                          <li>Durasi: <strong>15 menit presentasi + 30 menit Q&A</strong></li>
-                          <li>Seluruh anggota tim <strong>wajib tampil</strong></li>
+                          <li>Maximum <strong>20 slides</strong></li>
+                          <li>Language: <strong>English mandatory</strong></li>
+                          <li>Duration: <strong>15 minutes presentation + 30 minutes Q&A</strong></li>
+                          <li>All team members <strong>must present</strong></li>
+                          <li>Format: <strong>PPTX or PDF</strong></li>
                         </ul>
                       </div>
                     @endif
@@ -609,9 +623,64 @@
         <div class="payment-info">
           <h4>Ketentuan Submisi</h4>
           <p>Setiap tim wajib mentransfer biaya pendaftaran ke rekening yang tertera, dengan menyertakan catatan dengan format:</p>
-          <div class="format-example">
-            <p>[NAMA TIM/PESERTA] - [NAMA SINGKAT KOMPETISI] Nama tim apabila lomba dalam bentuk tim, sedangkan nama peserta apabila lomba dalam bentuk Individu.</p>
-          </div>
+          
+          @if($kategori === 'business_case')
+            <div class="format-example">
+              <p><strong>INCEPTION2026_BCC_[NAMA TIM]</strong></p>
+              <p style="margin-top: 8px; color: #666; font-size: 12px;">(Contoh: INCEPTION2026_BCC_AlphaTeam)</p>
+            </div>
+            
+            <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px; border-left: 3px solid #FBB137;">
+              <h4 style="margin: 0 0 10px 0; font-size: 14px; color: #1a1a1a;">Ketentuan Upload Bukti Bayar</h4>
+              <p style="margin: 0; font-size: 13px; color: #333;">
+                <strong>Format Nama File:</strong> NamaPengirim_Bank_NamaTim_BCC<br>
+                <span style="color: #666; font-size: 12px;">(Contoh: Dega_BCA_AlphaTeam_BCC)</span>
+              </p>
+            </div>
+          @elseif($kategori === 'well_stimulation')
+            <div class="format-example">
+              <p><strong>INCEPTION2026_WSC_[NAMA TIM]</strong></p>
+              <p style="margin-top: 8px; color: #666; font-size: 12px;">(Contoh: INCEPTION2026_WSC_AlphaTeam)</p>
+            </div>
+            
+            <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px; border-left: 3px solid #32477C;">
+              <h4 style="margin: 0 0 10px 0; font-size: 14px; color: #1a1a1a;">Ketentuan Upload Bukti Bayar</h4>
+              <p style="margin: 0; font-size: 13px; color: #333;">
+                <strong>Format Nama File:</strong> NamaPengirim_Bank_NamaTim_WSC<br>
+                <span style="color: #666; font-size: 12px;">(Contoh: Dega_BCA_AlphaTeam_WSC)</span>
+              </p>
+            </div>
+          @elseif($kategori === 'poster_paper')
+            <div class="format-example">
+              <p><strong>INCEPTION2026_PPC_[NAMA TIM]</strong></p>
+              <p style="margin-top: 8px; color: #666; font-size: 12px;">(Contoh: INCEPTION2026_PPC_AlphaTeam)</p>
+            </div>
+            
+            <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px; border-left: 3px solid #4683B5;">
+              <h4 style="margin: 0 0 10px 0; font-size: 14px; color: #1a1a1a;">Ketentuan Upload Bukti Bayar</h4>
+              <p style="margin: 0; font-size: 13px; color: #333;">
+                <strong>Format Nama File:</strong> NamaPengirim_Bank_NamaTim_PPC<br>
+                <span style="color: #666; font-size: 12px;">(Contoh: Dega_BCA_AlphaTeam_PPC)</span>
+              </p>
+            </div>
+          @elseif($kategori === 'geothermal')
+            <div class="format-example">
+              <p><strong>INCEPTION2026_GDPC_[NAMA TIM]</strong></p>
+              <p style="margin-top: 8px; color: #666; font-size: 12px;">(Contoh: INCEPTION2026_GDPC_AlphaTeam)</p>
+            </div>
+            
+            <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px; border-left: 3px solid #B22A2A;">
+              <h4 style="margin: 0 0 10px 0; font-size: 14px; color: #1a1a1a;">Ketentuan Upload Bukti Bayar</h4>
+              <p style="margin: 0; font-size: 13px; color: #333;">
+                <strong>Format Nama File:</strong> NamaPengirim_Bank_NamaTim_GDPC<br>
+                <span style="color: #666; font-size: 12px;">(Contoh: Dega_BCA_AlphaTeam_GDPC)</span>
+              </p>
+            </div>
+          @else
+            <div class="format-example">
+              <p>[NAMA TIM] - [NAMA KOMPETISI]</p>
+            </div>
+          @endif
           
           <div class="bank-info">
             <p>Detail alamat rekening yang harus di transfer:</p>

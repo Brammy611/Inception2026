@@ -1643,52 +1643,63 @@
 
 /* Submission Guidelines Inside Card */
 .submission-guidelines {
-  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-  border: 1px solid #e3e6ea;
-  border-left: 3px solid #FBB137;
-  border-radius: 8px;
-  padding: 18px 20px;
-  margin-bottom: 18px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  background: #ffffff;
+  border: 1px solid #e8eaed;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: all 0.3s ease;
+}
+
+.submission-guidelines:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 .submission-guidelines .guideline-content h5 {
   font-family: 'Poppins', sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  color: #2c3e50;
-  margin: 0 0 12px 0;
-  letter-spacing: 0.2px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 20px 0;
+  letter-spacing: 0;
+  padding-bottom: 14px;
+  border-bottom: 2px solid #f0f0f0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .submission-guidelines .guideline-content ul {
   list-style: none;
   padding: 0;
-  margin: 0 0 12px 0;
+  margin: 0 0 20px 0;
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  flex-direction: column;
+  gap: 14px;
 }
 
 .submission-guidelines .guideline-content ul li {
-  font-family: 'Kumbh Sans', sans-serif;
-  font-size: 12px;
-  line-height: 1.5;
-  color: #555;
-  padding: 5px 12px;
-  background: #fff;
-  border: 1px solid #e0e4e8;
-  border-radius: 6px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #333;
+  padding: 12px 16px;
+  background: #f8f9fa;
+  border: 1px solid #e8eaed;
+  border-radius: 8px;
   position: relative;
-  display: inline-flex;
-  align-items: center;
-  white-space: nowrap;
+  display: flex;
+  align-items: flex-start;
+  white-space: normal;
   transition: all 0.2s ease;
 }
 
 .submission-guidelines .guideline-content ul li:hover {
-  border-color: #FBB137;
-  box-shadow: 0 2px 4px rgba(251, 177, 55, 0.1);
+  background: #ffffff;
+  border-color: #d0d4d9;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  transform: translateX(2px);
 }
 
 .submission-guidelines .guideline-content ul li::before {
@@ -1696,42 +1707,182 @@
 }
 
 .submission-guidelines .guideline-content ul li strong {
-  color: #1A1A1A;
+  color: #000;
   font-weight: 600;
-  margin-left: 4px;
+  margin-left: 0;
+  margin-right: 6px;
+  min-width: fit-content;
 }
 
 .submission-guidelines .filename-box {
-  background: #fff;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  padding: 10px 12px;
+  background: #f5f6f7;
+  border: 1px solid #e0e3e6;
+  border-radius: 10px;
+  padding: 14px 18px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   margin-top: 0;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.04);
 }
 
 .submission-guidelines .filename-box:hover {
-  border-color: #FBB137;
-  box-shadow: 0 2px 6px rgba(251, 177, 55, 0.12);
+  background: #ecedef;
+  border-color: #c8ccd1;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
 }
 
 .submission-guidelines .filename-box svg {
   flex-shrink: 0;
   color: #6b7280;
+  width: 18px;
+  height: 18px;
 }
 
 .submission-guidelines .filename-box code {
   font-family: 'Consolas', 'Monaco', monospace;
-  font-size: 11px;
-  color: #374151;
-  background: #f9fafb;
-  padding: 3px 6px;
-  border-radius: 4px;
+  font-size: 12px;
+  color: #1a1a1a;
+  background: transparent;
+  padding: 0;
+  border: none;
+  font-weight: 500;
   word-break: break-all;
   line-height: 1.5;
+  letter-spacing: 0.3px;
+}
+
+/* Category-specific accent colors for guidelines */
+.peserta-dashboard[data-category="business_case"] .submission-guidelines .guideline-content h5 {
+  color: #FBB137;
+}
+
+.peserta-dashboard[data-category="business_case"] .submission-guidelines .filename-box svg {
+  color: #FBB137;
+}
+
+.peserta-dashboard[data-category="geothermal"] .submission-guidelines .guideline-content h5 {
+  color: #B22A2A;
+}
+
+.peserta-dashboard[data-category="geothermal"] .submission-guidelines .filename-box svg {
+  color: #B22A2A;
+}
+
+.peserta-dashboard[data-category="poster_paper"] .submission-guidelines .guideline-content h5 {
+  color: #4683B5;
+}
+
+.peserta-dashboard[data-category="poster_paper"] .submission-guidelines .filename-box svg {
+  color: #4683B5;
+}
+
+.peserta-dashboard[data-category="well_stimulation"] .submission-guidelines .guideline-content h5 {
+  color: #32477C;
+}
+
+.peserta-dashboard[data-category="well_stimulation"] .submission-guidelines .filename-box svg {
+  color: #32477C;
+}
+
+/* Responsive Guidelines */
+@media (max-width: 1024px) {
+  .submission-guidelines {
+    padding: 20px;
+  }
+  
+  .submission-guidelines .guideline-content h5 {
+    font-size: 15px;
+    margin-bottom: 18px;
+  }
+  
+  .submission-guidelines .guideline-content ul {
+    gap: 12px;
+  }
+  
+  .submission-guidelines .guideline-content ul li {
+    font-size: 12px;
+    padding: 10px 14px;
+  }
+  
+  .submission-guidelines .filename-box {
+    padding: 12px 16px;
+  }
+  
+  .submission-guidelines .filename-box code {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 768px) {
+  .submission-guidelines {
+    padding: 18px;
+    margin-bottom: 16px;
+  }
+  
+  .submission-guidelines .guideline-content h5 {
+    font-size: 14px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+  }
+  
+  .submission-guidelines .guideline-content ul {
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  
+  .submission-guidelines .guideline-content ul li {
+    font-size: 12px;
+    padding: 10px 12px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .submission-guidelines .guideline-content ul li strong {
+    margin-bottom: 4px;
+  }
+  
+  .submission-guidelines .filename-box {
+    padding: 12px 14px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .submission-guidelines .filename-box svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .submission-guidelines .filename-box code {
+    font-size: 10px;
+    width: 100%;
+    word-break: break-word;
+  }
+}
+
+@media (max-width: 480px) {
+  .submission-guidelines {
+    padding: 16px;
+  }
+  
+  .submission-guidelines .guideline-content h5 {
+    font-size: 13px;
+  }
+  
+  .submission-guidelines .guideline-content ul li {
+    font-size: 11px;
+    padding: 8px 10px;
+  }
+  
+  .submission-guidelines .filename-box {
+    padding: 10px 12px;
+  }
+  
+  .submission-guidelines .filename-box code {
+    font-size: 9px;
+  }
 }
 
 /* Submission File Info */
