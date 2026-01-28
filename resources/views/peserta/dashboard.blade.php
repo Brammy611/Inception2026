@@ -226,13 +226,14 @@
                     {{-- PPC Guidelines --}}
                     @if($requirement['type'] === 'abstract' && $requirement['stage'] === 'preliminary')
                       <div class="guideline-content">
-                        <h5>Ketentuan Abstract:</h5>
+                        <h5>Requirements:</h5>
                         <ul>
-                          <li>Ditulis dalam <strong>Bahasa Inggris</strong></li>
-                          <li>Kertas: <strong>A4</strong></li>
+                          <li>Maximum <strong>1 A4 page</strong></li>
                           <li>Font: <strong>Times New Roman 12</strong></li>
-                          <li>Spasi: <strong>1.15</strong></li>
-                          <li>Margin: <strong>L 2cm, T 4cm, B 3cm, R 2cm</strong></li>
+                          <li>Spacing: <strong>1.15</strong></li>
+                          <li>Margins: <strong>Left 2cm, Top 4cm, Bottom 3cm, Right 2cm</strong></li>
+                          <li>Language: <strong>English or Bahasa Indonesia</strong></li>
+                          <li>Format: <strong>PDF</strong></li>
                         </ul>
                         <div class="filename-box">
                           <svg fill="currentColor" viewBox="0 0 24 24" width="14" height="14">
