@@ -109,6 +109,11 @@
         'semifinal' => 'Semifinal Round', 
         'final' => 'Final Round',
       ];
+      
+      // Filter stages by active stages
+      $stageOrder = array_filter($stageOrder, function($stage) use ($activeStages) {
+        return in_array($stage, $activeStages);
+      });
     @endphp
 
     @foreach($stageOrder as $stage)
@@ -247,7 +252,7 @@
           </div>
           <div class="guideline-content">
             <h4>Deadline</h4>
-            <p>Pastikan mengunggah file sebelum batas waktu yang ditentukan. Lihat guidebook untuk detail.</p>
+            <p>Pastikan mengunggah file sebelum batas waktu yang ditentukan. Lihat guidebook untuk lebih detail.</p>
           </div>
         </div>
       </div>

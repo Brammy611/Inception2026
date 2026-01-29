@@ -204,6 +204,29 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Active Stages Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Control which competition stages are currently active and visible to participants.
+    | To enable a stage, add it to the array. To disable it, remove it.
+    | 
+    | Available stages: 'preliminary', 'semifinal', 'final'
+    | 
+    | Example - Enable all stages:
+    |   'active_stages' => ['preliminary', 'semifinal', 'final']
+    | 
+    | Example - Only preliminary:
+    |   'active_stages' => ['preliminary']
+    |
+    */
+    'active_stages' => [
+        'preliminary', // Currently active
+        // 'semifinal', // Uncomment to enable Semifinal Round
+        // 'final',     // Uncomment to enable Final Round
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Global Settings
     |--------------------------------------------------------------------------
     */

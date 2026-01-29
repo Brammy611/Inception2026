@@ -36,6 +36,18 @@ class DashboardController extends Controller
 
         // Get submission config and existing submissions
         $submissionConfig = config("submissions.categories.{$kategori}");
+        
+        // Filter requirements by active stages
+        if ($submissionConfig) {
+            $activeStages = config('submissions.active_stages', ['preliminary']);
+            $submissionConfig['requirements'] = array_filter(
+                $submissionConfig['requirements'] ?? [],
+                function ($requirement) use ($activeStages) {
+                    return in_array($requirement['stage'], $activeStages);
+                }
+            );
+        }
+        
         $existingSubmissions = $peserta->submissions()
             ->get()
             ->keyBy(function ($item) {

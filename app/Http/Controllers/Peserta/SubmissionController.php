@@ -13,6 +13,20 @@ use Illuminate\Support\Str;
 class SubmissionController extends Controller
 {
     /**
+     * Filter requirements based on active stages.
+     *
+     * @param array $requirements
+     * @return array
+     */
+    protected function filterActiveRequirements(array $requirements): array
+    {
+        $activeStages = config('submissions.active_stages', ['preliminary']);
+        
+        return array_filter($requirements, function ($requirement) use ($activeStages) {
+            return in_array($requirement['stage'], $activeStages);
+        });
+    }
+    /**
      * Display submission page with all requirements.
      */
     public function index()
@@ -32,6 +46,11 @@ class SubmissionController extends Controller
                 ->with('error', 'Kategori lomba tidak ditemukan.');
         }
 
+        // Filter requirements by active stages
+        $submissionConfig['requirements'] = $this->filterActiveRequirements(
+            $submissionConfig['requirements'] ?? []
+        );
+
         // Get existing submissions
         $existingSubmissions = $peserta->submissions()
             ->get()
@@ -41,12 +60,16 @@ class SubmissionController extends Controller
 
         // Get competition info
         $competition = config("competitions.categories.{$peserta->kategori}");
+        
+        // Get active stages for view
+        $activeStages = config('submissions.active_stages', ['preliminary']);
 
         return view('peserta.submissions', compact(
             'peserta',
             'submissionConfig',
             'existingSubmissions',
-            'competition'
+            'competition',
+            'activeStages'
         ));
     }
 
@@ -90,6 +113,15 @@ class SubmissionController extends Controller
 
         $submissionType = $request->input('submission_type');
         $stage = $request->input('stage');
+
+        // Check if stage is active
+        $activeStages = config('submissions.active_stages', ['preliminary']);
+        if (!in_array($stage, $activeStages)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Tahap kompetisi ini belum dibuka.'
+            ], 422);
+        }
 
         // Verify this submission type is valid for the category
         $requirements = config("submissions.categories.{$peserta->kategori}.requirements", []);
@@ -309,6 +341,10 @@ class SubmissionController extends Controller
         }
 
         $requirements = config("submissions.categories.{$peserta->kategori}.requirements", []);
+        
+        // Filter by active stages
+        $requirements = $this->filterActiveRequirements($requirements);
+        
         $submissions = $peserta->submissions()->get();
 
         $status = [];

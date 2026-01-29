@@ -136,10 +136,23 @@ class Peserta extends Model
 
     /**
      * Get submission requirements based on kategori.
+     * Optionally filter by active stages.
+     *
+     * @param bool $activeOnly Whether to return only active stage requirements
+     * @return array
      */
-    public function getSubmissionRequirements(): array
+    public function getSubmissionRequirements(bool $activeOnly = false): array
     {
-        return config("submissions.categories.{$this->kategori}.requirements", []);
+        $requirements = config("submissions.categories.{$this->kategori}.requirements", []);
+        
+        if ($activeOnly) {
+            $activeStages = config('submissions.active_stages', ['preliminary']);
+            $requirements = array_filter($requirements, function ($requirement) use ($activeStages) {
+                return in_array($requirement['stage'], $activeStages);
+            });
+        }
+        
+        return $requirements;
     }
 
     /**
@@ -163,10 +176,14 @@ class Peserta extends Model
 
     /**
      * Get submission progress (percentage of uploaded files).
+     * Only counts active stage requirements.
+     *
+     * @return array
      */
     public function getSubmissionProgressAttribute(): array
     {
-        $requirements = $this->getSubmissionRequirements();
+        // Use active requirements only for progress calculation
+        $requirements = $this->getSubmissionRequirements(true);
         $totalRequired = 0;
         $totalUploaded = 0;
 

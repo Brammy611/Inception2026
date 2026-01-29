@@ -139,6 +139,12 @@
           'semifinal' => 'Semifinal Round', 
           'final' => 'Final Round',
         ];
+        
+        // Filter stages by active stages from config
+        $activeStages = config('submissions.active_stages', ['preliminary']);
+        $stageOrder = array_filter($stageOrder, function($stage) use ($activeStages) {
+          return in_array($stage, $activeStages);
+        });
       @endphp
 
       @foreach($stageOrder as $stage)
