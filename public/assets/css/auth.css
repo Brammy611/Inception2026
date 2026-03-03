@@ -203,3 +203,48 @@ body:has(.register-form) .auth-footer a {
 .auth-footer a:hover {
   text-decoration: underline;
 }
+
+/* Forgot Password Link */
+.forgot-password {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.forgot-password a {
+  color: #666;
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.forgot-password a:hover {
+  color: #32477C;
+  text-decoration: underline;
+}
+
+/* Disabled Input */
+.disabled-input {
+  background-color: #f5f5f5 !important;
+  color: #888 !important;
+  cursor: not-allowed;
+}
+
+/* Alert Messages */
+.alert {
+  padding: 1rem 1.25rem;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  color: #155724;
+}
+
+.alert-error {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+}

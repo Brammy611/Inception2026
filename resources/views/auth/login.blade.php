@@ -9,6 +9,12 @@
       <p>Sign in to your Inception account</p>
     </div>
 
+    @if(session('success'))
+      <div class="alert alert-success">
+        {{ session('success') }}
+      </div>
+    @endif
+
     <form method="POST" action="{{ route('login') }}" class="auth-form">
       @csrf
       
@@ -52,6 +58,10 @@
       </div>
 
       <button type="submit" class="btn-submit">Login</button>
+
+      <div class="forgot-password">
+        <a href="{{ route('password.request') }}">Lupa Password?</a>
+      </div>
     </form>
 
     <div class="auth-footer">

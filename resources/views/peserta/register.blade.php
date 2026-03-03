@@ -221,10 +221,6 @@
           </div>
         </div>
       </div>
-            <span class="error-message">{{ $message }}</span>
-          @enderror
-        </div>
-      </div>
 
       {{-- Document Uploads --}}
       <h3 class="form-section-title">Upload Dokumen (Format PDF, Max 10MB)</h3>

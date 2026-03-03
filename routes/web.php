@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 
 // Main route
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -14,6 +15,12 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [LoginController::class, 'login']);
     Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
     Route::post('/register', [RegisterController::class, 'register']);
+    
+    // Password Reset Routes
+    Route::get('/forgot-password', [ForgotPasswordController::class, 'showForgotForm'])->name('password.request');
+    Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink'])->name('password.email');
+    Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
+    Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('password.update');
 });
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
@@ -57,6 +64,9 @@ Route::get('/career-talk', [HomeController::class, 'careerTalk'])->name('career-
 Route::get('/career-talk/register', [HomeController::class, 'careerTalkRegister'])->name('career-talk.register');
 Route::post('/career-talk/register', [HomeController::class, 'careerTalkRegisterStore'])->name('career-talk.register.store');
 Route::get('/career-talk/success', [HomeController::class, 'careerTalkSuccess'])->name('career-talk.success');
+
+// Company Visit Routes
+Route::get('/company-visit', [HomeController::class, 'companyVisit'])->name('company-visit');
 
 // Competition Routes
 Route::get('/competitions', function () {

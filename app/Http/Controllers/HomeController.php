@@ -149,6 +149,100 @@ class HomeController extends Controller
         return view('sections.career-talk-success');
     }
 
+    // Company Visit Methods
+    public function companyVisit()
+    {
+        $benefits = $this->getCompanyVisitBenefits();
+        $description = $this->getCompanyVisitDescription();
+        $faqs = $this->getCompanyVisitFaqs();
+        $googleFormUrl = 'YOUR_GOOGLE_FORM_URL'; // Replace with actual Google Form URL
+        
+        return view('sections.company-visit', compact('benefits', 'description', 'faqs', 'googleFormUrl'));
+    }
+
+    private function getCompanyVisitBenefits()
+    {
+        return [
+            'First-hand exposure to the oil and gas and energy industry',
+            'Insights and knowledge about the energy and industrial sector',
+            'Opportunity to learn how sustainability and innovation are applied in real industrial practices',
+            'Opportunity to apply academic knowledge to real-world industrial contexts',
+            'Opportunity to have direct discussions with industry experts',
+            'Networking opportunities and valuable professional connections',
+            'E-certificate of participation',
+            'Social media exposure',
+            'One main meal and one snack provided',
+            'Round-trip transportation from Semarang to Balongan by 50-seat bus'
+        ];
+    }
+
+    private function getCompanyVisitDescription()
+    {
+        return 'Pertamina Refinery Unit VI (RU VI) Balongan is one of PT Pertamina\'s strategic refining facilities located in Indramayu, West Java. The refinery plays a vital role in supporting Indonesia\'s national energy supply, particularly in meeting the growing demand for high-quality fuel and petroleum products. Guided by the spirit of Energy for the Nation, Pertamina RU VI Balongan is committed to strengthening Indonesia\'s energy security while promoting sustainable industrial development. The refinery operates with international standards and continuously adopts modern technologies and digitalized processes to enhance efficiency, reliability, and safety in its operations. Beyond its role in energy production, Pertamina RU VI Balongan also demonstrates a strong commitment to environmental protection, occupational safety, and community development. Through continuous innovation and sustainable practices, the refinery strives to create long-term value not only for the energy sector, but also for society and the surrounding environment. As one of the key national strategic assets, Pertamina RU VI Balongan stands as a symbol of Indonesia\'s progress toward a more resilient, independent, and sustainable energy future.';
+    }
+
+    private function getCompanyVisitFaqs()
+    {
+        return [
+            [
+                'question' => 'What is Company Visit Inception 2026?',
+                'answer' => 'Company Visit: "From Classroom to Industry: Preparing Future Leaders for Energy Sustainability" is the main program in the INCEPTION 2026 series, designed to provide students with firsthand experience in getting to know the professional world of the oil and gas industry and the energy sector comprehensively. Through visits to energy companies, participants will gain an in-depth understanding of operational practices, work culture, technological innovations, and the challenges faced by the industry in promoting the transition to sustainable energy. This activity includes presentations from company representatives, tours of relevant facilities or departments, and interactive discussion sessions that bridge academic theory with real-world applications. Open to students interested in oil and gas, renewable energy, industrial technology, the environment, management, and sustainable development, this program not only enriches their knowledge but also fosters critical thinking, innovative spirit, and professional readiness—empowering the younger generation to become future leaders who play an active role in realizing a responsible, efficient, and sustainable energy system.'
+            ],
+            [
+                'question' => 'When and where will the event be held?',
+                'answer' => 'PT Kilang Pertamina Internasional (Unit RU VI Balongan)'
+            ],
+            [
+                'question' => 'Who can participate in this event?',
+                'answer' => 'All students of Diponegoro University'
+            ],
+            [
+                'question' => 'Will participants receive a certificate?',
+                'answer' => 'Yes, all participants will receive an e-certificate, which will be distributed after the company visit is completed.'
+            ],
+            [
+                'question' => 'What should participants bring?',
+                'answer' => '<strong>Required Items:</strong><br>
+• Personal identification (ID card or student card)<br>
+• University Jacket (almamater)<br>
+• Proper safety attire: long pants, closed shoes, and a shirt<br>
+• Personal necessities (medication, drinking water, and light snacks)<br>
+• Notebook and stationery<br><br>
+<strong>Recommended Items:</strong><br>
+• Power bank<br>
+• Personal protective items (mask or hand sanitizer)<br>
+• Cap (only worn during company tours)<br><br>
+<strong>Prohibited Items:</strong><br>
+• Cigarettes and lighters<br>
+• Sharp objects<br>
+• Flammable materials'
+            ],
+            [
+                'question' => 'How does the registration process work?',
+                'answer' => 'The registration process is conducted online through a Google Form provided by the organizing committee. Participants are required to fill in and upload the required information and documents, including:<br>
+• Students of Diponegoro University<br>
+• Full name<br>
+• Student ID Numbert<br>
+• Faculty<br>
+• Study Program<br>
+• Class of [Year]<br>
+• Student ID Card<br>
+• Proof of Payment<br>
+• Wearpack size (S, M, L, XL, XXL)<br>
+• Shoe size<br><br>
+After completing the registration, participants will be added to a group chat with fellow participants. All further information, announcements, and reminders regarding the event will be shared through this group.'
+            ],
+            [
+                'question' => 'Will transportation be provided by the organizing committee?',
+                'answer' => 'Yes, transportation will be provided by the organizing committee. Participants will be transported using buses for both the departure and return trips.'
+            ],
+            [
+                'question' => 'Will meals be provided for the participants?',
+                'answer' => 'Yes, meals will be provided for all participants. The organizing committee will provide both main meals and snacks during the event.'
+            ]
+        ];
+    }
+
     private function getSpeakers()
     {
         return [
@@ -213,7 +307,7 @@ class HomeController extends Controller
                 'description' => 'Kunjungan eksklusif ke perusahaan.',
                 'image' => 'logo.png',
                 'delay' => '1s',
-                'link' => '#company-visit'
+                'link' => route('company-visit')
             ],
             [
                 'title' => 'Competition',

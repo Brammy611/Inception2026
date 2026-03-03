@@ -30,6 +30,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/register.css') }}">
   @elseif(Request::is('career-talk/success'))
     <link rel="stylesheet" href="{{ asset('assets/css/success.css') }}">
+  @elseif(Request::is('company-visit'))
+    <link rel="stylesheet" href="{{ asset('assets/css/career-talk.css') }}">
   @elseif(Request::is('peserta/dashboard'))
     <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
   @elseif(Request::is('peserta/profile'))
@@ -48,6 +50,10 @@
     <link rel="stylesheet" href="{{ asset('assets/css/admin-career-talk.css') }}">
   @elseif(Request::is('admin/peserta*'))
     <link rel="stylesheet" href="{{ asset('assets/css/admin-peserta.css') }}">
+  @elseif(Request::is('forgot-password'))
+    <link rel="stylesheet" href="{{ asset('assets/css/auth.css') }}">
+  @elseif(Request::is('reset-password*'))
+    <link rel="stylesheet" href="{{ asset('assets/css/auth.css') }}">
   @endif
   
   <!-- Google Fonts -->
