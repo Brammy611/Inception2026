@@ -48,6 +48,10 @@ Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'peserta'])->gro
     Route::get('/documents/share-poster/{filename}', [App\Http\Controllers\Peserta\DashboardController::class, 'viewSharePoster'])->name('view-share-poster');
     Route::get('/documents/payment/{filename}', [App\Http\Controllers\Peserta\DashboardController::class, 'viewPayment'])->name('view-payment');
     
+    // Semifinal Payment Routes
+    Route::post('/semifinal/payment', [App\Http\Controllers\Peserta\DashboardController::class, 'uploadSemifinalPayment'])->name('semifinal.payment.upload');
+    Route::get('/semifinal/payment/view', [App\Http\Controllers\Peserta\DashboardController::class, 'viewSemifinalPayment'])->name('semifinal.payment.view');
+    
     // Submission Routes
     Route::prefix('submissions')->name('submissions.')->group(function () {
         Route::get('/', function() { return redirect()->route('peserta.dashboard'); })->name('index');
@@ -104,5 +108,13 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
         Route::get('/{peserta}/submissions', [App\Http\Controllers\Admin\AdminSubmissionController::class, 'index'])->name('submissions.index');
         Route::get('/{peserta}/submissions/{type}/{stage}', [App\Http\Controllers\Admin\AdminSubmissionController::class, 'view'])->name('submissions.view');
         Route::get('/{peserta}/submissions/{type}/{stage}/download', [App\Http\Controllers\Admin\AdminSubmissionController::class, 'download'])->name('submissions.download');
+    });
+    
+    // Semifinal Payment Management
+    Route::prefix('semifinal-payments')->name('semifinal-payments.')->group(function () {
+        Route::get('/', [App\Http\Controllers\Admin\AdminSemifinalPaymentController::class, 'index'])->name('index');
+        Route::get('/{payment}/view', [App\Http\Controllers\Admin\AdminSemifinalPaymentController::class, 'view'])->name('view');
+        Route::patch('/{payment}/verify', [App\Http\Controllers\Admin\AdminSemifinalPaymentController::class, 'verify'])->name('verify');
+        Route::patch('/{payment}/reject', [App\Http\Controllers\Admin\AdminSemifinalPaymentController::class, 'reject'])->name('reject');
     });
 });

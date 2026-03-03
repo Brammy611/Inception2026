@@ -54,7 +54,21 @@ class DashboardController extends Controller
                 return $item->submission_type . '_' . $item->stage;
             });
 
-        return view('peserta.dashboard', compact('user', 'peserta', 'competition', 'kategori', 'payment', 'submissionConfig', 'existingSubmissions'));
+        // Get semifinal information
+        $semifinalQualifier = $peserta->semifinalQualifier;
+        $semifinalPayment = $peserta->semifinalPayment;
+
+        return view('peserta.dashboard', compact(
+            'user', 
+            'peserta', 
+            'competition', 
+            'kategori', 
+            'payment', 
+            'submissionConfig', 
+            'existingSubmissions',
+            'semifinalQualifier',
+            'semifinalPayment'
+        ));
     }
 
     /**
@@ -381,5 +395,88 @@ class DashboardController extends Controller
         $notification->markAsRead();
 
         return redirect()->back()->with('success', 'Notification marked as read');
+    }
+
+    /**
+     * Upload semifinal payment proof
+     */
+    public function uploadSemifinalPayment(Request $request)
+    {
+        $user = auth()->user();
+        $peserta = $user->peserta;
+
+        if (!$peserta) {
+            return redirect()->route('peserta.register');
+        }
+
+        // Check if team is qualified for semifinals
+        if (!$peserta->isQualifiedForSemifinal()) {
+            return redirect()->route('peserta.dashboard')
+                ->with('error', 'Tim Anda tidak lolos ke babak semifinal.');
+        }
+
+        // Check if payment already uploaded
+        if ($peserta->hasUploadedSemifinalPayment()) {
+            return redirect()->route('peserta.dashboard')
+                ->with('error', 'Anda sudah mengupload bukti pembayaran semifinal.');
+        }
+
+        $request->validate([
+            'payment_proof' => ['required', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'], // 10MB max
+        ]);
+
+        $file = $request->file('payment_proof');
+        
+        // Store file with unique name
+        $filename = 'semifinal_payment_' . $peserta->id . '_' . time() . '.' . $file->getClientOriginalExtension();
+        $path = $file->storeAs('peserta/semifinal_payments', $filename, 'public');
+
+        // Get semifinal qualifier record
+        $qualifier = $peserta->semifinalQualifier;
+
+        // Create semifinal payment record
+        \App\Models\SemifinalPayment::create([
+            'peserta_id' => $peserta->id,
+            'semifinal_qualifier_id' => $qualifier->id,
+            'payment_proof_path' => $path,
+            'original_filename' => $file->getClientOriginalName(),
+            'file_size' => $file->getSize(),
+            'status' => 'pending',
+            'uploaded_at' => now(),
+        ]);
+
+        return redirect()->route('peserta.dashboard')
+            ->with('success', 'Bukti pembayaran semifinal berhasil diupload. Menunggu verifikasi admin.');
+    }
+
+    /**
+     * View semifinal payment proof
+     */
+    public function viewSemifinalPayment()
+    {
+        $user = auth()->user();
+        $peserta = $user->peserta;
+
+        if (!$peserta) {
+            return redirect()->route('peserta.register');
+        }
+
+        $payment = $peserta->semifinalPayment;
+
+        if (!$payment) {
+            abort(404, 'Bukti pembayaran tidak ditemukan.');
+        }
+
+        $path = storage_path('app/public/' . $payment->payment_proof_path);
+
+        if (!file_exists($path)) {
+            abort(404, 'File tidak ditemukan.');
+        }
+
+        $mimeType = mime_content_type($path);
+        
+        return response()->file($path, [
+            'Content-Type' => $mimeType,
+        ]);
     }
 }

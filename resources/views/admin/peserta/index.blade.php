@@ -68,6 +68,18 @@
         <p>{{ $stats['rejected'] }}</p>
       </div>
     </div>
+
+    <div class="stat-card">
+      <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+        <svg width="24" height="24" fill="white" viewBox="0 0 24 24">
+          <path d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+        </svg>
+      </div>
+      <div class="stat-info">
+        <h3>Semifinalists</h3>
+        <p>{{ $stats['semifinal_qualified'] }}</p>
+      </div>
+    </div>
   </div>
 
   {{-- Category Breakdown --}}
@@ -127,9 +139,18 @@
         </select>
       </div>
 
+      <div class="form-group">
+        <label>Semifinal</label>
+        <select name="semifinal">
+          <option value="">All Teams</option>
+          <option value="qualified" {{ request('semifinal') == 'qualified' ? 'selected' : '' }}>Qualified</option>
+          <option value="not_qualified" {{ request('semifinal') == 'not_qualified' ? 'selected' : '' }}>Not Qualified</option>
+        </select>
+      </div>
+
       <button type="submit" class="btn-filter">Filter</button>
 
-      @if(request()->hasAny(['search', 'kategori', 'status']))
+      @if(request()->hasAny(['search', 'kategori', 'status', 'semifinal']))
         <a href="{{ route('admin.peserta.index') }}" class="btn-clear">Clear</a>
       @endif
     </form>
@@ -146,6 +167,7 @@
           <th>Leader</th>
           <th>University</th>
           <th>Status</th>
+          <th>Stage</th>
           <th>Documents</th>
           <th>Registered</th>
           <th>Actions</th>
@@ -185,6 +207,17 @@
             </span>
           </td>
           <td>
+            @if($p->isQualifiedForSemifinal())
+              <span class="status-badge" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); font-size: 11px; padding: 3px 8px;">
+                ⭐ Semifinal
+              </span>
+            @else
+              <span class="status-badge" style="background: #6b7280; font-size: 11px; padding: 3px 8px;">
+                Preliminary
+              </span>
+            @endif
+          </td>
+          <td>
             <div class="doc-indicators">
               <span class="doc-indicator {{ $p->ktm ? 'uploaded' : 'missing' }}" title="KTM">K</span>
               <span class="doc-indicator {{ $p->follow_ig ? 'uploaded' : 'missing' }}" title="Follow IG">F</span>
@@ -206,7 +239,7 @@
         </tr>
         @empty
         <tr>
-          <td colspan="9" class="no-data">
+          <td colspan="10" class="no-data">
             <svg width="48" height="48" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
             </svg>

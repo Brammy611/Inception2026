@@ -15,7 +15,7 @@ class AdminPesertaController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Peserta::with('user');
+        $query = Peserta::with(['user', 'semifinalQualifier']);
 
         // Filter by category
         if ($request->filled('kategori')) {
@@ -25,6 +25,15 @@ class AdminPesertaController extends Controller
         // Filter by status
         if ($request->filled('status')) {
             $query->where('status_verifikasi', $request->status);
+        }
+
+        // Filter by semifinal qualification
+        if ($request->filled('semifinal')) {
+            if ($request->semifinal === 'qualified') {
+                $query->whereHas('semifinalQualifier');
+            } elseif ($request->semifinal === 'not_qualified') {
+                $query->whereDoesntHave('semifinalQualifier');
+            }
         }
 
         // Search
@@ -45,6 +54,7 @@ class AdminPesertaController extends Controller
             'verified' => Peserta::where('status_verifikasi', 'verified')->count(),
             'pending' => Peserta::where('status_verifikasi', 'pending')->count(),
             'rejected' => Peserta::where('status_verifikasi', 'rejected')->count(),
+            'semifinal_qualified' => Peserta::whereHas('semifinalQualifier')->count(),
             'business_case' => Peserta::where('kategori', 'business_case')->count(),
             'geothermal' => Peserta::where('kategori', 'geothermal')->count(),
             'poster_paper' => Peserta::where('kategori', 'poster_paper')->count(),

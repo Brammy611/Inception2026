@@ -114,6 +114,23 @@ class SubmissionController extends Controller
         $submissionType = $request->input('submission_type');
         $stage = $request->input('stage');
 
+        // Check if stage is semifinal and verify payment
+        if ($stage === 'semifinal') {
+            if (!$peserta->isQualifiedForSemifinal()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Tim Anda tidak lolos ke babak semifinal.'
+                ], 403);
+            }
+
+            if (!$peserta->hasSemifinalPaymentVerified()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Anda harus mengupload dan memverifikasi bukti pembayaran semifinal terlebih dahulu.'
+                ], 403);
+            }
+        }
+
         // Check if stage is active
         $activeStages = config('submissions.active_stages', ['preliminary']);
         if (!in_array($stage, $activeStages)) {

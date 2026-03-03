@@ -95,6 +95,151 @@
       </div>
     </section>
 
+    {{-- Semifinal Section (Only for Qualified Teams) --}}
+    @if($semifinalQualifier)
+    <section class="section-semifinal">
+      <h2 class="section-title">SEMIFINAL STATUS</h2>
+      
+      {{-- Congratulations Card --}}
+      <div class="semifinal-congratulations">
+        <div class="congrats-icon">
+          <svg fill="currentColor" viewBox="0 0 24 24" width="32" height="32">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+        </div>
+        <div class="congrats-content">
+          <h3>🎉 Congratulations! Your Team Advanced to Semifinals</h3>
+          <p>Team <strong>{{ $peserta->nama_tim }}</strong> has successfully advanced to the semifinals of {{ $competition['name'] }}!</p>
+        </div>
+      </div>
+
+      {{-- Payment Section --}}
+      <div class="semifinal-payment-section">
+        <h3 class="subsection-title">Semifinal Payment</h3>
+        
+        @if(!$semifinalPayment)
+          {{-- Upload Payment Form --}}
+          <div class="payment-upload-card">
+            <div class="payment-info">
+              <h4>Upload Semifinal Payment Proof</h4>
+              <p>To proceed to the semifinal round, please complete the payment and upload the payment proof.</p>
+              
+              <div class="payment-details">
+                <div class="payment-detail-item">
+                  <span class="label">Bank</span>
+                  <strong>{{ $payment['bank_name'] }}</strong>
+                </div>
+                <div class="payment-detail-item">
+                  <span class="label">Account Number</span>
+                  <strong>{{ $payment['account_number'] }}</strong>
+                </div>
+                <div class="payment-detail-item">
+                  <span class="label">Account Holder</span>
+                  <strong>{{ $payment['account_holder'] }}</strong>
+                </div>
+              </div>
+            </div>
+
+            <form action="{{ route('peserta.semifinal.payment.upload') }}" method="POST" enctype="multipart/form-data" class="payment-upload-form" id="semifinalPaymentForm">
+              @csrf
+              <div class="submission-upload">
+                <div class="upload-dropzone" id="semifinalPaymentDropzone">
+                  <input type="file" 
+                         name="payment_proof" 
+                         id="payment_proof" 
+                         accept=".pdf,.jpg,.jpeg,.png,image/jpeg,image/png,application/pdf" 
+                         class="file-input-hidden"
+                         required>
+                  <label for="payment_proof" class="upload-label">
+                    <div class="upload-icon">
+                      <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" width="28" height="28">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>
+                      </svg>
+                    </div>
+                    <span class="upload-text">Upload Payment Proof</span>
+                    <span class="upload-hint">PDF, JPG, or PNG (Max 10MB)</span>
+                  </label>
+                </div>
+                <div class="upload-progress" id="semifinalPaymentProgress" style="display: none;">
+                  <div class="progress-bar-mini">
+                    <div class="progress-fill"></div>
+                  </div>
+                  <span class="progress-status">Uploading...</span>
+                </div>
+              </div>
+              <button type="submit" class="btn-upload-payment" id="submitPaymentBtn" style="display: none;">
+                <svg fill="currentColor" viewBox="0 0 24 24" width="20" height="20">
+                  <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/>
+                </svg>
+                Upload Payment Proof
+              </button>
+            </form>
+          </div>
+        @else
+          {{-- Payment Status --}}
+          <div class="payment-status-card status-{{ $semifinalPayment->status }}">
+            <div class="status-header">
+              <h4>Payment Proof Status</h4>
+              <span class="status-badge {{ $semifinalPayment->status }}">
+                @if($semifinalPayment->status === 'pending')
+                  ⏳ Pending
+                @elseif($semifinalPayment->status === 'verified')
+                  ✓ Verified
+                @else
+                  ✗ Rejected
+                @endif
+              </span>
+            </div>
+            
+            <div class="payment-file-info">
+              <svg fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
+                <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+              </svg>
+              <div class="file-details">
+                <span class="filename">{{ $semifinalPayment->original_filename }}</span>
+                <span class="filesize">{{ $semifinalPayment->file_size_human }}</span>
+                <span class="upload-date">Uploaded: {{ $semifinalPayment->uploaded_at->format('d M Y, H:i') }}</span>
+              </div>
+              <a href="{{ route('peserta.semifinal.payment.view') }}" target="_blank" class="btn-view-file">View</a>
+            </div>
+
+            @if($semifinalPayment->status === 'pending')
+              <div class="status-message pending">
+                <svg fill="currentColor" viewBox="0 0 24 24" width="20" height="20">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                </svg>
+                <span>Waiting for admin verification...</span>
+              </div>
+            @elseif($semifinalPayment->status === 'verified')
+              <div class="status-message verified">
+                <svg fill="currentColor" viewBox="0 0 24 24" width="20" height="20">
+                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <span>Payment verified! You can now upload semifinal submissions.</span>
+                @if($semifinalPayment->verified_at)
+                  <small>Verified at: {{ $semifinalPayment->verified_at->format('d M Y, H:i') }}</small>
+                @endif
+              </div>
+            @elseif($semifinalPayment->status === 'rejected')
+              <div class="status-message rejected">
+                <svg fill="currentColor" viewBox="0 0 24 24" width="20" height="20">
+                  <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/>
+                </svg>
+                <div>
+                  <span>Payment rejected.</span>
+                  @if($semifinalPayment->rejection_reason)
+                    <p class="rejection-reason"><strong>Reason:</strong> {{ $semifinalPayment->rejection_reason }}</p>
+                  @endif
+                  <p>Please contact admin for more information.</p>
+                </div>
+              </div>
+            @endif
+          </div>
+        @endif
+      </div>
+    </section>
+    @endif
+
     {{-- Competition Submissions Section --}}
     @if($submissionConfig)
     <section class="section-submissions-full">
@@ -127,6 +272,27 @@
       </div>
       @endif
 
+      {{-- Semifinal Payment Notice --}}
+      @if($peserta->isQualifiedForSemifinal() && !$peserta->canUploadSemifinalSubmission() && in_array('semifinal', config('submissions.active_stages', [])))
+      <div class="verification-notice" style="background: #fef3c7; border-color: #fbbf24;">
+        <div class="notice-icon" style="background: #fbbf24;">
+          <svg fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+          </svg>
+        </div>
+        <div class="notice-content">
+          <h4>Semifinal Payment Required</h4>
+          @if(!$peserta->hasUploadedSemifinalPayment())
+            <p>Please upload your semifinal payment proof to access semifinal submissions. Check the "Semifinal Status" section above.</p>
+          @elseif($peserta->semifinalPayment->status === 'pending')
+            <p>Your semifinal payment is pending verification. Semifinal submissions will be available once your payment is verified.</p>
+          @elseif($peserta->semifinalPayment->status === 'rejected')
+            <p>Your semifinal payment was rejected. Please contact admin to resolve this issue before you can upload semifinal submissions.</p>
+          @endif
+        </div>
+      </div>
+      @endif
+
       {{-- Submissions by Stage --}}
       @php
         $stages = [];
@@ -142,8 +308,24 @@
         
         // Filter stages by active stages from config
         $activeStages = config('submissions.active_stages', ['preliminary']);
-        $stageOrder = array_filter($stageOrder, function($stage) use ($activeStages) {
-          return in_array($stage, $activeStages);
+        $stageOrder = array_filter($stageOrder, function($stage) use ($activeStages, $peserta) {
+          // Check if stage is active
+          if (!in_array($stage, $activeStages)) {
+            return false;
+          }
+          
+          // For semifinal stage, check if team qualified and payment verified
+          if ($stage === 'semifinal') {
+            return $peserta->canUploadSemifinalSubmission();
+          }
+          
+          // For final stage, add similar check if needed in the future
+          if ($stage === 'final') {
+            // Add final stage qualification check here if needed
+            return true;
+          }
+          
+          return true;
         });
       @endphp
 
@@ -744,6 +926,299 @@
 .nav-item {
   position: relative;
 }
+
+/* Semifinal Section Styles */
+.section-semifinal {
+  margin-bottom: 2rem;
+}
+
+.semifinal-congratulations {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border-radius: 12px;
+  color: white;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2);
+}
+
+.congrats-icon {
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+}
+
+.congrats-content h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.congrats-content p {
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+  opacity: 0.95;
+}
+
+.congrats-content small {
+  font-size: 0.875rem;
+  opacity: 0.85;
+}
+
+.semifinal-payment-section {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.subsection-title {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.payment-upload-card {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.payment-info h4 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.payment-info p {
+  margin: 0 0 1rem 0;
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.payment-details {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.payment-detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.payment-detail-item .label {
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.payment-detail-item strong {
+  color: #1f2937;
+  font-size: 0.875rem;
+}
+
+.payment-upload-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.btn-upload-payment {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 0.5rem;
+}
+
+.btn-upload-payment:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+}
+
+.payment-status-card {
+  padding: 1.25rem;
+  border-radius: 8px;
+  border: 2px solid;
+}
+
+.payment-status-card.status-pending {
+  background: #fef3c7;
+  border-color: #fbbf24;
+}
+
+.payment-status-card.status-verified {
+  background: #d1fae5;
+  border-color: #10b981;
+}
+
+.payment-status-card.status-rejected {
+  background: #fee2e2;
+  border-color: #ef4444;
+}
+
+.status-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.status-header h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.status-badge {
+  padding: 0.375rem 0.875rem;
+  border-radius: 20px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.status-badge.pending {
+  background: #fbbf24;
+  color: #78350f;
+}
+
+.status-badge.verified {
+  background: #10b981;
+  color: white;
+}
+
+.status-badge.rejected {
+  background: #ef4444;
+  color: white;
+}
+
+.payment-file-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.payment-file-info svg {
+  flex-shrink: 0;
+  color: #6b7280;
+}
+
+.file-details {
+  flex: 1;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.file-details .filename {
+  font-weight: 600;
+  color: #1f2937;
+  font-size: 0.9375rem;
+}
+
+.file-details .filesize,
+.file-details .upload-date {
+  color: #6b7280;
+  font-size: 0.8125rem;
+}
+
+.btn-view-file {
+  padding: 0.5rem 1rem;
+  background: #3b82f6;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.btn-view-file:hover {
+  background: #2563eb;
+}
+
+.status-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.status-message.pending {
+  background: rgba(251, 191, 36, 0.1);
+}
+
+.status-message.verified {
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.status-message.rejected {
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.status-message svg {
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+}
+
+.status-message.pending svg {
+  color: #d97706;
+}
+
+.status-message.verified svg {
+  color: #059669;
+}
+
+.status-message.rejected svg {
+  color: #dc2626;
+}
+
+.status-message span {
+  font-weight: 600;
+  color: #1f2937;
+  font-size: 0.9375rem;
+}
+
+.status-message small {
+  display: block;
+  margin-top: 0.25rem;
+  color: #6b7280;
+  font-size: 0.8125rem;
+}
+
+.rejection-reason {
+  margin: 0.5rem 0;
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+  font-size: 0.875rem;
+}
 </style>
 
 {{-- Toast Notification --}}
@@ -960,6 +1435,81 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             toast.style.display = 'none';
         }, 4000);
+    }
+
+    // Semifinal payment upload handling
+    const paymentFileInput = document.getElementById('payment_proof');
+    const submitPaymentBtn = document.getElementById('submitPaymentBtn');
+    const paymentDropzone = document.getElementById('semifinalPaymentDropzone');
+    
+    if (paymentFileInput && submitPaymentBtn && paymentDropzone) {
+        // Handle file selection
+        paymentFileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                const file = e.target.files[0];
+                const fileName = file.name;
+                const fileSize = (file.size / (1024 * 1024)).toFixed(2); // MB
+                
+                // Update dropzone to show selected file
+                const uploadText = paymentDropzone.querySelector('.upload-text');
+                const uploadHint = paymentDropzone.querySelector('.upload-hint');
+                
+                if (uploadText && uploadHint) {
+                    uploadText.textContent = fileName;
+                    uploadHint.textContent = fileSize + ' MB';
+                }
+                
+                // Show submit button
+                submitPaymentBtn.style.display = 'flex';
+            }
+        });
+        
+        // Handle drag and drop for payment
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            paymentDropzone.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        ['dragenter', 'dragover'].forEach(eventName => {
+            paymentDropzone.addEventListener(eventName, () => paymentDropzone.classList.add('dragover'), false);
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            paymentDropzone.addEventListener(eventName, () => paymentDropzone.classList.remove('dragover'), false);
+        });
+        
+        paymentDropzone.addEventListener('drop', (e) => {
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                const file = files[0];
+                
+                // Validate file type
+                const validTypes = ['application/pdf', 'image/jpeg', 'image/png'];
+                if (!validTypes.includes(file.type)) {
+                    showToast('error', 'Hanya file PDF, JPG, atau PNG yang diperbolehkan.');
+                    return;
+                }
+                
+                // Validate file size (10MB)
+                if (file.size > 10 * 1024 * 1024) {
+                    showToast('error', 'Ukuran file melebihi batas maksimum 10 MB.');
+                    return;
+                }
+                
+                // Create a DataTransfer to set files
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                paymentFileInput.files = dataTransfer.files;
+                
+                // Trigger change event
+                const event = new Event('change', { bubbles: true });
+                paymentFileInput.dispatchEvent(event);
+            }
+        });
     }
 });
 </script>

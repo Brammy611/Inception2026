@@ -135,6 +135,55 @@ class Peserta extends Model
     }
 
     /**
+     * Get the semifinal qualifier record for this peserta.
+     */
+    public function semifinalQualifier()
+    {
+        return $this->hasOne(SemifinalQualifier::class);
+    }
+
+    /**
+     * Get the semifinal payment for this peserta.
+     */
+    public function semifinalPayment()
+    {
+        return $this->hasOne(SemifinalPayment::class);
+    }
+
+    /**
+     * Check if this team qualified for semifinals.
+     */
+    public function isQualifiedForSemifinal(): bool
+    {
+        return $this->semifinalQualifier()->exists();
+    }
+
+    /**
+     * Check if this team has uploaded semifinal payment proof.
+     */
+    public function hasUploadedSemifinalPayment(): bool
+    {
+        return $this->semifinalPayment()->exists();
+    }
+
+    /**
+     * Check if this team's semifinal payment has been verified.
+     */
+    public function hasSemifinalPaymentVerified(): bool
+    {
+        return $this->semifinalPayment()->where('status', 'verified')->exists();
+    }
+
+    /**
+     * Check if this team can upload semifinal submissions.
+     * Team must be qualified AND have verified payment.
+     */
+    public function canUploadSemifinalSubmission(): bool
+    {
+        return $this->isQualifiedForSemifinal() && $this->hasSemifinalPaymentVerified();
+    }
+
+    /**
      * Get submission requirements based on kategori.
      * Optionally filter by active stages.
      *
