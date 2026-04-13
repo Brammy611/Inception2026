@@ -14,6 +14,12 @@
   margin-bottom: 2rem;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .admin-header h1 {
   font-size: 2rem;
   font-weight: 700;
@@ -44,6 +50,26 @@
 
 .btn-export:hover {
   background: #059669;
+}
+
+.btn-semifinal {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-semifinal:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
 }
 
 /* Table Container */
@@ -291,6 +317,10 @@
   border-radius: 6px;
   font-size: 0.8125rem;
   font-weight: 600;
+}
+
+.stage-badge {
+  color: #ffffff;
 }
 
 .status-pending {
@@ -795,6 +825,16 @@
   }
 
   .btn-export {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .header-actions {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .btn-semifinal {
     width: 100%;
     justify-content: center;
   }

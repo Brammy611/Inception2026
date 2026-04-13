@@ -4,58 +4,48 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Mail\CompetitionPaymentStatusMail;
-use App\Models\SemifinalPayment;
+use App\Models\FinalPayment;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
-class AdminSemifinalPaymentController extends Controller
+class AdminFinalPaymentController extends Controller
 {
-    /**
-     * Display a listing of semifinal payments.
-     */
     public function index(Request $request)
     {
-        $query = SemifinalPayment::with(['peserta', 'semifinalQualifier']);
+        $query = FinalPayment::with(['peserta', 'finalQualifier']);
 
-        // Filter by status
         if ($request->has('status') && $request->status !== 'all') {
             $query->where('status', $request->status);
         }
 
-        // Filter by competition category
         if ($request->has('category') && $request->category !== 'all') {
-            $query->whereHas('semifinalQualifier', function ($q) use ($request) {
-                $q->where('competition_category', $request->category);
+            $query->whereHas('finalQualifier', function ($builder) use ($request) {
+                $builder->where('competition_category', $request->category);
             });
         }
 
-        // Search by team name
         if ($request->has('search') && $request->search) {
             $search = $request->search;
-            $query->whereHas('peserta', function ($q) use ($search) {
-                $q->where('nama_tim', 'like', "%{$search}%");
+            $query->whereHas('peserta', function ($builder) use ($search) {
+                $builder->where('nama_tim', 'like', "%{$search}%");
             });
         }
 
         $payments = $query->latest()->paginate(20);
 
-        // Statistics
         $statistics = [
-            'total' => SemifinalPayment::count(),
-            'pending' => SemifinalPayment::where('status', 'pending')->count(),
-            'verified' => SemifinalPayment::where('status', 'verified')->count(),
-            'rejected' => SemifinalPayment::where('status', 'rejected')->count(),
+            'total' => FinalPayment::count(),
+            'pending' => FinalPayment::where('status', 'pending')->count(),
+            'verified' => FinalPayment::where('status', 'verified')->count(),
+            'rejected' => FinalPayment::where('status', 'rejected')->count(),
         ];
 
-        return view('admin.semifinal-payments.index', compact('payments', 'statistics'));
+        return view('admin.final-payments.index', compact('payments', 'statistics'));
     }
 
-    /**
-     * View payment proof file.
-     */
-    public function view(SemifinalPayment $payment)
+    public function view(FinalPayment $payment)
     {
         $path = storage_path('app/public/' . $payment->payment_proof_path);
 
@@ -64,21 +54,18 @@ class AdminSemifinalPaymentController extends Controller
         }
 
         $mimeType = mime_content_type($path);
-        
+
         return response()->file($path, [
             'Content-Type' => $mimeType,
         ]);
     }
 
-    /**
-     * Verify payment proof.
-     */
-    public function verify(SemifinalPayment $payment)
+    public function verify(FinalPayment $payment)
     {
-        $payment->loadMissing(['peserta.user', 'semifinalQualifier']);
+        $payment->loadMissing(['peserta.user', 'finalQualifier']);
 
         if ($payment->status === 'verified') {
-            return redirect()->back()->with('error', 'Pembayaran sudah terverifikasi.');
+            return redirect()->back()->with('error', 'Pembayaran final sudah terverifikasi.');
         }
 
         $payment->update([
@@ -87,12 +74,11 @@ class AdminSemifinalPaymentController extends Controller
             'rejection_reason' => null,
         ]);
 
-        $category = $payment->semifinalQualifier->competition_category ?? $payment->peserta->kategori;
-        $groupLink = $this->resolveGroupLink('semifinal', $category);
+        $category = $payment->finalQualifier->competition_category ?? $payment->peserta->kategori;
+        $groupLink = $this->resolveGroupLink('final', $category);
 
-        // Create notification for the participant
         $notificationData = [
-            'stage' => 'semifinal',
+            'stage' => 'final',
         ];
 
         if (!empty($groupLink)) {
@@ -101,37 +87,34 @@ class AdminSemifinalPaymentController extends Controller
 
         Notification::create([
             'user_id' => $payment->peserta->user_id,
-            'type' => 'payment_verified',
-            'title' => 'Pembayaran Semifinal Terverifikasi',
-            'message' => 'Pembayaran semifinal Anda telah diverifikasi. Anda sekarang dapat mengupload submission semifinal.',
+            'type' => 'final_payment_verified',
+            'title' => 'Pembayaran Final Terverifikasi',
+            'message' => 'Pembayaran final Anda telah diverifikasi. Anda sekarang dapat mengupload submission final.',
             'data' => $notificationData,
             'is_read' => false,
         ]);
 
         $this->sendPaymentStatusMail(
             $payment,
-            'semifinal',
+            'final',
             'verified',
             $groupLink,
             null,
         );
 
-        return redirect()->back()->with('success', 'Pembayaran berhasil diverifikasi.');
+        return redirect()->back()->with('success', 'Pembayaran final berhasil diverifikasi.');
     }
 
-    /**
-     * Reject payment proof.
-     */
-    public function reject(Request $request, SemifinalPayment $payment)
+    public function reject(Request $request, FinalPayment $payment)
     {
-        $payment->loadMissing(['peserta.user', 'semifinalQualifier']);
+        $payment->loadMissing(['peserta.user', 'finalQualifier']);
 
         $request->validate([
             'rejection_reason' => 'required|string|max:500',
         ]);
 
         if ($payment->status === 'rejected') {
-            return redirect()->back()->with('error', 'Pembayaran sudah ditolak sebelumnya.');
+            return redirect()->back()->with('error', 'Pembayaran final sudah ditolak sebelumnya.');
         }
 
         $payment->update([
@@ -140,24 +123,23 @@ class AdminSemifinalPaymentController extends Controller
             'verified_at' => null,
         ]);
 
-        // Create notification for the participant
         Notification::create([
             'user_id' => $payment->peserta->user_id,
-            'type' => 'payment_rejected',
-            'title' => 'Pembayaran Semifinal Ditolak',
-            'message' => 'Pembayaran semifinal Anda ditolak. Alasan: ' . $request->rejection_reason,
+            'type' => 'final_payment_rejected',
+            'title' => 'Pembayaran Final Ditolak',
+            'message' => 'Pembayaran final Anda ditolak. Alasan: ' . $request->rejection_reason,
             'is_read' => false,
         ]);
 
         $this->sendPaymentStatusMail(
             $payment,
-            'semifinal',
+            'final',
             'rejected',
             null,
             $request->rejection_reason,
         );
 
-        return redirect()->back()->with('success', 'Pembayaran ditolak.');
+        return redirect()->back()->with('success', 'Pembayaran final ditolak.');
     }
 
     private function resolveGroupLink(string $stage, string $category): ?string
@@ -166,7 +148,7 @@ class AdminSemifinalPaymentController extends Controller
     }
 
     private function sendPaymentStatusMail(
-        SemifinalPayment $payment,
+        FinalPayment $payment,
         string $stage,
         string $status,
         ?string $groupLink,
@@ -189,7 +171,7 @@ class AdminSemifinalPaymentController extends Controller
                 )
             );
         } catch (\Throwable $exception) {
-            Log::warning('Failed sending semifinal payment status email', [
+            Log::warning('Failed sending final payment status email', [
                 'payment_id' => $payment->id,
                 'status' => $status,
                 'error' => $exception->getMessage(),

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Peserta;
 
 use App\Http\Controllers\Controller;
+use App\Models\FinalPayment;
 use App\Models\Peserta;
 use App\Models\Notification;
 use Illuminate\Http\Request;
@@ -57,6 +58,8 @@ class DashboardController extends Controller
         // Get semifinal information
         $semifinalQualifier = $peserta->semifinalQualifier;
         $semifinalPayment = $peserta->semifinalPayment;
+        $finalQualifier = $peserta->finalQualifier;
+        $finalPayment = $peserta->finalPayment;
 
         return view('peserta.dashboard', compact(
             'user', 
@@ -67,7 +70,9 @@ class DashboardController extends Controller
             'submissionConfig', 
             'existingSubmissions',
             'semifinalQualifier',
-            'semifinalPayment'
+            'semifinalPayment',
+            'finalQualifier',
+            'finalPayment'
         ));
     }
 
@@ -453,6 +458,53 @@ class DashboardController extends Controller
     }
 
     /**
+     * Upload final payment proof
+     */
+    public function uploadFinalPayment(Request $request)
+    {
+        $user = auth()->user();
+        $peserta = $user->peserta;
+
+        if (!$peserta) {
+            return redirect()->route('peserta.register');
+        }
+
+        if (!$peserta->isQualifiedForFinal()) {
+            return redirect()->route('peserta.dashboard')
+                ->with('error', 'Tim Anda tidak lolos ke babak final.');
+        }
+
+        if ($peserta->hasUploadedFinalPayment()) {
+            return redirect()->route('peserta.dashboard')
+                ->with('error', 'Anda sudah mengupload bukti pembayaran final.');
+        }
+
+        $request->validate([
+            'final_payment_proof' => ['required', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:10240'],
+        ]);
+
+        $file = $request->file('final_payment_proof');
+
+        $filename = 'final_payment_' . $peserta->id . '_' . time() . '.' . $file->getClientOriginalExtension();
+        $path = $file->storeAs('peserta/final_payments', $filename, 'public');
+
+        $qualifier = $peserta->finalQualifier;
+
+        FinalPayment::create([
+            'peserta_id' => $peserta->id,
+            'final_qualifier_id' => $qualifier->id,
+            'payment_proof_path' => $path,
+            'original_filename' => $file->getClientOriginalName(),
+            'file_size' => $file->getSize(),
+            'status' => 'pending',
+            'uploaded_at' => now(),
+        ]);
+
+        return redirect()->route('peserta.dashboard')
+            ->with('success', 'Bukti pembayaran final berhasil diupload. Menunggu verifikasi admin.');
+    }
+
+    /**
      * View semifinal payment proof
      */
     public function viewSemifinalPayment()
@@ -478,6 +530,37 @@ class DashboardController extends Controller
 
         $mimeType = mime_content_type($path);
         
+        return response()->file($path, [
+            'Content-Type' => $mimeType,
+        ]);
+    }
+
+    /**
+     * View final payment proof
+     */
+    public function viewFinalPayment()
+    {
+        $user = auth()->user();
+        $peserta = $user->peserta;
+
+        if (!$peserta) {
+            return redirect()->route('peserta.register');
+        }
+
+        $payment = $peserta->finalPayment;
+
+        if (!$payment) {
+            abort(404, 'Bukti pembayaran tidak ditemukan.');
+        }
+
+        $path = storage_path('app/public/' . $payment->payment_proof_path);
+
+        if (!file_exists($path)) {
+            abort(404, 'File tidak ditemukan.');
+        }
+
+        $mimeType = mime_content_type($path);
+
         return response()->file($path, [
             'Content-Type' => $mimeType,
         ]);

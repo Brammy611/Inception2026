@@ -51,6 +51,10 @@ Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'peserta'])->gro
     // Semifinal Payment Routes
     Route::post('/semifinal/payment', [App\Http\Controllers\Peserta\DashboardController::class, 'uploadSemifinalPayment'])->name('semifinal.payment.upload');
     Route::get('/semifinal/payment/view', [App\Http\Controllers\Peserta\DashboardController::class, 'viewSemifinalPayment'])->name('semifinal.payment.view');
+
+    // Final Payment Routes
+    Route::post('/final/payment', [App\Http\Controllers\Peserta\DashboardController::class, 'uploadFinalPayment'])->name('final.payment.upload');
+    Route::get('/final/payment/view', [App\Http\Controllers\Peserta\DashboardController::class, 'viewFinalPayment'])->name('final.payment.view');
     
     // Submission Routes
     Route::prefix('submissions')->name('submissions.')->group(function () {
@@ -116,5 +120,13 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
         Route::get('/{payment}/view', [App\Http\Controllers\Admin\AdminSemifinalPaymentController::class, 'view'])->name('view');
         Route::patch('/{payment}/verify', [App\Http\Controllers\Admin\AdminSemifinalPaymentController::class, 'verify'])->name('verify');
         Route::patch('/{payment}/reject', [App\Http\Controllers\Admin\AdminSemifinalPaymentController::class, 'reject'])->name('reject');
+    });
+
+    // Final Payment Management
+    Route::prefix('final-payments')->name('final-payments.')->group(function () {
+        Route::get('/', [App\Http\Controllers\Admin\AdminFinalPaymentController::class, 'index'])->name('index');
+        Route::get('/{payment}/view', [App\Http\Controllers\Admin\AdminFinalPaymentController::class, 'view'])->name('view');
+        Route::patch('/{payment}/verify', [App\Http\Controllers\Admin\AdminFinalPaymentController::class, 'verify'])->name('verify');
+        Route::patch('/{payment}/reject', [App\Http\Controllers\Admin\AdminFinalPaymentController::class, 'reject'])->name('reject');
     });
 });

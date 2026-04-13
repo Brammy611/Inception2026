@@ -50,6 +50,10 @@
     <link rel="stylesheet" href="{{ asset('assets/css/admin-career-talk.css') }}">
   @elseif(Request::is('admin/peserta*'))
     <link rel="stylesheet" href="{{ asset('assets/css/admin-peserta.css') }}">
+  @elseif(Request::is('admin/semifinal-payments*'))
+    <link rel="stylesheet" href="{{ asset('assets/css/admin-peserta.css') }}">
+  @elseif(Request::is('admin/final-payments*'))
+    <link rel="stylesheet" href="{{ asset('assets/css/admin-peserta.css') }}">
   @elseif(Request::is('forgot-password'))
     <link rel="stylesheet" href="{{ asset('assets/css/auth.css') }}">
   @elseif(Request::is('reset-password*'))
@@ -61,7 +65,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Great+Vibes&family=Kavoon&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&family=Playwrite+AU+SA:wght@100..400&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sacramento&family=Sniglet:wght@400;800&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
   <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.90/build/spline-viewer.js"></script>
-  
+  @yield('styles')
   @stack('styles')
 </head>
 

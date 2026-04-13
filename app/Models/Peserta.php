@@ -151,6 +151,22 @@ class Peserta extends Model
     }
 
     /**
+     * Get the final qualifier record for this peserta.
+     */
+    public function finalQualifier()
+    {
+        return $this->hasOne(FinalQualifier::class);
+    }
+
+    /**
+     * Get the final payment for this peserta.
+     */
+    public function finalPayment()
+    {
+        return $this->hasOne(FinalPayment::class);
+    }
+
+    /**
      * Check if this team qualified for semifinals.
      */
     public function isQualifiedForSemifinal(): bool
@@ -181,6 +197,39 @@ class Peserta extends Model
     public function canUploadSemifinalSubmission(): bool
     {
         return $this->isQualifiedForSemifinal() && $this->hasSemifinalPaymentVerified();
+    }
+
+    /**
+     * Check if this team qualified for finals.
+     */
+    public function isQualifiedForFinal(): bool
+    {
+        return $this->finalQualifier()->exists();
+    }
+
+    /**
+     * Check if this team has uploaded final payment proof.
+     */
+    public function hasUploadedFinalPayment(): bool
+    {
+        return $this->finalPayment()->exists();
+    }
+
+    /**
+     * Check if this team's final payment has been verified.
+     */
+    public function hasFinalPaymentVerified(): bool
+    {
+        return $this->finalPayment()->where('status', 'verified')->exists();
+    }
+
+    /**
+     * Check if this team can upload final submissions.
+     * Team must be qualified AND have verified payment.
+     */
+    public function canUploadFinalSubmission(): bool
+    {
+        return $this->isQualifiedForFinal() && $this->hasFinalPaymentVerified();
     }
 
     /**

@@ -105,12 +105,148 @@
       </div>
     </section>
 
+    {{-- Final Section (Only for Final Qualified Teams) --}}
+    @if($finalQualifier)
+    <section class="section-semifinal">
+      <h2 class="section-title">FINAL STATUS</h2>
+
+      <div class="semifinal-congratulations">
+        <div class="congrats-icon">
+          <svg fill="currentColor" viewBox="0 0 24 24" width="32" height="32">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+        </div>
+        <div class="congrats-content">
+          <h3>🏆 Congratulations! Your Team Advanced to Final</h3>
+          <p>Team <strong>{{ $peserta->nama_tim }}</strong> has successfully advanced to the final round of {{ $competition['name'] }}!</p>
+        </div>
+      </div>
+
+      <div class="semifinal-payment-section">
+        <h3 class="subsection-title">Final Payment</h3>
+
+        @if(!$finalPayment)
+          <div class="payment-upload-card">
+            <div class="payment-info">
+              <h4>Upload Final Payment Proof</h4>
+              <p>To proceed to the final round, please complete the payment and upload the payment proof.</p>
+
+              <div class="payment-details">
+                <div class="payment-detail-item">
+                  <span class="label">Bank</span>
+                  <strong>{{ $payment['bank_name'] }}</strong>
+                </div>
+                <div class="payment-detail-item">
+                  <span class="label">Account Number</span>
+                  <strong>{{ $payment['account_number'] }}</strong>
+                </div>
+                <div class="payment-detail-item">
+                  <span class="label">Account Holder</span>
+                  <strong>{{ $payment['account_holder'] }}</strong>
+                </div>
+              </div>
+            </div>
+
+            <form action="{{ route('peserta.final.payment.upload') }}" method="POST" enctype="multipart/form-data" class="payment-upload-form" id="finalPaymentForm">
+              @csrf
+              <div class="submission-upload">
+                <div class="upload-dropzone" id="finalPaymentDropzone">
+                  <input type="file"
+                         name="final_payment_proof"
+                         id="final_payment_proof"
+                         accept=".pdf,.jpg,.jpeg,.png,image/jpeg,image/png,application/pdf"
+                         class="file-input-hidden"
+                         required>
+                  <label for="final_payment_proof" class="upload-label">
+                    <div class="upload-icon">
+                      <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" width="28" height="28">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>
+                      </svg>
+                    </div>
+                    <span class="upload-text">Upload Final Payment Proof</span>
+                    <span class="upload-hint">PDF, JPG, or PNG (Max 10MB)</span>
+                  </label>
+                </div>
+              </div>
+              <button type="submit" class="btn-upload-payment" id="submitFinalPaymentBtn" style="display: none;">
+                <svg fill="currentColor" viewBox="0 0 24 24" width="20" height="20">
+                  <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/>
+                </svg>
+                Upload Final Payment Proof
+              </button>
+            </form>
+          </div>
+        @else
+          <div class="payment-status-card status-{{ $finalPayment->status }}">
+            <div class="status-header">
+              <h4>Final Payment Proof Status</h4>
+              <span class="status-badge {{ $finalPayment->status }}">
+                @if($finalPayment->status === 'pending')
+                  ⏳ Pending
+                @elseif($finalPayment->status === 'verified')
+                  ✓ Verified
+                @else
+                  ✗ Rejected
+                @endif
+              </span>
+            </div>
+
+            <div class="payment-file-info">
+              <svg fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
+                <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+              </svg>
+              <div class="file-details">
+                <span class="filename">{{ $finalPayment->original_filename }}</span>
+                <span class="filesize">{{ $finalPayment->file_size_human }}</span>
+                <span class="upload-date">Uploaded: {{ $finalPayment->uploaded_at->format('d M Y, H:i') }}</span>
+              </div>
+              <a href="{{ route('peserta.final.payment.view') }}" target="_blank" class="btn-view-file">View</a>
+            </div>
+
+            @if($finalPayment->status === 'pending')
+              <div class="status-message pending">
+                <svg fill="currentColor" viewBox="0 0 24 24" width="20" height="20">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                </svg>
+                <span>Waiting for admin verification...</span>
+              </div>
+            @elseif($finalPayment->status === 'verified')
+              <div class="status-message verified">
+                <svg fill="currentColor" viewBox="0 0 24 24" width="20" height="20">
+                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <span>Payment verified! You can now upload final submissions.</span>
+                @if($finalPayment->verified_at)
+                  <small>Verified at: {{ $finalPayment->verified_at->format('d M Y, H:i') }}</small>
+                @endif
+              </div>
+            @elseif($finalPayment->status === 'rejected')
+              <div class="status-message rejected">
+                <svg fill="currentColor" viewBox="0 0 24 24" width="20" height="20">
+                  <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/>
+                </svg>
+                <div>
+                  <span>Payment rejected.</span>
+                  @if($finalPayment->rejection_reason)
+                    <p class="rejection-reason"><strong>Reason:</strong> {{ $finalPayment->rejection_reason }}</p>
+                  @endif
+                  <p>Please contact admin for more information.</p>
+                </div>
+              </div>
+            @endif
+          </div>
+        @endif
+      </div>
+    </section>
+    @endif
+
     {{-- Semifinal Section (Only for Qualified Teams) --}}
     @if($semifinalQualifier)
     <section class="section-semifinal">
       <h2 class="section-title">SEMIFINAL STATUS</h2>
       
       {{-- Congratulations Card --}}
+      @if(!$finalQualifier)
       <div class="semifinal-congratulations">
         <div class="congrats-icon">
           <svg fill="currentColor" viewBox="0 0 24 24" width="32" height="32">
@@ -122,6 +258,7 @@
           <p>Team <strong>{{ $peserta->nama_tim }}</strong> has successfully advanced to the semifinals of {{ $competition['name'] }}!</p>
         </div>
       </div>
+      @endif
 
       {{-- Payment Section --}}
       <div class="semifinal-payment-section">
@@ -303,6 +440,27 @@
       </div>
       @endif
 
+      {{-- Final Payment Notice --}}
+      @if($peserta->isQualifiedForFinal() && !$peserta->canUploadFinalSubmission() && in_array('final', config('submissions.active_stages', [])))
+      <div class="verification-notice" style="background: #ede9fe; border-color: #8b5cf6;">
+        <div class="notice-icon" style="background: #8b5cf6;">
+          <svg fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+          </svg>
+        </div>
+        <div class="notice-content">
+          <h4>Final Payment Required</h4>
+          @if(!$peserta->hasUploadedFinalPayment())
+            <p>Please upload your final payment proof to access final submissions. Check the "Final Status" section above.</p>
+          @elseif($peserta->finalPayment->status === 'pending')
+            <p>Your final payment is pending verification. Final submissions will be available once your payment is verified.</p>
+          @elseif($peserta->finalPayment->status === 'rejected')
+            <p>Your final payment was rejected. Please contact admin to resolve this issue before you can upload final submissions.</p>
+          @endif
+        </div>
+      </div>
+      @endif
+
       {{-- Submissions by Stage --}}
       @php
         $stages = [];
@@ -331,8 +489,7 @@
           
           // For final stage, add similar check if needed in the future
           if ($stage === 'final') {
-            // Add final stage qualification check here if needed
-            return true;
+            return $peserta->canUploadFinalSubmission();
           }
           
           return true;
@@ -940,6 +1097,10 @@
 /* Semifinal Section Styles */
 .section-semifinal {
   margin-bottom: 2rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
 }
 
 .semifinal-congratulations {
@@ -987,6 +1148,8 @@
   border-radius: 12px;
   padding: 1.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .subsection-title {
@@ -1447,12 +1610,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 4000);
     }
 
-    // Semifinal payment upload handling
-    const paymentFileInput = document.getElementById('payment_proof');
-    const submitPaymentBtn = document.getElementById('submitPaymentBtn');
-    const paymentDropzone = document.getElementById('semifinalPaymentDropzone');
-    
-    if (paymentFileInput && submitPaymentBtn && paymentDropzone) {
+    function initPaymentDropzone(fileInputId, submitButtonId, dropzoneId) {
+      const paymentFileInput = document.getElementById(fileInputId);
+      const submitPaymentBtn = document.getElementById(submitButtonId);
+      const paymentDropzone = document.getElementById(dropzoneId);
+
+      if (!paymentFileInput || !submitPaymentBtn || !paymentDropzone) {
+        return;
+      }
+
         // Handle file selection
         paymentFileInput.addEventListener('change', (e) => {
             if (e.target.files.length > 0) {
@@ -1521,6 +1687,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+          // Final and semifinal payment upload handling
+          initPaymentDropzone('final_payment_proof', 'submitFinalPaymentBtn', 'finalPaymentDropzone');
+          initPaymentDropzone('payment_proof', 'submitPaymentBtn', 'semifinalPaymentDropzone');
 });
 </script>
 @endpush

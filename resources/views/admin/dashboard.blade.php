@@ -34,6 +34,33 @@
         </div>
       </a>
 
+      <a href="{{ route('admin.semifinal-payments.index') }}" class="dashboard-card">
+        <div class="card-icon purple">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M17 9V7a5 5 0 00-10 0v2M5 9h14l-1 11H6L5 9z"/>
+            <path d="M9 13h6"/>
+          </svg>
+        </div>
+        <div class="card-content">
+          <h3>Semifinal Payments</h3>
+          <p>Review and verify semifinal payment proofs</p>
+        </div>
+      </a>
+
+      <a href="{{ route('admin.final-payments.index') }}" class="dashboard-card">
+        <div class="card-icon purple">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M17 9V7a5 5 0 00-10 0v2M5 9h14l-1 11H6L5 9z"/>
+            <path d="M8 13h8"/>
+            <path d="M10 16h4"/>
+          </svg>
+        </div>
+        <div class="card-content">
+          <h3>Final Payments</h3>
+          <p>Review and verify final payment proofs</p>
+        </div>
+      </a>
+
       <div class="dashboard-card">
         <div class="card-icon red">
           <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">

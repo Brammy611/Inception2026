@@ -135,6 +135,22 @@ class SubmissionController extends Controller
             }
         }
 
+        if ($stage === 'final') {
+            if (!$peserta->isQualifiedForFinal()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Tim Anda tidak lolos ke babak final.'
+                ], 403);
+            }
+
+            if (!$peserta->hasFinalPaymentVerified()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Anda harus mengupload dan memverifikasi bukti pembayaran final terlebih dahulu.'
+                ], 403);
+            }
+        }
+
         // Check if stage is active
         $activeStages = config('submissions.active_stages', ['preliminary']);
         if (!in_array($stage, $activeStages)) {

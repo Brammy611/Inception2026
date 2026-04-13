@@ -11,12 +11,29 @@
       <h1>Competition Participants Management</h1>
       <p>Monitor and manage all competition participants</p>
     </div>
-    <a href="{{ route('admin.peserta.export', request()->query()) }}" class="btn-export">
-      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-      </svg>
-      Export CSV
-    </a>
+    <div class="header-actions">
+      <a href="{{ route('admin.semifinal-payments.index') }}" class="btn-semifinal">
+        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a5 5 0 00-10 0v2M5 9h14l-1 11H6L5 9z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6"/>
+        </svg>
+        Semifinal Payments
+      </a>
+      <a href="{{ route('admin.final-payments.index') }}" class="btn-semifinal">
+        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a5 5 0 00-10 0v2M5 9h14l-1 11H6L5 9z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 13h8"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 16h4"/>
+        </svg>
+        Final Payments
+      </a>
+      <a href="{{ route('admin.peserta.export', request()->query()) }}" class="btn-export">
+        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+        Export CSV
+      </a>
+    </div>
   </div>
 
   {{-- Statistics Cards --}}
@@ -207,12 +224,16 @@
             </span>
           </td>
           <td>
-            @if($p->isQualifiedForSemifinal())
-              <span class="status-badge" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); font-size: 11px; padding: 3px 8px;">
+            @if($p->isQualifiedForFinal())
+              <span class="status-badge stage-badge" style="background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%); font-size: 11px; padding: 3px 8px;">
+                ⭐ Final
+              </span>
+            @elseif($p->isQualifiedForSemifinal())
+              <span class="status-badge stage-badge" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); font-size: 11px; padding: 3px 8px;">
                 ⭐ Semifinal
               </span>
             @else
-              <span class="status-badge" style="background: #6b7280; font-size: 11px; padding: 3px 8px;">
+              <span class="status-badge stage-badge" style="background: #6b7280; font-size: 11px; padding: 3px 8px;">
                 Preliminary
               </span>
             @endif
