@@ -33,13 +33,13 @@
   @elseif(Request::is('company-visit'))
     <link rel="stylesheet" href="{{ asset('assets/css/career-talk.css') }}">
   @elseif(Request::is('peserta/dashboard'))
-    <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}?v={{ time() }}">
   @elseif(Request::is('peserta/profile'))
-    <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}?v={{ time() }}">
   @elseif(Request::is('peserta/notifications'))
-    <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}?v={{ time() }}">
   @elseif(Request::is('peserta/submissions*'))
-    <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}?v={{ time() }}">
   @elseif(Request::is('login'))
     <link rel="stylesheet" href="{{ asset('assets/css/auth.css') }}">
   @elseif(Request::is('register'))

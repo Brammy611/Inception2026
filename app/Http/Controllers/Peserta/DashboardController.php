@@ -234,8 +234,11 @@ class DashboardController extends Controller
 
         $kategori = $peserta->kategori;
         $competition = config("competitions.categories.{$kategori}");
+        
+        // Get semifinal information
+        $semifinalQualifier = $peserta->semifinalQualifier;
 
-        return view('peserta.profile', compact('user', 'peserta', 'competition', 'kategori'));
+        return view('peserta.profile', compact('user', 'peserta', 'competition', 'kategori', 'semifinalQualifier'));
     }
 
     /**

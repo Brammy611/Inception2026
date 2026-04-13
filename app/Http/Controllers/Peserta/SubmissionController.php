@@ -61,6 +61,9 @@ class SubmissionController extends Controller
         // Get competition info
         $competition = config("competitions.categories.{$peserta->kategori}");
         
+        // Get semifinal information
+        $semifinalQualifier = $peserta->semifinalQualifier;
+        
         // Get active stages for view
         $activeStages = config('submissions.active_stages', ['preliminary']);
 
@@ -69,7 +72,8 @@ class SubmissionController extends Controller
             'submissionConfig',
             'existingSubmissions',
             'competition',
-            'activeStages'
+            'activeStages',
+            'semifinalQualifier'
         ));
     }
 

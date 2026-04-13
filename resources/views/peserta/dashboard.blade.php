@@ -51,12 +51,22 @@
     {{-- Competition Header --}}
     <div class="competition-header" style="background: {{ $competition['color'] }};">
       <h1>{{ strtoupper($competition['name']) }}</h1>
-      <a href="{{ asset($competition['guidebook']) }}" class="btn-guidebook" target="_blank">
-        <svg fill="currentColor" viewBox="0 0 24 24" width="20" height="20">
-          <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-        </svg>
-        Download Guidebook
-      </a>
+      <div class="header-buttons">
+        <a href="{{ asset($competition['guidebook']) }}" class="btn-guidebook" target="_blank">
+          <svg fill="currentColor" viewBox="0 0 24 24" width="20" height="20">
+            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+          </svg>
+          Download Guidebook
+        </a>
+        @if($peserta->kategori === 'geothermal' && $semifinalQualifier)
+        <a href="{{ asset('case/FinalCase_GDPC_INCEPTION_2026.rar') }}" class="btn-case-semifinal" download="FinalCase_GDPC_INCEPTION_2026.rar">
+          <svg fill="currentColor" viewBox="0 0 24 24" width="20" height="20">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/>
+          </svg>
+          Case Semifinal
+        </a>
+        @endif
+      </div>
     </div>
 
     {{-- Team Section --}}

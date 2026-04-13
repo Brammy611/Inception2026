@@ -296,12 +296,22 @@
       <div class="status-badge {{ $peserta->status_verifikasi }}" style="margin-bottom: 1rem;">
         {{ ucfirst($peserta->status_verifikasi) }}
       </div>
-      <a href="{{ asset($competition['guidebook']) }}" class="btn-guidebook-small" target="_blank">
-        <svg fill="currentColor" viewBox="0 0 24 24" width="16" height="16">
-          <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-        </svg>
-        Download Guidebook
-      </a>
+      <div class="sidebar-buttons" style="display: flex; flex-direction: column; gap: 8px;">
+        <a href="{{ asset($competition['guidebook']) }}" class="btn-guidebook-small" target="_blank">
+          <svg fill="currentColor" viewBox="0 0 24 24" width="16" height="16">
+            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+          </svg>
+          Download Guidebook
+        </a>
+        @if($peserta->kategori === 'geothermal' && $semifinalQualifier)
+        <a href="{{ asset('case/FinalCase_GDPC_INCEPTION_2026.rar') }}" class="btn-case-semifinal-small" download="FinalCase_GDPC_INCEPTION_2026.rar">
+          <svg fill="currentColor" viewBox="0 0 24 24" width="16" height="16">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/>
+          </svg>
+          Case Semifinal
+        </a>
+        @endif
+      </div>
     </div>
   </aside>
 </div>
