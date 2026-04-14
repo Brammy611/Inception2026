@@ -15,6 +15,8 @@ class FinalQualifierSeeder extends Seeder
     {
         $finalTeams = [
             ['team_name' => 'Business Innovators', 'category' => 'business_case'],
+            ['team_name' => 'Geothermal Warriors', 'category' => 'geothermal'],
+            ['team_name' => 'Poster Creators', 'category' => 'poster_paper'],
             ['team_name' => 'Well Experts', 'category' => 'well_stimulation'],
         ];
 

@@ -55,6 +55,8 @@ Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'peserta'])->gro
     // Final Payment Routes
     Route::post('/final/payment', [App\Http\Controllers\Peserta\DashboardController::class, 'uploadFinalPayment'])->name('final.payment.upload');
     Route::get('/final/payment/view', [App\Http\Controllers\Peserta\DashboardController::class, 'viewFinalPayment'])->name('final.payment.view');
+    Route::get('/final/payment-rules/download', [App\Http\Controllers\Peserta\DashboardController::class, 'downloadFinalPaymentRules'])->name('final.payment.rules.download');
+    Route::get('/final/guidebook/download', [App\Http\Controllers\Peserta\DashboardController::class, 'downloadFinalGuidebook'])->name('final.guidebook.download');
     
     // Submission Routes
     Route::prefix('submissions')->name('submissions.')->group(function () {

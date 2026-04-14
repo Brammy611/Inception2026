@@ -144,18 +144,16 @@ class UserSeeder extends Seeder
                 ]
             );
 
-            if (in_array($testUser['email'], ['budi.bcc@test.com', 'dewi.wsc@test.com'])) {
-                FinalQualifier::updateOrCreate(
-                    [
-                        'peserta_id' => $peserta->id,
-                        'competition_category' => $testUser['kategori'],
-                    ],
-                    [
-                        'team_name' => $testUser['tim'],
-                        'qualified_at' => now(),
-                    ]
-                );
-            }
+            FinalQualifier::updateOrCreate(
+                [
+                    'peserta_id' => $peserta->id,
+                    'competition_category' => $testUser['kategori'],
+                ],
+                [
+                    'team_name' => $testUser['tim'],
+                    'qualified_at' => now(),
+                ]
+            );
 
             // Display user information
             echo "✓ User #" . ($index + 1) . " Created:\n";
@@ -167,9 +165,7 @@ class UserSeeder extends Seeder
             echo "  ├─ Universitas: Institut Teknologi Bandung\n";
             echo "  ├─ Status     : " . ucfirst($testUser['status']) . "\n";
             echo "  ├─ Semifinal  : Qualified\n";
-            if (in_array($testUser['email'], ['budi.bcc@test.com', 'dewi.wsc@test.com'])) {
-                echo "  ├─ Final      : Qualified\n";
-            }
+            echo "  ├─ Final      : Qualified\n";
             
             if ($testUser['kategori'] === Peserta::KATEGORI_POSTER_PAPER) {
                 echo "  └─ Anggota    : 3 orang (Leader + 2 members)\n";

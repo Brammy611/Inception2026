@@ -123,7 +123,24 @@
       </div>
 
       <div class="semifinal-payment-section">
-        <h3 class="subsection-title">Final Payment</h3>
+        <div class="subsection-header">
+          <h3 class="subsection-title">Final Payment</h3>
+          <div class="final-tools">
+            <a href="{{ route('peserta.final.payment.rules.download') }}" class="btn-final-tool btn-final-tool-rules" title="Download Final Payment Rules">
+              <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" width="16" height="16">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 16V4m0 12l-4-4m4 4l4-4"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 20h16"/>
+              </svg>
+              <span>Payment Rules</span>
+            </a>
+            <a href="{{ route('peserta.final.guidebook.download') }}" class="btn-final-tool btn-final-tool-guidebook" title="Download Final Guidebook">
+              <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" width="16" height="16">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6H7a2 2 0 00-2 2v9a1 1 0 001.447.894L12 15l5.553 2.894A1 1 0 0019 17V8a2 2 0 00-2-2h-5z"/>
+              </svg>
+              <span>Final Guidebook</span>
+            </a>
+          </div>
+        </div>
 
         @if(!$finalPayment)
           <div class="payment-upload-card">
@@ -1153,10 +1170,19 @@
 }
 
 .subsection-title {
-  margin: 0 0 1.5rem 0;
+  margin: 0;
   font-size: 1.125rem;
   font-weight: 600;
   color: #1f2937;
+}
+
+.subsection-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
 }
 
 .payment-upload-card {
@@ -1169,6 +1195,51 @@
   font-size: 1rem;
   font-weight: 600;
   color: #1f2937;
+}
+
+.final-tools {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.btn-final-tool {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.46rem 0.72rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.btn-final-tool-rules {
+  background: #fff7e6;
+  color: #b45309;
+  border: 1px solid #fbb137;
+}
+
+.btn-final-tool-rules:hover {
+  background: #ffefcc;
+  border-color: #f59e0b;
+  transform: translateY(-1px);
+}
+
+.btn-final-tool-guidebook {
+  background: #ffedd5;
+  color: #9a3412;
+  border: 1px solid #fb923c;
+}
+
+.btn-final-tool-guidebook:hover {
+  background: #fed7aa;
+  border-color: #ea580c;
+  transform: translateY(-1px);
 }
 
 .payment-info p {

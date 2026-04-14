@@ -565,4 +565,62 @@ class DashboardController extends Controller
             'Content-Type' => $mimeType,
         ]);
     }
+
+    /**
+     * Download final payment rules PDF.
+     */
+    public function downloadFinalPaymentRules()
+    {
+        $user = auth()->user();
+        $peserta = $user->peserta;
+
+        if (!$peserta) {
+            return redirect()->route('peserta.register');
+        }
+
+        $rulesRelativePath = config("competitions.categories.{$peserta->kategori}.final_payment_rules")
+            ?? config('competitions.payment.final_payment_rules_file', 'guidebooks/final-payment-rules.pdf');
+
+        $rulesFullPath = base_path($rulesRelativePath);
+
+        if (!file_exists($rulesFullPath)) {
+            return redirect()->route('peserta.dashboard')
+                ->with('error', 'Final payment rules file is not available yet. Please contact admin.');
+        }
+
+        $downloadName = strtoupper($peserta->kategori) . '_Final_Payment_Rules_Inception2026.pdf';
+
+        return response()->download($rulesFullPath, $downloadName);
+    }
+
+    /**
+     * Download final guidebook based on participant category.
+     */
+    public function downloadFinalGuidebook()
+    {
+        $user = auth()->user();
+        $peserta = $user->peserta;
+
+        if (!$peserta) {
+            return redirect()->route('peserta.register');
+        }
+
+        $guidebookRelativePath = config("competitions.categories.{$peserta->kategori}.final_guidebook");
+
+        if (!$guidebookRelativePath) {
+            return redirect()->route('peserta.dashboard')
+                ->with('error', 'Final guidebook for your competition category is not configured yet.');
+        }
+
+        $guidebookFullPath = base_path($guidebookRelativePath);
+
+        if (!file_exists($guidebookFullPath)) {
+            return redirect()->route('peserta.dashboard')
+                ->with('error', 'Final guidebook file is not available yet. Please contact admin.');
+        }
+
+        $downloadName = strtoupper($peserta->kategori) . '_Final_Guidebook_Inception2026.pdf';
+
+        return response()->download($guidebookFullPath, $downloadName);
+    }
 }

@@ -10,6 +10,8 @@ return [
     |
     */
 
+    //bagian final guidbook nanti diupdate kalau udah ada, sesuai route yg ada
+
     'categories' => [
         'business_case' => [
             'name' => 'Business Case Competition',
@@ -17,6 +19,8 @@ return [
             'color' => '#FBB137',
             'border_color' => '#FBB137',
             'guidebook' => 'guidebooks/business_case_guidebook.pdf',
+            'final_guidebook' => 'guidebooks/final/business_case_final_guidebook.pdf',
+            'final_payment_rules' => 'guidebooks/final/payment-rules/business_case_final_payment_rules.pdf',
             'timeline' => [
                 ['date' => '2 January - 9 January 2026', 'event' => 'Early Bird Registration'],
                 ['date' => '10 January - 31 January 2026', 'event' => 'Regular Registration'],
@@ -38,6 +42,8 @@ return [
             'color' => '#B22A2A',
             'border_color' => '#B22A2A',
             'guidebook' => 'guidebooks/geothermal_guidebook.pdf',
+            'final_guidebook' => 'guidebooks/final/geothermal_final_guidebook.pdf',
+            'final_payment_rules' => 'guidebooks/final/payment-rules/geothermal_final_payment_rules.pdf',
             'timeline' => [
                 ['date' => '2 January - 9 January 2026', 'event' => 'Early Bird Registration'],
                 ['date' => '10 January - 31 January 2026', 'event' => 'Regular Registration'],
@@ -59,6 +65,8 @@ return [
             'color' => '#4683B5',
             'border_color' => '#4683B5',
             'guidebook' => 'guidebooks/poster_paper_guidebook.pdf',
+            'final_guidebook' => 'guidebooks/final/poster_paper_final_guidebook.pdf',
+            'final_payment_rules' => 'guidebooks/final/payment-rules/poster_paper_final_payment_rules.pdf',
             'timeline' => [
                 ['date' => '2 January - 9 January 2026', 'event' => 'Early Bird Registration'],
                 ['date' => '10 January - 31 January 2026', 'event' => 'Regular Registration'],
@@ -80,6 +88,8 @@ return [
             'color' => '#32477C',
             'border_color' => '#32477C',
             'guidebook' => 'guidebooks/well_stimulation_guidebook.pdf',
+            'final_guidebook' => 'guidebooks/final/well_stimulation_final_guidebook.pdf',
+            'final_payment_rules' => 'guidebooks/final/payment-rules/well_stimulation_final_payment_rules.pdf',
             'timeline' => [
                 ['date' => '2 January - 9 January 2026', 'event' => 'Early Bird Registration'],
                 ['date' => '10 January - 31 January 2026', 'event' => 'Regular Registration'],
@@ -105,6 +115,8 @@ return [
         'bank_name' => 'SEABANK',
         'account_number' => '123456789',
         'account_holder' => 'AN FITRI',
+        // fallback lama (opsional) jika per-kategori belum diisi
+        'final_payment_rules_file' => 'guidebooks/final-payment-rules.pdf',
         'accepted_file_types' => ['png', 'jpeg', 'jpg', 'pdf'],
     ],
 ];
