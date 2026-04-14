@@ -233,6 +233,26 @@ class Peserta extends Model
     }
 
     /**
+     * Get active stages this peserta can access based on qualification and payment.
+     */
+    public function getEligibleStages(): array
+    {
+        $activeStages = config('submissions.active_stages', ['preliminary']);
+
+        return array_values(array_filter($activeStages, function ($stage) {
+            if ($stage === 'semifinal') {
+                return $this->canUploadSemifinalSubmission();
+            }
+
+            if ($stage === 'final') {
+                return $this->canUploadFinalSubmission();
+            }
+
+            return true;
+        }));
+    }
+
+    /**
      * Get submission requirements based on kategori.
      * Optionally filter by active stages.
      *
@@ -244,7 +264,7 @@ class Peserta extends Model
         $requirements = config("submissions.categories.{$this->kategori}.requirements", []);
         
         if ($activeOnly) {
-            $activeStages = config('submissions.active_stages', ['preliminary']);
+            $activeStages = $this->getEligibleStages();
             $requirements = array_filter($requirements, function ($requirement) use ($activeStages) {
                 return in_array($requirement['stage'], $activeStages);
             });

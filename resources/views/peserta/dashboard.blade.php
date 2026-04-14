@@ -1494,7 +1494,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
     
     // File upload handling
-    document.querySelectorAll('.upload-dropzone').forEach(dropzone => {
+    document.querySelectorAll('.upload-dropzone[data-type][data-stage]').forEach(dropzone => {
         const fileInput = dropzone.querySelector('.file-input-hidden');
         const type = dropzone.dataset.type;
         const stage = dropzone.dataset.stage;
@@ -1532,6 +1532,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     function handleFileUpload(file, type, stage, maxSize, dropzone) {
+      if (!type || !stage) {
+        return;
+      }
+
         if (file.type !== 'application/pdf') {
             showToast('error', 'Hanya file PDF yang diperbolehkan.');
             return;
@@ -1735,7 +1739,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const file = files[0];
                 
                 // Validate file type
-                const validTypes = ['application/pdf', 'image/jpeg', 'image/png'];
+                const validTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
                 if (!validTypes.includes(file.type)) {
                     showToast('error', 'Hanya file PDF, JPG, atau PNG yang diperbolehkan.');
                     return;

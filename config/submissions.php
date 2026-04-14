@@ -221,8 +221,8 @@ return [
     */
     'active_stages' => [
         'preliminary', // Currently active
-        'semifinal', // Uncomment to enable Semifinal Round
-        // 'final',     // Uncomment to enable Final Round
+        'semifinal', // Semifinal Round active
+        'final',     // Final Round active
     ],
 
     /*

@@ -18,9 +18,9 @@ class SubmissionController extends Controller
      * @param array $requirements
      * @return array
      */
-    protected function filterActiveRequirements(array $requirements): array
+    protected function filterActiveRequirements(array $requirements, ?array $activeStages = null): array
     {
-        $activeStages = config('submissions.active_stages', ['preliminary']);
+        $activeStages = $activeStages ?? config('submissions.active_stages', ['preliminary']);
         
         return array_filter($requirements, function ($requirement) use ($activeStages) {
             return in_array($requirement['stage'], $activeStages);
@@ -46,9 +46,12 @@ class SubmissionController extends Controller
                 ->with('error', 'Kategori lomba tidak ditemukan.');
         }
 
+        $activeStages = $peserta->getEligibleStages();
+
         // Filter requirements by active stages
         $submissionConfig['requirements'] = $this->filterActiveRequirements(
-            $submissionConfig['requirements'] ?? []
+            $submissionConfig['requirements'] ?? [],
+            $activeStages
         );
 
         // Get existing submissions
@@ -65,7 +68,7 @@ class SubmissionController extends Controller
         $semifinalQualifier = $peserta->semifinalQualifier;
         
         // Get active stages for view
-        $activeStages = config('submissions.active_stages', ['preliminary']);
+        $activeStages = $peserta->getEligibleStages();
 
         return view('peserta.submissions', compact(
             'peserta',
