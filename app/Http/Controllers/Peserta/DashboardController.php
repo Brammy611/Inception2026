@@ -582,7 +582,7 @@ class DashboardController extends Controller
         $rulesRelativePath = config("competitions.categories.{$peserta->kategori}.final_payment_rules")
             ?? config('competitions.payment.final_payment_rules_file', 'guidebooks/final-payment-rules.pdf');
 
-        $rulesFullPath = base_path($rulesRelativePath);
+        $rulesFullPath = public_path($rulesRelativePath);
 
         if (!file_exists($rulesFullPath)) {
             return redirect()->route('peserta.dashboard')
