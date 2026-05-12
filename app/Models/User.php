@@ -18,9 +18,10 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'nama',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -41,8 +42,55 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Get the peserta record associated with the user.
+     */
+    public function peserta()
+    {
+        return $this->hasOne(Peserta::class);
+    }
+
+    /**
+     * Get the notifications for the user.
+     */
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class)->latest();
+    }
+
+    /**
+     * Get unread notifications count.
+     */
+    public function unreadNotificationsCount()
+    {
+        return $this->notifications()->unread()->count();
+    }
+
+    /**
+     * Check if user is admin.
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    /**
+     * Check if user is peserta.
+     */
+    public function isPeserta(): bool
+    {
+        return $this->role === 'peserta';
+    }
+
+    /**
+     * Check if user has completed peserta registration.
+     */
+    public function hasCompletedRegistration(): bool
+    {
+        return $this->peserta !== null;
     }
 }

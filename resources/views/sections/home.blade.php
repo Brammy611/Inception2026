@@ -1,4 +1,4 @@
-<section class="home">
+<section class="home" id="home">
   {{-- <div class="logo-3d">
     <spline-viewer url="https://prod.spline.design/ONMSJVwBqdCXOk-v/scene.splinecode"></spline-viewer>
   </div> --}}

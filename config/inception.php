@@ -6,24 +6,28 @@ return [
             'title' => 'Career Talk',
             'description' => 'Inspirasi langsung dari profesional industri untuk membangun karier digital masa depan.',
             'image' => 'logo.png',
+            'link' => '/career-talk',
             'delay' => '0s'
         ],
         [
             'title' => 'Company Visit',
             'description' => 'Kunjungan eksklusif ke perusahaan teknologi ternama untuk mengenal dunia kerja nyata.',
             'image' => 'logo.png',
+            'link' => '#',
             'delay' => '1s'
         ],
         [
             'title' => 'Competition',
             'description' => 'Adu kreativitas dan inovasi dalam berbagai kompetisi seru bertema teknologi.',
             'image' => 'logo.png',
+            'link' => '/competitions',
             'delay' => '2s'
         ],
         [
             'title' => 'Awarding Night',
             'description' => 'Perayaan puncak untuk para pemenang dan seluruh peserta yang berkontribusi.',
             'image' => 'logo.png',
+            'link' => '#',
             'delay' => '3s'
         ]
     ],

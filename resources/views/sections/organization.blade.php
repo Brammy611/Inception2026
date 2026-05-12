@@ -1,4 +1,4 @@
-<section class="organization">
+<section class="organization" id="organization">
   <div class="about-header">
     <h2>OUR <span class="heading">ORGANIZATION</span></h2>
     <p class="tagline">Organisasi yang menaungi Inception</p>
